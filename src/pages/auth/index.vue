@@ -1,6 +1,6 @@
 <template>
     <div class="auth-page">
-        <el-form>
+        <div class="auth-form">
             <div class="title"><h1>Вход</h1></div>
             <div class="field">
                 <el-input type="text" placeholder="Логин" v-model="userName"/>
@@ -16,9 +16,9 @@
                 >
                     Войти
                 </el-button>
-                <el-button>Регистрация</el-button>
+                <el-button @click="login">Регистрация</el-button>
             </div>
-        </el-form>
+        </div>
     </div>
 </template>
 
@@ -65,6 +65,10 @@
     .title {
         display: flex;
         justify-content: center;
+    }
+
+    .auth-form {
+        width: 280px;
     }
 
     .field {
