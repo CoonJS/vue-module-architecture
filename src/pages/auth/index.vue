@@ -16,7 +16,7 @@
                 >
                     Войти
                 </el-button>
-                <el-button @click="login">Регистрация</el-button>
+                <el-button>Регистрация</el-button>
             </div>
         </div>
     </div>
