@@ -9,7 +9,13 @@
                 <el-input type="password" placeholder="Пароль" v-model="password"/>
             </div>
             <div class="actions">
-                <el-button type="success" @click="login">Войти</el-button>
+                <el-button
+                    type="success"
+                    :loading="isLoading"
+                    @click="login"
+                >
+                    Войти
+                </el-button>
                 <el-button @click="login">Регистрация</el-button>
             </div>
         </div>
@@ -22,12 +28,27 @@
     data () {
       return {
         userName: '',
-        password: ''
+        password: '',
+        isLoading: false
       }
     },
     methods: {
-      login() {
-        this.$locator.Api.auth(this.userName, this.password);
+      async login() {
+        this.isLoading = true;
+        try {
+          await this.$locator.Api.auth(this.userName, this.password);
+        } catch(e) {
+          this.showLoginError();
+          this.isLoading = false;
+        }
+      },
+      showLoginError() {
+        this.$message({
+          showClose: true,
+          message: 'Неверный логин или пароль',
+          type: 'error',
+          duration: 2000
+        });
       }
     }
   }

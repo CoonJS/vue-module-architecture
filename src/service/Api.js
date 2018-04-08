@@ -7,7 +7,6 @@ const BASE_URL = isDevelopment ? 'http://0.0.0.0:8080' : '/';
 export default class Api {
   constructor() {
     this.axios = axios;
-    this.isAuthorized = false;
     this.event = new EventEmitter();
 
     this.configureAxios();
@@ -48,12 +47,10 @@ export default class Api {
   configureAxios() {
     this.axios.interceptors.response.use(
       (response) => {
-        this.isAuthorized = true;
         return response
       },
       (error) => {
         if (error.response.status === 401) {
-          this.isAuthorized = false;
           this.event.emit('logout');
         }
       }
