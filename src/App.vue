@@ -1,29 +1,42 @@
 <template>
-    <div class="app">
-        <div class="menu" v-if="isShowMenu">
-            <div class="pages">
-                <router-link
-                    v-for="item in menuItems"
-                    :key="item.key"
-                    :to="item.link"
-                >
-                    <div class="menu-item">
-                        {{item.title}}
-                    </div>
-                </router-link>
-            </div>
-            <div class="actions">
-                <div class="menu-item" @click="logout">Выйти</div>
-            </div>
-        </div>
-        <div class="page">
+    <page-layout>
+        <nav-layout v-if="isShowMenu">
+            <menu-item-logo slot="left"/>
+            <menu-item-link
+                slot="left"
+                v-for="item in menuItems"
+                :key="item.key"
+                :link="item.link"
+            >
+                {{item.title}}
+            </menu-item-link>
+            <menu-item-action slot="right" @click="logout">
+                Выйти
+            </menu-item-action>
+        </nav-layout>
+        <page-container>
             <router-view></router-view>
-        </div>
-    </div>
+        </page-container>
+    </page-layout>
 </template>
 
 <script>
+    import PageLayout from './com/Layout/Page.vue';
+    import NavLayout from './com/Layout/Nav.vue';
+    import PageContainer from './com/Container/Page.vue';
+    import MenuItemLink from './com/Menu/Item/Link.vue';
+    import MenuItemLogo from './com/Menu/Item/Logo.vue';
+    import MenuItemAction from './com/Menu/Item/Action.vue';
+
   export default {
+    components: {
+      PageLayout,
+      NavLayout,
+      MenuItemLink,
+      MenuItemLogo,
+      MenuItemAction,
+      PageContainer
+    },
     mounted() {
       this.$locator.Api.get('/api/me');
 
@@ -41,11 +54,6 @@
       return {
         isShowMenu: true,
         menuItems: [
-          {
-            key: 'home',
-            title: 'Salestat',
-            link: '/'
-          },
           {
             key:'dashboards',
             title: 'Дашборды',
@@ -82,9 +90,6 @@
 </script>
 
 <style scoped>
-    .app {
-        height: 100vh;
-    }
 
     .menu {
         height: 40px;
@@ -108,19 +113,4 @@
         display: flex;
     }
 
-    a {
-        display: flex;
-        height: 100%;
-        color: #fff;
-        text-decoration: none;
-    }
-    .menu-item {
-        cursor: pointer;
-        background-color: rgba(51, 51, 51, 1);
-        padding: 12px;
-        color: #fff;
-    }
-    .menu-item:hover {
-        background-color: rgba(210, 210, 210, .1);
-    }
 </style>

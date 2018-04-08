@@ -1,15 +1,16 @@
 <template>
     <div class="auth-page">
         <div class="auth-form">
+            <div class="title"><h1>Вход</h1></div>
             <div class="field">
-                <el-input type="text" placeholder="Login" v-model="userName"/>
+                <el-input type="text" placeholder="Логин" v-model="userName"/>
             </div>
             <div class="field">
-                <el-input type="password" placeholder="Password" v-model="password"/>
+                <el-input type="password" placeholder="Пароль" v-model="password"/>
             </div>
             <div class="actions">
-                <el-button type="success" @click="login">Login</el-button>
-                <el-button type="primary" @click="login">Sign in</el-button>
+                <el-button type="success" @click="login">Войти</el-button>
+                <el-button @click="login">Регистрация</el-button>
             </div>
         </div>
     </div>
@@ -40,8 +41,13 @@
         justify-content: center;
     }
 
+    .title {
+        display: flex;
+        justify-content: center;
+    }
+
     .auth-form {
-        width: 400px;
+        width: 280px;
     }
 
     .field {
@@ -51,5 +57,6 @@
     .actions {
         margin-top: 12px;
         display: flex;
+        justify-content: space-between;
     }
 </style>
