@@ -51,10 +51,29 @@
       }
     },
     methods: {
-      register() {
+      async register() {
+        const {
+          email,
+          lastName,
+          password,
+          firstName
+        } = this;
+
         if (this.password !== this.passwordConfirm) {
-          this.showRegisterError()
+          this.showRegisterError();
+          return;
         }
+
+        const response = await this.$locator.Api.post('/api/users',
+          {
+            email,
+            password,
+            lastName,
+            firstName
+          }
+        );
+
+        console.log(response);
       },
       showRegisterError() {
         this.$message({

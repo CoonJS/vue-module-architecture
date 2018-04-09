@@ -1,6 +1,6 @@
 <template>
     <page-layout>
-        <nav-layout v-if="isShowMenu">
+        <nav-layout v-if="isUserLoaded">
             <menu-item-logo slot="left"/>
             <menu-item-link
                 slot="left"
@@ -10,6 +10,12 @@
             >
                 {{item.title}}
             </menu-item-link>
+            <user-menu-item
+                v-if="hasUser"
+                slot="right"
+            >
+                {{ userInfo }}
+            </user-menu-item>
             <menu-item-action slot="right" @click="logout">
                 Выйти
             </menu-item-action>
@@ -26,6 +32,7 @@
     import RootContainer from './com/Container/Root.vue';
     import MenuItemLink from './com/Menu/Item/Link.vue';
     import MenuItemLogo from './com/Menu/Item/Logo.vue';
+    import UserMenuItem from './com/Menu/Item/User.vue';
     import MenuItemAction from './com/Menu/Item/Action.vue';
 
   export default {
@@ -34,11 +41,12 @@
       NavLayout,
       MenuItemLink,
       MenuItemLogo,
+      UserMenuItem,
       MenuItemAction,
       RootContainer
     },
     mounted() {
-      this.$locator.Api.get('/api/me');
+      this.loadUser();
 
       this.$locator.Api.onLogout(() => {
         this.isShowMenu = false;
@@ -52,6 +60,8 @@
     },
     data() {
       return {
+        user: null,
+        isUserLoaded: false,
         isShowMenu: true,
         menuItems: [
           {
@@ -67,9 +77,23 @@
         ]
       };
     },
+    computed: {
+      hasUser() {
+        return this.user !== null;
+      },
+      userInfo() {
+        const user = this.user;
+        return this.hasUser ? `${user.lastName} ${user.firstName}` : ''
+      }
+    },
     methods: {
       async logout() {
         const response = await this.$locator.Api.get('/logout');
+      },
+      async loadUser() {
+        this.isUserLoaded = false;
+        this.user = await this.$locator.Api.get('/api/users/me');
+        this.isUserLoaded = true;
       },
       redirectToLoginPage() {
         const isAuthPage = this.$route.name === 'AuthPage';
