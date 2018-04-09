@@ -1,40 +1,46 @@
 <template>
-    <div class="register-page">
-        <div class="register-form ">
-            <div class="title">
-                <h1>Регистрация</h1>
-            </div>
-            <div class="field">
-                <el-input type="text" placeholder="Имя" v-model="firstName"/>
-            </div>
-            <div class="field">
-                <el-input type="text" placeholder="Фамилия" v-model="lastName"/>
-            </div>
-            <div class="field">
-                <el-input type="text" placeholder="Почта" v-model="email"/>
-            </div>
-            <div class="field">
-                <el-input type="password" placeholder="Пароль" v-model="password"/>
-            </div>
-            <div class="field">
-                <el-input type="password" placeholder="Подтверждение пароля" v-model="passwordConfirm"/>
-            </div>
-            <div class="actions">
-                <el-button
-                    type="success"
-                    class="register-button"
-                    @click="register"
-                >
-                    Зарегистрироваться
-                </el-button>
+    <page-container style="display: flex; align-items: center">
+        <div class="form-wrapper">
+            <div class="register-form">
+                <div class="title">
+                    <h1>Регистрация</h1>
+                </div>
+                <div class="field">
+                    <el-input type="text" placeholder="Имя" v-model="firstName"/>
+                </div>
+                <div class="field">
+                    <el-input type="text" placeholder="Фамилия" v-model="lastName"/>
+                </div>
+                <div class="field">
+                    <el-input type="text" placeholder="Почта" v-model="email"/>
+                </div>
+                <div class="field">
+                    <el-input type="password" placeholder="Пароль" v-model="password"/>
+                </div>
+                <div class="field">
+                    <el-input type="password" placeholder="Подтверждение пароля" v-model="passwordConfirm"/>
+                </div>
+                <div class="actions">
+                    <el-button
+                        type="success"
+                        class="register-button"
+                        @click="register"
+                    >
+                        Зарегистрироваться
+                    </el-button>
+                </div>
             </div>
         </div>
-    </div>
+    </page-container>
 </template>
 
 <script>
+  import PageContainer from '../../com/Container/Page.vue';
 
   export default {
+    components: {
+      PageContainer
+    },
     data () {
       return {
         firstName: '',
@@ -63,10 +69,8 @@
 </script>
 
 <style scoped>
-    .register-page {
-        height: 100%;
+    .form-wrapper {
         display: flex;
-        align-items: center;
         justify-content: center;
     }
 

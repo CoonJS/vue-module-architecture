@@ -15,7 +15,7 @@
 <style scoped>
     .menu-item {
         cursor: pointer;
-        padding: 16px;
+        padding: 16px 16px 16px 0;
         align-items: center;
         color: #fff;
         font-size: 12px;

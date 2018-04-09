@@ -1,36 +1,10 @@
-<template>
-    <div class="auth-page">
-        <div class="auth-form">
-            <div class="title"><h1>Вход</h1></div>
-            <div class="field">
-                <el-input type="text" placeholder="Логин" v-model="userName"/>
-            </div>
-            <div class="field">
-                <el-input type="password" placeholder="Пароль" v-model="password"/>
-            </div>
-            <div class="actions">
-                <el-button
-                    type="success"
-                    :loading="isLoading"
-                    @click="login"
-                >
-                    Войти
-                </el-button>
-                <el-button
-                    type="primary"
-                    class="register-button"
-                    @click="redirectToRegisterPage"
-                >
-                    Зарегистрироваться
-                </el-button>
-            </div>
-        </div>
-    </div>
-</template>
-
 <script>
+  import PageContainer from '../../com/Container/Page.vue';
 
   export default {
+    components: {
+      PageContainer
+    },
     data () {
       return {
         userName: '',
@@ -63,15 +37,45 @@
   }
 </script>
 
+<template>
+    <page-container style="display: flex; align-items: center">
+        <div class="form-wrapper">
+            <div class="auth-form">
+                <div class="title"><h1>Вход</h1></div>
+                <div class="field">
+                    <el-input type="text" placeholder="Логин" v-model="userName"/>
+                </div>
+                <div class="field">
+                    <el-input type="password" placeholder="Пароль" v-model="password"/>
+                </div>
+                <div class="actions">
+                    <el-button
+                        type="success"
+                        :loading="isLoading"
+                        @click="login"
+                    >
+                        Войти
+                    </el-button>
+                    <el-button
+                        type="primary"
+                        class="register-button"
+                        @click="redirectToRegisterPage"
+                    >
+                        Зарегистрироваться
+                    </el-button>
+                </div>
+            </div>
+        </div>
+    </page-container>
+</template>
+
 <style scoped>
-    .auth-page {
-        height: 100%;
+    .title {
         display: flex;
-        align-items: center;
         justify-content: center;
     }
 
-    .title {
+    .form-wrapper {
         display: flex;
         justify-content: center;
     }

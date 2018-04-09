@@ -14,16 +14,16 @@
                 Выйти
             </menu-item-action>
         </nav-layout>
-        <page-container>
+        <root-container>
             <router-view></router-view>
-        </page-container>
+        </root-container>
     </page-layout>
 </template>
 
 <script>
     import PageLayout from './com/Layout/Page.vue';
     import NavLayout from './com/Layout/Nav.vue';
-    import PageContainer from './com/Container/Page.vue';
+    import RootContainer from './com/Container/Root.vue';
     import MenuItemLink from './com/Menu/Item/Link.vue';
     import MenuItemLogo from './com/Menu/Item/Logo.vue';
     import MenuItemAction from './com/Menu/Item/Action.vue';
@@ -35,7 +35,7 @@
       MenuItemLink,
       MenuItemLogo,
       MenuItemAction,
-      PageContainer
+      RootContainer
     },
     mounted() {
       this.$locator.Api.get('/api/me');
