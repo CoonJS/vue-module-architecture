@@ -16,7 +16,7 @@
                 >
                     Войти
                 </el-button>
-                <el-button>Регистрация</el-button>
+                <el-button @click="redirectToRegisterPage">Регистрация</el-button>
             </div>
         </div>
     </div>
@@ -49,6 +49,9 @@
           type: 'error',
           duration: 2000
         });
+      },
+      redirectToRegisterPage() {
+        this.$router.push('register');
       }
     }
   }

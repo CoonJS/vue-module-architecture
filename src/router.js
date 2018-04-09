@@ -4,6 +4,7 @@ import AuthPage from './pages/auth/index.vue';
 import ManagersPage from './pages/managers/index.vue';
 import ManagerPage from './pages/manager/index.vue';
 import DashboardsPage from './pages/dashboards/index.vue';
+import RegisterPage from './pages/register/index.vue';
 
 const routes = [
   {
@@ -17,6 +18,11 @@ const routes = [
     component: AuthPage
   },
   {
+    path: '/register',
+    name: 'RegisterPage',
+    component: RegisterPage
+  },
+  {
     path: '/managers',
     name: 'ManagersPage',
     component: ManagersPage
@@ -25,7 +31,8 @@ const routes = [
     path: '/managers/:managerId',
     name: 'ManagerPage',
     component: ManagerPage
-  }
+  },
+
 ];
 
 export default new VueRouter({ routes });
