@@ -16,7 +16,13 @@
                 >
                     Войти
                 </el-button>
-                <el-button @click="redirectToRegisterPage">Регистрация</el-button>
+                <el-button
+                    type="primary"
+                    class="register-button"
+                    @click="redirectToRegisterPage"
+                >
+                    Зарегистрироваться
+                </el-button>
             </div>
         </div>
     </div>
@@ -82,5 +88,9 @@
         margin-top: 12px;
         display: flex;
         justify-content: space-between;
+    }
+
+    .register-button {
+        flex: 1;
     }
 </style>
