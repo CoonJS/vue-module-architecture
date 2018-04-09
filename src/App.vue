@@ -10,12 +10,7 @@
             >
                 {{item.title}}
             </menu-item-link>
-            <user-menu-item
-                v-if="hasUser"
-                slot="right"
-            >
-                {{ userInfo }}
-            </user-menu-item>
+            <menu-item-link slot="right" link="/profile">{{userInfo}}</menu-item-link>
             <menu-item-action slot="right" @click="logout">
                 Выйти
             </menu-item-action>

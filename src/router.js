@@ -1,9 +1,10 @@
 import VueRouter from 'vue-router';
 
 import AuthPage from './pages/auth/index.vue';
+import ProfilePage from './pages/profile/index.vue';
 import ManagersPage from './pages/managers/index.vue';
-import DashboardsPage from './pages/dashboards/index.vue';
 import RegisterPage from './pages/register/index.vue';
+import DashboardsPage from './pages/dashboards/index.vue';
 
 const routes = [
   {
@@ -22,6 +23,11 @@ const routes = [
     component: RegisterPage
   },
   {
+    path: '/profile',
+    name: 'UserProfile',
+    component: ProfilePage
+  },
+  {
     path: '/managers',
     name: 'ManagersPage',
     component: ManagersPage
@@ -29,4 +35,3 @@ const routes = [
 ];
 
 export default new VueRouter({ routes });
-

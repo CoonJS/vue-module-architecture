@@ -30,6 +30,8 @@
     }
 
     .page-header {
+        display: flex;
+        align-items: center;
         padding: 12px;
         position: absolute;
         top: 0;
