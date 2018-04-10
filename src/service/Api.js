@@ -5,7 +5,10 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 const BASE_URL = isDevelopment ? 'https://0.0.0.0:8080' : '/';
 
 export default class Api {
+
   constructor() {
+    this.name = 'Api';
+
     this.axios = axios.create({
       baseURL: BASE_URL,
       headers: {

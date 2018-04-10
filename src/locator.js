@@ -1,5 +1,4 @@
 import Api from './service/Api';
-import Cookie from './service/Cookie';
 
 class Locator {
   constructor() {
@@ -8,7 +7,7 @@ class Locator {
 
   registerService(Service) {
     const service = new Service(this);
-    const serviceName = service.constructor.name;
+    const serviceName = service.name;
 
     if (this._serviceNames.includes(serviceName)) {
       throw `service ${serviceName} exist`;
@@ -22,6 +21,5 @@ class Locator {
 const locator = new Locator();
 
 locator.registerService(Api);
-locator.registerService(Cookie);
 
 export default locator;
