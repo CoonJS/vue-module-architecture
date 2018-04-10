@@ -1,6 +1,6 @@
 <template>
     <page-layout>
-        <nav-layout v-if="hasUser">
+        <nav-layout v-if="isShowMenu">
             <menu-item-logo slot="left"/>
             <menu-item-link
                 slot="left"
@@ -42,13 +42,13 @@
     },
     mounted() {
       this.loadUser();
-
       this.$locator.Api.onLogout(() => {
         this.isShowMenu = false;
         this.redirectToLoginPage();
       });
 
       this.$locator.Api.onLogin(() => {
+        this.loadUser();
         this.isShowMenu = true;
         this.redirectToHomePage();
       });
@@ -77,13 +77,13 @@
         return this.user != null;
       },
       userInfo() {
-        const user = this.user;
-        return this.hasUser ? `${user.lastName} ${user.firstName}` : ''
+        const user = this.user || null;
+        return user !== null ? `${user.lastName} ${user.firstName}` : '';
       }
     },
     methods: {
       async logout() {
-        const response = await this.$locator.Api.get('/logout');
+        await this.$locator.Api.logout();
       },
       async loadUser() {
         this.isUserLoaded = false;

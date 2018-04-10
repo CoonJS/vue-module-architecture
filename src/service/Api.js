@@ -45,6 +45,11 @@ export default class Api {
     this.event.emit('login');
   }
 
+  async logout() {
+    const response = await this.axios.get('api/users/me/logout');
+    return response && response.data;
+  }
+
   onLogin(cb) {
     this.event.on('login', cb);
   }
@@ -59,9 +64,9 @@ export default class Api {
         return response
       },
       (error) => {
-        // if (error.response.status === 401) {
-        //   this.event.emit('logout');
-        // }
+        if (error.response.status === 401) {
+          this.event.emit('logout');
+        }
       }
     );
   }
