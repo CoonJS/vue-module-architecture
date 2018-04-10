@@ -1,6 +1,6 @@
 <template>
     <page-layout>
-        <nav-layout v-if="isUserLoaded">
+        <nav-layout v-if="hasUser">
             <menu-item-logo slot="left"/>
             <menu-item-link
                 slot="left"
@@ -74,7 +74,7 @@
     },
     computed: {
       hasUser() {
-        return this.user !== null;
+        return this.user != null;
       },
       userInfo() {
         const user = this.user;

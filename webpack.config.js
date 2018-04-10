@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const fs = require('fs');
 
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -45,8 +46,13 @@ module.exports = {
     port: '8080',
     proxy: {
       '*': {
-        target: 'http://77.244.213.135:8080'
+        target: 'https://77.244.213.135',
+        secure: false
       }
+    },
+    https: {
+      key: fs.readFileSync(path.resolve(__dirname, 'domain.key')),
+      cert: fs.readFileSync(path.resolve(__dirname, 'domain.crt'))
     }
   }
 };
