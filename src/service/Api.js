@@ -46,7 +46,8 @@ export default class Api {
   }
 
   async logout() {
-    const response = await this.axios.get('api/users/me/logout');
+    const response = await this.axios.get('api/users/logout');
+    await this.axios.get('/api/users/me');
     return response && response.data;
   }
 
