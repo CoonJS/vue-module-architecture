@@ -45,6 +45,23 @@ export default class Api {
     this.event.emit('login');
   }
 
+  async register(email, password, lastName, firstName) {
+    try {
+      await this.axios.post('api/users',
+        {
+          email,
+          password,
+          lastName,
+          firstName
+        }
+      );
+
+      this.event.emit('login');
+    } catch (e) {
+      throw e;
+    }
+  }
+
   async logout() {
     const response = await this.axios.get('api/users/logout');
     await this.axios.get('/api/users/me');

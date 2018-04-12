@@ -64,16 +64,15 @@
           return;
         }
 
-        const response = await this.$locator.Api.post('/api/users',
-          {
-            email,
-            password,
-            lastName,
-            firstName
-          }
-        );
-
-        console.log(response);
+        try {
+          await this.$locator.Api.register(email, password, lastName, firstName);
+          this.redirectToRegisterPage();
+        } catch(e) {
+          throw e;
+        }
+      },
+      redirectToRegisterPage() {
+        this.$router.push('/');
       },
       showRegisterError() {
         this.$message({
