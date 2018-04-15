@@ -11,6 +11,9 @@
                 {{item.title}}
             </menu-item-link>
             <menu-item-link slot="right" link="/profile">{{userInfo}}</menu-item-link>
+            <menu-item-icon icon="goods" slot="right" link="/marketplace"/>
+            <menu-item-icon icon="setting" slot="right" link="/settings"/>
+            <menu-item-icon icon="bell" slot="right" link="/notifications"/>
             <menu-item-action slot="right" @click="logout">
                 Выйти
             </menu-item-action>
@@ -28,6 +31,7 @@
     import MenuItemLink from './com/Menu/Item/Link.vue';
     import MenuItemLogo from './com/Menu/Item/Logo.vue';
     import UserMenuItem from './com/Menu/Item/User.vue';
+    import MenuItemIcon from './com/Menu/Item/Icon.vue';
     import MenuItemAction from './com/Menu/Item/Action.vue';
 
   export default {
@@ -37,8 +41,9 @@
       MenuItemLink,
       MenuItemLogo,
       UserMenuItem,
-      MenuItemAction,
-      RootContainer
+      MenuItemIcon,
+      RootContainer,
+      MenuItemAction
     },
     mounted() {
       this.loadUser();

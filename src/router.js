@@ -5,6 +5,7 @@ import ProfilePage from './pages/profile/index.vue';
 import ManagersPage from './pages/managers/index.vue';
 import RegisterPage from './pages/register/index.vue';
 import DashboardsPage from './pages/dashboards/index.vue';
+import MarketplacePage from './pages/marketplace/index.vue';
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     path: '/managers',
     name: 'ManagersPage',
     component: ManagersPage
+  },
+  {
+    path: '/marketplace',
+    name: 'MarketplacePage',
+    component: MarketplacePage
   }
 ];
 
