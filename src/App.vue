@@ -118,7 +118,7 @@
     .menu {
         height: 40px;
         padding: 0 16px;
-        background-color: #333;
+        background-color: #2a3a4d;
         display: flex;
         justify-content: space-between;
     }

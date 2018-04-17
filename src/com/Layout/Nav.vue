@@ -24,7 +24,7 @@
         width: 100%;
         padding: 0 12px;
         display: flex;
-        background-color: #171717;
+        background-color: #2a3a4d;
         justify-content: space-between;
         box-shadow: 0 0 1px rgba(0,0,0,0.25);
     }
