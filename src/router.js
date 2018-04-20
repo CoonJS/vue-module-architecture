@@ -1,12 +1,12 @@
 import VueRouter from 'vue-router';
 
-import AuthPage from './pages/auth/index.vue';
-import ProfilePage from './pages/profile/index.vue';
-import SettingsPage from './pages/settings/index.vue';
-import ManagersPage from './pages/managers/index.vue';
-import RegisterPage from './pages/register/index.vue';
-import DashboardsPage from './pages/dashboards/index.vue';
-import MarketplacePage from './pages/marketplace/index.vue';
+const AuthPage = () => import(/* webpackChunkName: "auth" */'./pages/auth/index.vue');
+const ProfilePage = () => import(/* webpackChunkName: "profile" */'./pages/profile/index.vue');
+const SettingsPage = () => import(/* webpackChunkName: "settings" */'./pages/settings/index.vue');
+const ManagersPage = () => import(/* webpackChunkName: "managers" */'./pages/managers/index.vue');
+const RegisterPage = () => import(/* webpackChunkName: "register" */'./pages/register/index.vue');
+const DashboardsPage = () => import(/* webpackChunkName: "dashboard" */'./pages/dashboards/index.vue');
+const MarketplacePage = () => import(/* webpackChunkName: "marketplace"*/'./pages/marketplace/index.vue');
 
 const routes = [
   {
