@@ -2,6 +2,7 @@ import VueRouter from 'vue-router';
 
 import AuthPage from './pages/auth/index.vue';
 import ProfilePage from './pages/profile/index.vue';
+import SettingsPage from './pages/settings/index.vue';
 import ManagersPage from './pages/managers/index.vue';
 import RegisterPage from './pages/register/index.vue';
 import DashboardsPage from './pages/dashboards/index.vue';
@@ -17,6 +18,11 @@ const routes = [
     path: '/auth',
     name: 'AuthPage',
     component: AuthPage
+  },
+  {
+    path: '/settings',
+    name: 'SettingsPage',
+    component: SettingsPage
   },
   {
     path: '/register',

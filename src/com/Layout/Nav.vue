@@ -17,6 +17,7 @@
 
 <style scoped>
     .nav-layout {
+        height: 46px;
         position: fixed;
         z-index: 10;
         top: 0;

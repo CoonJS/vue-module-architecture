@@ -10,13 +10,10 @@
             >
                 {{item.title}}
             </menu-item-link>
-            <menu-item-link slot="right" link="/profile">{{userInfo}}</menu-item-link>
+            <!--<menu-item-link slot="right" link="/profile"></menu-item-link>-->
             <menu-item-icon icon="goods" slot="right" link="/marketplace"/>
-            <menu-item-icon icon="setting" slot="right" link="/settings"/>
             <menu-item-icon icon="bell" slot="right" link="/notifications"/>
-            <menu-item-action slot="right" @click="logout">
-                Выйти
-            </menu-item-action>
+            <menu-item-dropdown slot="right">{{userInfo}}</menu-item-dropdown>
         </nav-layout>
         <root-container>
             <router-view></router-view>
@@ -33,6 +30,7 @@
     import UserMenuItem from './com/Menu/Item/User.vue';
     import MenuItemIcon from './com/Menu/Item/Icon.vue';
     import MenuItemAction from './com/Menu/Item/Action.vue';
+    import MenuItemDropdown from './com/Menu/Item/Dropdown.vue';
 
   export default {
     components: {
@@ -43,7 +41,8 @@
       UserMenuItem,
       MenuItemIcon,
       RootContainer,
-      MenuItemAction
+      MenuItemAction,
+      MenuItemDropdown
     },
     mounted() {
       this.loadUser();
@@ -87,9 +86,6 @@
       }
     },
     methods: {
-      async logout() {
-        await this.$locator.Api.logout();
-      },
       async loadUser() {
         this.isUserLoaded = false;
         this.user = await this.$locator.Api.get('/api/users/me');
