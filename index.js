@@ -5,6 +5,11 @@ import ElementUI from 'element-ui';
 import './src/global.css';
 import 'element-ui/lib/theme-chalk/index.css';
 
+import locale from 'element-ui/lib/locale';
+import lang from 'element-ui/lib/locale/lang/ru-RU';
+
+locale.use(lang);
+
 import App from './src/App.vue';
 import router from './src/router';
 import locator from './src/locator';

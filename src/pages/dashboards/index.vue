@@ -25,38 +25,56 @@
                 placeholder="До"
             />
         </div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis debitis, deleniti dolorum eius fuga nostrum. Blanditiis doloribus ducimus eaque eius hic ipsum optio pariatur possimus similique vel. A, hic officia.</div>
+        <div class="dashboards">
+            <div class="row">
+                <el-card class="box-card">
+                    <div slot="header">
+                        <span>Dashboard 1</span>
+                    </div>
+                </el-card>
+                <el-card class="box-card">
+                    <div slot="header">
+                        <span>Dashboard 2</span>
+                    </div>
+                </el-card>
+            </div>
+            <div class="row">
+                <el-card class="box-card">
+                    <div slot="header">
+                        <span>Dashboard 3</span>
+                    </div>
+                </el-card>
+                <el-card class="box-card">
+                    <div slot="header">
+                        <span>Dashboard 4</span>
+                    </div>
+                </el-card>
+            </div>
+        </div>
     </page-container>
 </template>
 
-<style>
+<style scoped>
+    .dashboards {
 
+    }
+
+    .box-card {
+        width: 50%;
+        margin-right: 12px;
+        height: 400px;
+    }
+
+    .box-card:last-child {
+        margin-right: 0;
+    }
+
+    .row {
+      display: flex;
+      margin-bottom: 12px;
+    }
+
+    .row:last-child {
+        margin-bottom: 0;
+    }
 </style>
