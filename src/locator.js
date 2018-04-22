@@ -1,4 +1,5 @@
 import Api from './service/Api';
+import Component from './service/Component';
 
 class Locator {
   constructor() {
@@ -21,5 +22,6 @@ class Locator {
 const locator = new Locator();
 
 locator.registerService(Api);
+locator.registerService(Component);
 
 export default locator;

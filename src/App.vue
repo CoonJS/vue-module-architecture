@@ -10,7 +10,6 @@
             >
                 {{item.title}}
             </menu-item-link>
-            <!--<menu-item-link slot="right" link="/profile"></menu-item-link>-->
             <menu-item-icon icon="goods" slot="right" link="/marketplace"/>
             <menu-item-icon icon="bell" slot="right" link="/notifications"/>
             <menu-item-dropdown slot="right">{{userInfo}}</menu-item-dropdown>
@@ -22,28 +21,8 @@
 </template>
 
 <script>
-    import PageLayout from './com/Layout/Page.vue';
-    import NavLayout from './com/Layout/Nav.vue';
-    import RootContainer from './com/Container/Root.vue';
-    import MenuItemLink from './com/Menu/Item/Link.vue';
-    import MenuItemLogo from './com/Menu/Item/Logo.vue';
-    import UserMenuItem from './com/Menu/Item/User.vue';
-    import MenuItemIcon from './com/Menu/Item/Icon.vue';
-    import MenuItemAction from './com/Menu/Item/Action.vue';
-    import MenuItemDropdown from './com/Menu/Item/Dropdown.vue';
 
   export default {
-    components: {
-      PageLayout,
-      NavLayout,
-      MenuItemLink,
-      MenuItemLogo,
-      UserMenuItem,
-      MenuItemIcon,
-      RootContainer,
-      MenuItemAction,
-      MenuItemDropdown
-    },
     mounted() {
       this.loadUser();
       this.$locator.Api.onLogout(() => {

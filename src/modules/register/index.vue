@@ -35,12 +35,7 @@
 </template>
 
 <script>
-  import PageContainer from '../../com/Container/Page.vue';
-
   export default {
-    components: {
-      PageContainer
-    },
     data () {
       return {
         firstName: '',

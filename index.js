@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import ElementUI from 'element-ui';
+import { registerGlobalComponents } from './src/components';
 
 import './src/global.css';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -18,6 +19,7 @@ Vue.use(ElementUI);
 Vue.use(VueRouter);
 
 Vue.prototype.$locator = locator;
+registerGlobalComponents(locator);
 
 new Vue({
   router,
