@@ -22,7 +22,7 @@ Vue.use(VueRouter);
 Vue.prototype.$locator = locator;
 registerGlobalComponents(locator);
 
-run().then(() => {
+run(locator).then(() => {
   new Vue({
     router,
     render: h => h(App)

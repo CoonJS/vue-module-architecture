@@ -14,6 +14,9 @@ import LogoMenuItem from './com/Menu/Item/Logo.vue';
 import ActionMenuItem from './com/Menu/Item/Action.vue';
 import DropdownMenuItem from './com/Menu/Item/Dropdown.vue';
 
+/*===UI===*/
+import Sidebar from './com/Sidebar/Default.vue';
+
 const layouts = [
   NavLayout,
   PageLayout
@@ -30,6 +33,10 @@ const menuItems = [
   IconMenuItem,
   LinkMenuItem,
   LogoMenuItem
+];
+
+const commonUiComponents = [
+  Sidebar
 ];
 
 function registerLayouts(locator) {
@@ -50,8 +57,15 @@ function registerMenuItems(locator) {
   });
 }
 
+function registerCommonUiComponents(locator) {
+  commonUiComponents.forEach(uiCom => {
+    locator.Component.register(uiCom, 'common');
+  });
+}
+
 export function registerGlobalComponents (locator) {
   registerLayouts(locator);
   registerContainers(locator);
   registerMenuItems(locator);
+  registerCommonUiComponents(locator);
 }

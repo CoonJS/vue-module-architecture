@@ -1,13 +1,21 @@
 <script>
   export default {
+    created() {
+      /** @type {Module} */
+      this.moduleService = this.$locator.Module;
+    },
     mounted() {
+
       this.loadIntegrations();
     },
     data () {
       return {
         searchQuery: '',
         integrations: [],
-        isLoading: false
+        selectedIntegration: {},
+        isLoading: false,
+        isShowSidebar: false,
+        isEnabledSelectedModule: false
 
       }
     },
@@ -21,24 +29,17 @@
     methods: {
       async loadIntegrations() {
         this.isLoading = true;
-        // this.integrations = await this.$locator.Api.get('/api/integrations');
-        this.integrations = await [
-          {
-            type: "AMOCRM",
-            status: 'ENABLED'
-          }
-        ];
+        this.integrations = await this.$locator.Api.get('/api/integrations');
         this.isLoading = false;
       },
       showSettings(integration) {
-        // const credentials = {
-        //   type: "AMOCRM",
-        //   login: "uwared@yandex.ru",
-        //   token: "d6ceec42a68f698283977b0c5e0b6289",
-        //   subdomain: "new5ad28e13d52dc"
-        // };
 
-        console.log('show');
+        this.selectedIntegration = integration;
+        this.isEnabledSelectedModule = integration.status === 'ENABLED';
+        this.isShowSidebar = !this.isShowSidebar;
+      },
+      closeSideBar() {
+        this.isShowSidebar = false;
       }
     }
   }
@@ -56,19 +57,56 @@
                 </el-input>
             </div>
         </div>
-        <div>
-            <div class="card" v-for="integration in searchedIntegrations" @click="showSettings(integration)">
-                <div class="img">
-                    <img src="https://www.amocrm.ru/version2/images/logo_bill.png" width="150px" height="150px" alt="amocrm">
+
+        <div class="modules">
+            <el-card
+                class="module-card"
+                v-for="integration in searchedIntegrations"
+                @click.native="showSettings(integration)"
+            >
+                <div slot="header">
+                    <h3>{{integration.type}}</h3>
                 </div>
-                <div class="title">
-                    {{integration.type}}
-                </div>
+                <img src="https://www.amocrm.ru/version2/images/logo_bill.png" width="150px" height="150px" alt="amocrm">
                 <div class="status">
-                    {{integration.status}}
+                    <el-switch
+                        :value="integration.status === 'ENABLED'"
+                        active-color="#13ce66"
+                        inactive-color="#ff4949"
+                    />
                 </div>
-            </div>
+            </el-card>
         </div>
+
+        <sidebar v-model="isShowSidebar">
+            <div class="settings-header" slot="header">
+                <div class="left-side">
+                    <el-button round size="mini" icon="el-icon-arrow-right" @click="closeSideBar"/>
+                    <h3 class="settings-title">{{selectedIntegration.type}}</h3>
+                </div>
+                <el-button
+                    v-if="isEnabledSelectedModule"
+                    size="mini"
+                    type="danger"
+                >
+                    Отключить
+                </el-button>
+                <el-button
+                    v-else
+                    size="mini"
+                    type="success"
+                >
+                    Подключить
+                </el-button>
+            </div>
+
+            <component :is="moduleService.getSettingsComponent(selectedIntegration.type)" v-model="selectedIntegration"/>
+
+            <div slot="footer">
+                <el-button type="success">Сохранить</el-button>
+            </div>
+        </sidebar>
+
     </page-container>
 </template>
 
@@ -80,31 +118,31 @@
         justify-content: space-between;
     }
 
-    .el-input {
-        width: 260px;
+    .settings-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 
-    .card {
+    .settings-title {
+        margin-left: 16px;
+    }
+
+    .left-side {
+        display: flex;
+        align-items: center;
+    }
+
+    .modules {
+        display: flex;
+    }
+
+    .module-card {
         cursor: pointer;
-        width: 200px;
-        height: 200px;
-        display: flex;
-        flex-direction: column;
-        box-shadow: 0 0 4px rgba(0,0,0, .4);
-    }
-
-    .img {
-        display: flex;
-        justify-content: center;
-        padding: 8px 0;
-    }
-
-    .title {
-        display: flex;
-        justify-content: center;
     }
 
     .status {
+        margin-top: 12px;
         display: flex;
         justify-content: center;
     }
