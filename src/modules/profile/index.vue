@@ -1,8 +1,5 @@
 <script>
   export default {
-    components: {
-      PageContainer
-    },
     mounted() {
       this.loadUser();
     },
