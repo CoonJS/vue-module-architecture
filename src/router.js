@@ -4,7 +4,7 @@ const AuthPage = () => import(/* webpackChunkName: "auth" */'./modules/auth/inde
 const ProfilePage = () => import(/* webpackChunkName: "profile" */'./modules/profile/index.vue');
 const SettingsPage = () => import(/* webpackChunkName: "settings" */'./modules/settings/index.vue');
 const ManagersPage = () => import(/* webpackChunkName: "managers" */'./modules/managers/index.vue');
-const RegisterPage = () => import(/* webpackChunkName: "register" */'./modules/register/index.vue');
+const RegistrationPage = () => import(/* webpackChunkName: "register" */'./modules/registration/index.vue');
 const DashboardsPage = () => import(/* webpackChunkName: "dashboard" */'./modules/dashboards/index.vue');
 const MarketplacePage = () => import(/* webpackChunkName: "marketplace"*/'./modules/marketplace/index.vue');
 
@@ -25,9 +25,9 @@ const routes = [
     component: SettingsPage
   },
   {
-    path: '/register',
-    name: 'RegisterPage',
-    component: RegisterPage
+    path: '/registration',
+    name: 'Registration',
+    component: RegistrationPage
   },
   {
     path: '/profile',

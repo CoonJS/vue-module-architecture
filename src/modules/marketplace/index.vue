@@ -21,25 +21,24 @@
     methods: {
       async loadIntegrations() {
         this.isLoading = true;
-        this.integrations = await this.$locator.Api.get('/api/integrations');
+        // this.integrations = await this.$locator.Api.get('/api/integrations');
+        this.integrations = await [
+          {
+            type: "AMOCRM",
+            status: 'ENABLED'
+          }
+        ];
         this.isLoading = false;
       },
-      async enableIntegration(integration) {
-        const credentials = {
-          type: "AMOCRM",
-          login: "uwared@yandex.ru",
-          token: "d6ceec42a68f698283977b0c5e0b6289",
-          subdomain: "new5ad28e13d52dc"
-        };
+      showSettings(integration) {
+        // const credentials = {
+        //   type: "AMOCRM",
+        //   login: "uwared@yandex.ru",
+        //   token: "d6ceec42a68f698283977b0c5e0b6289",
+        //   subdomain: "new5ad28e13d52dc"
+        // };
 
-        await 'ok';
-
-        console.log(integration);
-
-        // const status = integrations[0].status;
-        //
-        // const isEnabled = status === 'ENABLED';
-        // const isDisabled = status === 'DISABLED';
+        console.log('show');
       }
     }
   }
@@ -58,7 +57,7 @@
             </div>
         </div>
         <div>
-            <div class="card" v-for="integration in searchedIntegrations" @click="enableIntegration(integration)">
+            <div class="card" v-for="integration in searchedIntegrations" @click="showSettings(integration)">
                 <div class="img">
                     <img src="https://www.amocrm.ru/version2/images/logo_bill.png" width="150px" height="150px" alt="amocrm">
                 </div>

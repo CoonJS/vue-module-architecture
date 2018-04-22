@@ -17,8 +17,6 @@ export default class Component {
       throw `Missing prop name in component`;
     }
 
-    console.log(Component.name);
-
     Vue.component(Component.name, Component);
 
     this.components[type].push({

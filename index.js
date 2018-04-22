@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import ElementUI from 'element-ui';
+import { run } from './src/bootstrap';
 import { registerGlobalComponents } from './src/components';
 
 import './src/global.css';
@@ -21,7 +22,9 @@ Vue.use(VueRouter);
 Vue.prototype.$locator = locator;
 registerGlobalComponents(locator);
 
-new Vue({
-  router,
-  render: h => h(App)
-}).$mount('#app');
+run().then(() => {
+  new Vue({
+    router,
+    render: h => h(App)
+  }).$mount('#app');
+});

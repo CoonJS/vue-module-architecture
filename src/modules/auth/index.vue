@@ -26,7 +26,7 @@
         });
       },
       redirectToRegisterPage() {
-        this.$router.push('register');
+        this.$router.push('registration');
       }
     }
   }
