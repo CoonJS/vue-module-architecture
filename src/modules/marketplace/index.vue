@@ -32,11 +32,32 @@
         this.integrations = await this.$locator.Api.get('/api/integrations');
         this.isLoading = false;
       },
+      async saveSettings() {
+        const integration = this.selectedIntegration;
+        await this.$locator.Api.put(`/api/integrations/${integration.id}`, integration);
+        await this.loadIntegrations();
+        this.closeSideBar();
+      },
+      async disableIntegration() {
+        const integration = this.selectedIntegration;
+        await this.$locator.Api.put(`/api/integrations/${integration.id}`,
+          Object.assign({}, integration, { active: false })
+        );
+        await this.loadIntegrations();
+        this.closeSideBar();
+      },
+      async enableIntegration() {
+        const integration = this.selectedIntegration;
+        await this.$locator.Api.put(`/api/integrations/${integration.id}`,
+          Object.assign({}, integration, { active: true })
+        );
+        await this.loadIntegrations();
+        this.closeSideBar();
+      },
       showSettings(integration) {
-
         this.selectedIntegration = integration;
-        this.isEnabledSelectedModule = integration.status === 'ENABLED';
-        this.isShowSidebar = !this.isShowSidebar;
+        this.isEnabledSelectedModule = integration.active;
+        this.isShowSidebar = true;
       },
       closeSideBar() {
         this.isShowSidebar = false;
@@ -70,7 +91,7 @@
                 <img src="https://www.amocrm.ru/version2/images/logo_bill.png" width="150px" height="150px" alt="amocrm">
                 <div class="status">
                     <el-switch
-                        :value="integration.status === 'ENABLED'"
+                        :value="integration.active"
                         active-color="#13ce66"
                         inactive-color="#ff4949"
                     />
@@ -88,6 +109,7 @@
                     v-if="isEnabledSelectedModule"
                     size="mini"
                     type="danger"
+                    @click="disableIntegration"
                 >
                     Отключить
                 </el-button>
@@ -95,6 +117,7 @@
                     v-else
                     size="mini"
                     type="success"
+                    @click="enableIntegration"
                 >
                     Подключить
                 </el-button>
@@ -103,7 +126,7 @@
             <component :is="moduleService.getSettingsComponent(selectedIntegration.type)" v-model="selectedIntegration"/>
 
             <div slot="footer">
-                <el-button type="success">Сохранить</el-button>
+                <el-button type="success" @click="saveSettings">Сохранить</el-button>
             </div>
         </sidebar>
 
@@ -138,6 +161,7 @@
     }
 
     .module-card {
+        margin: 8px;
         cursor: pointer;
     }
 

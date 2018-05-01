@@ -1,8 +1,23 @@
 <script>
+
   export default {
+    mounted() {
+      this.loadDashboardData();
+    },
     data () {
       return {
-
+        isDataLoading: false,
+        funnelItems: []
+      }
+    },
+    methods: {
+      async loadDashboardData() {
+        this.isDataLoading = true;
+        const response = await this.$locator.Api.get('api/dashboards');
+        this.funnelItems = response[0].data.map(item => {
+          return Object.assign({}, item, { name: item.statusName });
+        });
+        this.isDataLoading = false;
       }
     }
   }
@@ -22,9 +37,12 @@
         </div>
         <div class="dashboards">
             <div class="row">
-                <el-card class="box-card">
+                <el-card class="box-card" :body-style="{display: 'flex', flex: 1}">
                     <div slot="header">
-                        <span>Dashboard 1</span>
+                        <span>Воронка продаж</span>
+                    </div>
+                    <div v-loading.body="isDataLoading" class="loader">
+                        <funnel-dashboard :items="funnelItems"/>
                     </div>
                 </el-card>
                 <el-card class="box-card">
@@ -55,6 +73,8 @@
     }
 
     .box-card {
+        display: flex;
+        flex-direction: column;
         width: 50%;
         margin-right: 12px;
         height: 400px;
@@ -62,6 +82,10 @@
 
     .box-card:last-child {
         margin-right: 0;
+    }
+
+    .loader {
+        flex: 1;
     }
 
     .row {
@@ -72,4 +96,6 @@
     .row:last-child {
         margin-bottom: 0;
     }
+
+
 </style>

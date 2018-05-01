@@ -14,11 +14,6 @@
           return 'right';
         }
       }
-    },
-    watch: {
-      value(val) {
-        console.log(val);
-      }
     }
   }
 </script>

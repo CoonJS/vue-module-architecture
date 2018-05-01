@@ -8,7 +8,7 @@ export default class Component {
       layout: [],
       container: [],
       menuItem: [],
-      common: []
+      common: [],
     };
   }
 

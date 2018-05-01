@@ -30,6 +30,11 @@ export default class Api {
     return response && response.data;
   }
 
+  async put(route, params) {
+    const response = await this.axios.put(route, params);
+    return response && response.data;
+  }
+
   async auth(userName, password) {
     await axios.create({
       baseURL: BASE_URL,
@@ -45,14 +50,15 @@ export default class Api {
     this.event.emit('login');
   }
 
-  async register(email, password, lastName, firstName) {
+  async register(name, email, password, adminFirstName, adminLastName) {
     try {
-      await this.axios.post('api/users',
+      await this.axios.post('api/accounts',
         {
+          name,
           email,
           password,
-          lastName,
-          firstName
+          adminFirstName,
+          adminLastName
         }
       );
 

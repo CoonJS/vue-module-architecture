@@ -6,13 +6,16 @@
                     <h1>Регистрация</h1>
                 </div>
                 <div class="field">
-                    <el-input type="text" placeholder="Имя" v-model="firstName"/>
-                </div>
-                <div class="field">
-                    <el-input type="text" placeholder="Фамилия" v-model="lastName"/>
+                    <el-input type="text" placeholder="Название кампании" v-model="name"/>
                 </div>
                 <div class="field">
                     <el-input type="text" placeholder="Почта" v-model="email"/>
+                </div>
+                <div class="field">
+                    <el-input type="text" placeholder="Имя" v-model="adminFirstName"/>
+                </div>
+                <div class="field">
+                    <el-input type="text" placeholder="Фамилия" v-model="adminLastName"/>
                 </div>
                 <div class="field">
                     <el-input type="password" placeholder="Пароль" v-model="password"/>
@@ -38,9 +41,10 @@
   export default {
     data () {
       return {
-        firstName: '',
-        lastName: '',
+        name: '',
         email: '',
+        adminFirstName: '',
+        adminLastName: '',
         password: '',
         passwordConfirm: ''
       }
@@ -48,10 +52,11 @@
     methods: {
       async register() {
         const {
+          name,
           email,
-          lastName,
           password,
-          firstName
+          adminFirstName,
+          adminLastName
         } = this;
 
         if (this.password !== this.passwordConfirm) {
@@ -60,7 +65,7 @@
         }
 
         try {
-          await this.$locator.Api.register(email, password, lastName, firstName);
+          await this.$locator.Api.register(name, email, password, adminFirstName, adminLastName);
           this.redirectToRegisterPage();
         } catch(e) {
           throw e;
