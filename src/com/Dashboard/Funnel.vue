@@ -1,19 +1,25 @@
 <template>
     <div class="funnel">
-        <transition-group name="list" tag="div">
-            <div class="funnel-item-wrap" v-for="(item,idx) in items" :key="idx">
+        <transition-group name="list" tag="div" style="flex:1">
+            <div
+                v-for="(item, idx) in items"
+                class="funnel-item-wrap"
+                :key="item.statusName"
+                :style="{
+                    height: `${100/items.length}%`
+                }"
+            >
                 <div
                     class="funnel-item"
                     :style="{
                         backgroundColor: item.color || getRandomColor(idx),
-                        width: calcWidth(item.count)
+                        width: calcWidth(item.count),
                     }"
-                    v-show="idx === idx"
                 >
                     <span class="count">{{item.count}}</span>
                 </div>
                 <div class="name">
-                    {{item.name}}
+                    {{item.statusName}}
                 </div>
             </div>
         </transition-group>
@@ -65,7 +71,7 @@
         display: flex;
         flex-direction: column;
         align-items: stretch;
-        justify-content: center;
+        width: 100%;
     }
 
     .funnel-item-wrap {
@@ -74,13 +80,13 @@
     }
 
     .funnel-item {
-        height: 50px;
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 0 16px;
         border-radius: 3px;
         box-shadow: 2px 0 2px rgba(0, 0, 0, .6);
+        height: 100%;
     }
 
     .name {

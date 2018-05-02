@@ -16,9 +16,7 @@
       async loadDashboardData() {
         this.isDataLoading = true;
         const response = await this.$locator.Api.get('api/dashboards');
-        this.funnelItems = response[0].data.map(item => {
-          return Object.assign({}, item, { name: item.statusName });
-        });
+        this.funnelItems = response[0].data;
         this.isDataLoading = false;
       }
     }
@@ -84,6 +82,8 @@
 
     .loader {
         flex: 1;
+        display: flex;
+        align-items: stretch;
     }
 
     .row {

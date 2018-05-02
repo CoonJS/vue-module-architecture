@@ -36,6 +36,9 @@
             }
           }
         },
+        credits: {
+          enabled: false
+        },
         plotOptions: {
           area: {
             pointStart: 2000,
