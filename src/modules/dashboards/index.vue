@@ -7,7 +7,9 @@
     data () {
       return {
         isDataLoading: false,
-        funnelItems: []
+        funnelItems: [],
+        dateFrom: '',
+        dateTo: ''
       }
     },
     methods: {
@@ -27,27 +29,27 @@
     <page-container>
         <div slot="header">
             <el-date-picker
+                v-model="dateFrom"
                 type="date"
                 placeholder="От"
             />
             <el-date-picker
+                v-model="dateTo"
                 type="date"
                 placeholder="До"
             />
         </div>
         <div class="dashboards">
             <div class="row">
+                <el-card class="box-card">
+                    <line-chart></line-chart>
+                </el-card>
                 <el-card class="box-card" :body-style="{display: 'flex', flex: 1}">
                     <div slot="header">
                         <span>Воронка продаж</span>
                     </div>
                     <div v-loading.body="isDataLoading" class="loader">
                         <funnel-dashboard :items="funnelItems"/>
-                    </div>
-                </el-card>
-                <el-card class="box-card">
-                    <div slot="header">
-                        <span>Dashboard 2</span>
                     </div>
                 </el-card>
             </div>
@@ -68,10 +70,6 @@
 </template>
 
 <style scoped>
-    .dashboards {
-
-    }
-
     .box-card {
         display: flex;
         flex-direction: column;

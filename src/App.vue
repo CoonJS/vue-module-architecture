@@ -1,27 +1,4 @@
-<template>
-    <page-layout>
-        <nav-layout v-if="isShowMenu">
-            <menu-item-logo slot="left"/>
-            <menu-item-link
-                slot="left"
-                v-for="item in menuItems"
-                :key="item.key"
-                :link="item.link"
-            >
-                {{item.title}}
-            </menu-item-link>
-            <menu-item-icon icon="goods" slot="right" link="/marketplace"/>
-            <menu-item-icon icon="bell" slot="right" link="/notifications"/>
-            <menu-item-dropdown slot="right">{{userInfo}}</menu-item-dropdown>
-        </nav-layout>
-        <root-container>
-            <router-view></router-view>
-        </root-container>
-    </page-layout>
-</template>
-
 <script>
-
   export default {
     mounted() {
       this.loadUser();
@@ -87,6 +64,28 @@
     }
   }
 </script>
+
+<template>
+    <page-layout>
+        <nav-layout v-if="isShowMenu">
+            <menu-item-logo slot="left"/>
+            <menu-item-link
+                    slot="left"
+                    v-for="item in menuItems"
+                    :key="item.key"
+                    :link="item.link"
+            >
+                {{item.title}}
+            </menu-item-link>
+            <menu-item-icon icon="goods" slot="right" link="/marketplace"/>
+            <menu-item-icon icon="bell" slot="right" link="/notifications"/>
+            <menu-item-dropdown slot="right">{{userInfo}}</menu-item-dropdown>
+        </nav-layout>
+        <root-container>
+            <router-view></router-view>
+        </root-container>
+    </page-layout>
+</template>
 
 <style scoped>
 
