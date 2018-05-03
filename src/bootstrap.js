@@ -5,8 +5,7 @@ const modules = [
   require('./modules/managers/index'),
   require('./modules/marketplace/index'),
   require('./modules/profile/index'),
-  require('./modules/registration/index'),
-  require('./modules/amoCRM/index')
+  require('./modules/registration/index')
 ];
 
 export async function run (locator) {

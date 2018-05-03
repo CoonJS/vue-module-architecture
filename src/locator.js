@@ -1,5 +1,4 @@
-import Api from './service/Api';
-import Module from './service/Module';
+import Api from './service/Api';;
 import Component from './service/Component';
 
 class Locator {
@@ -23,7 +22,6 @@ class Locator {
 const locator = new Locator();
 
 locator.registerService(Api);
-locator.registerService(Module);
 locator.registerService(Component);
 
 export default locator;

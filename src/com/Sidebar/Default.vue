@@ -58,7 +58,7 @@
     }
 
     .header {
-        padding: 12px 16px;
+        padding: 18px 16px;
         border-bottom: 1px solid #eee;
     }
 
@@ -70,7 +70,7 @@
 
     .footer {
         border-top: 1px solid #eee;
-        padding: 12px 16px;
+        padding: 18px 16px;
     }
 
     .slide-fade-enter-to {

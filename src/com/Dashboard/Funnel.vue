@@ -1,31 +1,3 @@
-<template>
-    <div class="funnel">
-        <transition-group name="list" tag="div" style="flex:1">
-            <div
-                v-for="(item, idx) in items"
-                class="funnel-item-wrap"
-                :key="item.statusName"
-                :style="{
-                    height: `${100/items.length}%`
-                }"
-            >
-                <div
-                    class="funnel-item"
-                    :style="{
-                        backgroundColor: item.color || getRandomColor(idx),
-                        width: calcWidth(item.count),
-                    }"
-                >
-                    <span class="count">{{item.count}}</span>
-                </div>
-                <div class="name">
-                    {{item.statusName}}
-                </div>
-            </div>
-        </transition-group>
-    </div>
-</template>
-
 <script>
   export default {
     name: "FunnelDashboard",
@@ -65,6 +37,34 @@
     }
   }
 </script>
+
+<template>
+    <div class="funnel">
+        <transition-group name="list" tag="div" style="flex:1">
+            <div
+                v-for="(item, idx) in items"
+                class="funnel-item-wrap"
+                :key="item.statusName"
+                :style="{
+                    height: `${100/items.length}%`
+                }"
+            >
+                <div
+                    class="funnel-item"
+                    :style="{
+                        backgroundColor: item.color || getRandomColor(idx),
+                        width: calcWidth(item.count),
+                    }"
+                >
+                    <span class="count">{{item.count}}</span>
+                </div>
+                <div class="name">
+                    {{item.statusName}}
+                </div>
+            </div>
+        </transition-group>
+    </div>
+</template>
 
 <style scoped>
     .funnel {
