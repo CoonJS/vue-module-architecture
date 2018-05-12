@@ -28,6 +28,7 @@
 
         const fromMoment = dateFrom && new Date(dateFrom).toISOString();
         const toMoment = dateTo && new Date(dateTo).toISOString();
+
         this.isDataLoading = true;
         const response = hasPeriod
           ? await this.$locator.Api.get(`api/dashboards?fromMoment=${fromMoment}&toMoment=${toMoment}`)
