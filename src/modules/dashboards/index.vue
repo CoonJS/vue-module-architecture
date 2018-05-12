@@ -1,5 +1,4 @@
 <script>
-
   export default {
     mounted() {
       this.loadDashboardData();
@@ -8,14 +7,31 @@
       return {
         isDataLoading: false,
         funnelItems: [],
-        dateFrom: '',
-        dateTo: ''
+        period: {
+          dateFrom: null,
+          dateTo: null
+        }
+      }
+    },
+    watch: {
+      period: {
+        deep: true,
+        handler() {
+          this.loadDashboardData();
+        }
       }
     },
     methods: {
       async loadDashboardData() {
+        const { dateFrom, dateTo } = this.period;
+        const hasPeriod = dateFrom !== null && dateTo !== null;
+
+        const fromMoment = dateFrom && new Date(dateFrom).toISOString();
+        const toMoment = dateTo && new Date(dateTo).toISOString();
         this.isDataLoading = true;
-        const response = await this.$locator.Api.get('api/dashboards');
+        const response = hasPeriod
+          ? await this.$locator.Api.get(`api/dashboards?fromMoment=${fromMoment}&toMoment=${toMoment}`)
+          : await this.$locator.Api.get(`api/dashboards`);
         this.funnelItems = response[0].data;
         this.isDataLoading = false;
       }
@@ -27,13 +43,13 @@
     <page-container>
         <div slot="header">
             <el-date-picker
-                v-model="dateFrom"
-                type="date"
+                v-model="period.dateFrom"
+                type="datetime"
                 placeholder="От"
             />
             <el-date-picker
-                v-model="dateTo"
-                type="date"
+                v-model="period.dateTo"
+                type="datetime"
                 placeholder="До"
             />
         </div>

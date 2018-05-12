@@ -24,6 +24,7 @@
     .page-container {
         display: flex;
         flex: 1;
+        justify-content: center;
         width: 100%;
         position: relative;
         background: #fff;
@@ -43,10 +44,9 @@
     }
 
     .page-content {
-        flex: 1;
+        width: 1280px;
         overflow: auto;
         padding: 12px;
-        width: 100%;
     }
 
     .page-content.offset {
