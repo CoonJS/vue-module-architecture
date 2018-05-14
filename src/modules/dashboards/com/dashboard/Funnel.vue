@@ -18,7 +18,7 @@
     },
     methods: {
       calcWidth(value) {
-        return `${100 * (value/this.summary)}%`;
+        return `${Math.pow(100 * (value/this.summary), 1.5)}%`;
       },
       getRandomColor(idx) {
         const colorArray = [
@@ -94,7 +94,7 @@
     }
 
     .count {
-        color: #fff;
+        color: #000;
     }
 
     .list-enter-active, .list-leave-active {
