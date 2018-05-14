@@ -44,8 +44,10 @@
     methods: {
       async loadIntegrations() {
         this.isLoading = true;
-        const integrations = await this.$locator.Api.get('/api/integrations');
-        this.integrationSchemas = await this.$locator.Api.get('/api/integrations/schema');
+        const { data: integrations } = await this.$locator.Api.get('integrationsUsingGET');
+        const { data: integrationSchemas} = await this.$locator.Api.get('schemaUsingGET');
+        this.integrationSchemas = integrationSchemas;
+
         this.enabledIntegrations = integrations.map(integration => {
           const schema = this.integrationSchemas.find(schema => schema.type === integration.type);
           return Object.assign(
@@ -80,24 +82,22 @@
         }, {});
         const preparedIntegrationData = Object.assign({}, integrationData, { type: integration.type });
 
-        await this.$locator.Api.post('api/integrations', preparedIntegrationData);
+        await this.$locator.Api.post('createdIntegrationUsingPOST', {}, preparedIntegrationData);
       },
       async updateIntegrationSettings(integration) {
-        await this.$locator.Api.put(`/api/integrations/${integration.id}`, integration);
+        await this.$locator.Api.put('updatedIntegrationUsingPUT', { id: integration.id }, integration);
       },
       async disableIntegration() {
         const integration = this.selectedIntegration;
-        await this.$locator.Api.put(`/api/integrations/${integration.id}`,
-          Object.assign({}, integration, { active: false })
-        );
+        const newIntegration = Object.assign({}, integration, { active: false });
+        await this.$locator.Api.put('updatedIntegrationUsingPUT', { id: integration.id }, newIntegration);
         await this.loadIntegrations();
         this.closeSideBar();
       },
       async enableIntegration() {
         const integration = this.selectedIntegration;
-        await this.$locator.Api.put(`/api/integrations/${integration.id}`,
-          Object.assign({}, integration, { active: true })
-        );
+        const newIntegration = Object.assign({}, integration, { active: true });
+        await this.$locator.Api.put('updatedIntegrationUsingPUT', { id: integration.id }, newIntegration);
         await this.loadIntegrations();
         this.closeSideBar();
       },

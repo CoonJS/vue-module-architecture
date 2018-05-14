@@ -44,7 +44,8 @@
     methods: {
       async loadUser() {
         this.isUserLoaded = false;
-        this.user = await this.$locator.Api.get('/api/users/me');
+        const { data } = await this.$locator.Api.get('currentUserUsingGET');
+        this.user = data;
         this.isUserLoaded = true;
       },
       redirectToLoginPage() {

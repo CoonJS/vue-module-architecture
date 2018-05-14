@@ -24,16 +24,19 @@
     methods: {
       async loadDashboardData() {
         const { dateFrom, dateTo } = this.period;
-        const hasPeriod = dateFrom !== null && dateTo !== null;
 
         const fromMoment = dateFrom && new Date(dateFrom).toISOString();
         const toMoment = dateTo && new Date(dateTo).toISOString();
 
         this.isDataLoading = true;
-        const response = hasPeriod
-          ? await this.$locator.Api.get(`api/dashboards?fromMoment=${fromMoment}&toMoment=${toMoment}`)
-          : await this.$locator.Api.get(`api/dashboards`);
-        this.funnelItems = response[0].data;
+
+        const { data } = await this.$locator.Api.get('currentAccountDashboardsUsingGET', {}, {
+          fromMoment,
+          toMoment
+        });
+
+        this.funnelItems = data[0].data;
+
         this.isDataLoading = false;
       }
     }

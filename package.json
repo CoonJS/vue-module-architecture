@@ -15,6 +15,7 @@
     "element-ui": "^2.3.2",
     "express": "^4.15.2",
     "highcharts": "^6.1.0",
+    "query-string": "^6.1.0",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1"
   },

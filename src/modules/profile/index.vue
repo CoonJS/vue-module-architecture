@@ -17,7 +17,8 @@
     methods: {
         async loadUser() {
             this.isUserLoading = true;
-            this.user = await this.$locator.Api.get('/api/users/me');
+            const { data: user } = await this.$locator.Api.get('currentUserUsingGET');
+            this.user = user;
             this.isUserLoading = false;
         }
     }

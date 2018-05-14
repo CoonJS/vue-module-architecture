@@ -1,16 +1,17 @@
 import axios from 'axios';
 import EventEmitter from 'events';
+import { stringify } from 'query-string';
 
-const isDevelopment = process.env.NODE_ENV === 'development';
-const BASE_URL = isDevelopment ? 'https://0.0.0.0:8080' : '/';
+import apiSchema from '../apiSchema';
 
 export default class Api {
 
   constructor() {
     this.name = 'Api';
 
+    this.schema = apiSchema;
+
     this.axios = axios.create({
-      baseURL: BASE_URL,
       headers: {
         'X-Requested-With': 'XMLHttpRequest'
       }
@@ -20,24 +21,39 @@ export default class Api {
     this.configureAxios();
   }
 
-  async get(route) {
-    const response = await this.axios.get(route);
-    return response && response.data;
+
+  async get(id, templateParams, queryParams) {
+    const hasQueryParams = queryParams !== undefined;
+    const urlPath = this._buildUrlById(id, templateParams, 'get');
+    const path = !hasQueryParams
+      ? urlPath
+      : urlPath + '?' + stringify(queryParams);
+
+    return await this.axios.get(path);
   }
 
-  async post(route, params) {
-    const response = await this.axios.post(route, params);
-    return response && response.data;
+  async post(id, params, body) {
+    const path = this._buildUrlById(id, params, 'post');
+    return await this.axios.post(path, body);
   }
 
-  async put(route, params) {
-    const response = await this.axios.put(route, params);
-    return response && response.data;
+  async put(id, params, body) {
+    const path = this._buildUrlById(id, params, 'put');
+    return await this.axios.put(path, body);
+  }
+
+  async patch(id, params, body) {
+    const path = this._buildUrlById(id, params, 'patch');
+    return await this.axios.patch(path, body);
+  }
+
+  async delete(id, params, body) {
+    const path = self._buildUrlById(id, params, 'delete');
+    return await this.axios.delete(path, body);
   }
 
   async auth(userName, password) {
     await axios.create({
-      baseURL: BASE_URL,
       auth: {
         username: userName,
         password: password
@@ -52,7 +68,7 @@ export default class Api {
 
   async register(name, email, password, adminFirstName, adminLastName) {
     try {
-      await this.axios.post('api/accounts',
+      await this.post('createdAccountUsingPOST', {},
         {
           name,
           email,
@@ -69,8 +85,8 @@ export default class Api {
   }
 
   async logout() {
-    const response = await this.axios.get('api/users/logout');
-    await this.axios.get('/api/users/me');
+    const response = await this.get('logoutUsingGET');
+    await this.get('currentUserUsingGET');
     return response && response.data;
   }
 
@@ -93,6 +109,40 @@ export default class Api {
         }
       }
     );
+  }
+
+  _buildUrlById(operationId, params, methodType) {
+    const { basePath, paths } = this.schema;
+
+    const methodPath = Object.keys(paths).find(path => {
+      const methods = paths[path][methodType];
+      return methods !== undefined && methods['operationId'] === operationId;
+    });
+
+    if (!methodPath) {
+      throw new Error(`Operation ID not found: '${operationId}'`);
+    }
+
+    return this._buildPathWithParams(`${basePath}${methodPath}`, params);
+  }
+
+  _buildPathWithParams(path, params) {
+    if (!params) {
+      return path;
+    }
+
+    const matches = path.match(/{\w+}/g);
+
+    if (!matches) {
+      return path;
+    }
+
+    matches.forEach(match => {
+      const propName = match.replace(/({|})/g, '');
+      path = path.replace(match, params[propName]);
+    });
+
+    return path;
   }
 }
 
