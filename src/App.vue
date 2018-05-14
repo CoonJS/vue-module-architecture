@@ -26,7 +26,7 @@
           },
           {
             key:'managers',
-            title: 'Отчеты',
+            title: 'Менеджеры',
             link: '/managers'
           }
         ]

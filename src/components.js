@@ -16,7 +16,6 @@ import DropdownMenuItem from './com/Menu/Item/Dropdown.vue';
 
 /*===UI===*/
 import Sidebar from './com/Sidebar/Default.vue';
-import FunnelDashboard from './com/Dashboard/Funnel.vue';
 import LineChart from './com/Chart/Line.vue';
 import DynamicForm from './com/Form/Dynamic.vue';
 
@@ -41,8 +40,7 @@ const menuItems = [
 const commonUiComponents = [
   Sidebar,
   LineChart,
-  DynamicForm,
-  FunnelDashboard
+  DynamicForm
 ];
 
 function registerLayouts(locator) {

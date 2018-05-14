@@ -1,5 +1,12 @@
 <script>
+    import FunnelDashboard from './com/dashboard/Funnel.vue';
+    import SaleVolumeDashboard from './com/dashboard/SaleVolume.vue';
+
   export default {
+    components: {
+      FunnelDashboard,
+      SaleVolumeDashboard
+    },
     mounted() {
       this.loadDashboardData();
     },
@@ -7,6 +14,7 @@
       return {
         isDataLoading: false,
         funnelItems: [],
+        chartData: [],
         period: {
           dateFrom: null,
           dateTo: null
@@ -36,6 +44,7 @@
         });
 
         this.funnelItems = data[0].data;
+        this.chartData = data[1].data;
 
         this.isDataLoading = false;
       }
@@ -60,7 +69,7 @@
         <div class="dashboards">
             <div class="row">
                 <el-card class="box-card">
-                    <line-chart></line-chart>
+                    <sale-volume-dashboard :items="chartData"/>
                 </el-card>
                 <el-card class="box-card" :body-style="{display: 'flex', flex: 1}">
                     <div slot="header">
