@@ -44,7 +44,7 @@
     }
 
     .page-content {
-        width: 1280px;
+        width: 100%;
         overflow: auto;
         padding: 12px;
     }

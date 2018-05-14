@@ -2,39 +2,74 @@
   export default {
     data() {
       return {
-      };
+        tableData: [{
+          date: '2016-05-03',
+          name: 'Manager 1',
+          address: 'No. 189, Grove St, Los Angeles'
+        }, {
+          date: '2016-05-02',
+          name: 'Manager 2',
+          address: 'No. 189, Grove St, Los Angeles'
+        }, {
+          date: '2016-05-04',
+          name: 'Manager 3',
+          address: 'No. 189, Grove St, Los Angeles'
+        }, {
+          date: '2016-05-01',
+          name: 'Manager 4',
+          address: 'No. 189, Grove St, Los Angeles'
+        }]
+      }
+    },
+    methods: {
+      handleEdit(index, row) {
+        console.log(index, row);
+      },
+      handleDelete(index, row) {
+        console.log(index, row);
+      }
     }
   }
 </script>
 
-
 <template>
     <page-container>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto, consequatur fuga ipsa maiores neque, odit perspiciatis porro repudiandae similique veniam voluptate. Amet autem consequatur quam soluta tenetur.</div>
+        <el-table
+                :data="tableData"
+                style="width: 100%">
+            <el-table-column
+                    label="Name"
+                    width="180">
+                <template slot-scope="scope">
+                    <el-popover trigger="hover" placement="top">
+                        <p>Name: {{ scope.row.name }}</p>
+                        <p>Addr: {{ scope.row.address }}</p>
+                        <div slot="reference" class="name-wrapper">
+                            <el-tag size="medium">{{ scope.row.name }}</el-tag>
+                        </div>
+                    </el-popover>
+                </template>
+            </el-table-column>
+            <el-table-column
+                    label="Date"
+                    width="180">
+                <template slot-scope="scope">
+                    <i class="el-icon-time"></i>
+                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                    label="Operations">
+                <template slot-scope="scope">
+                    <el-button
+                            size="mini"
+                            @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+                    <el-button
+                            size="mini"
+                            type="danger"
+                            @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
     </page-container>
 </template>
