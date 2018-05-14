@@ -94,7 +94,7 @@
     }
 
     .count {
-        color: #000;
+        color: rgba(0, 0, 0, .8);
     }
 
     .list-enter-active, .list-leave-active {
