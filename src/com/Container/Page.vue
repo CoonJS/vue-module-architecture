@@ -3,7 +3,7 @@
         <div class="page-header" v-if="hasHeader">
             <slot name="header"></slot>
         </div>
-        <div class="page-content" :class="hasHeader && 'offset'">
+        <div class="page-content" :class="{ 'offset': hasHeader, 'flex': flexContent, 'fluid': fluid }">
             <slot></slot>
         </div>
     </div>
@@ -12,6 +12,20 @@
 <script>
   export default {
     name: "PageContainer",
+    props: {
+      flexContent: {
+        type: Boolean,
+        default() {
+          return false;
+        }
+      },
+      fluid: {
+        type: Boolean,
+        default() {
+          return false;
+        }
+      }
+    },
     data() {
       return {
         hasHeader: this.$slots.header !== undefined
@@ -51,5 +65,13 @@
 
     .page-content.offset {
         margin-top: 64px;
+    }
+
+    .page-content.flex {
+        display: flex;
+    }
+
+    .page-content.fluid {
+        padding: 0;
     }
 </style>

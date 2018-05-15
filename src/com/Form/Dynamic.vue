@@ -34,6 +34,7 @@
         <el-form-item
             v-for="field in fields"
             v-if="field.name !== 'type'"
+            :key="field.name"
             :label="field.displayName"
             :rules="[{ required: true }]"
         >

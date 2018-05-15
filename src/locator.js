@@ -1,4 +1,5 @@
 import Api from './service/Api';;
+import DateTime from './service/DateTime';
 import Component from './service/Component';
 
 class Locator {
@@ -21,6 +22,7 @@ class Locator {
 
 const locator = new Locator();
 
+locator.registerService(DateTime);
 locator.registerService(Api);
 locator.registerService(Component);
 

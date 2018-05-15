@@ -6,6 +6,7 @@
     data() {
       return {
         isDataLoading: false,
+        searchQuery: '',
         managers: [],
         columns: [
           {
@@ -27,6 +28,20 @@
         ]
       }
     },
+    computed: {
+      filteredManagers() {
+        return this.managers.filter(manager => {
+          const preparedFirstName = manager.firstName.toLowerCase();
+          const preparedLastName = manager.lastName.toLowerCase();
+          const searchString = `${preparedFirstName} ${preparedLastName}`;
+
+          return searchString.indexOf(this.preparedSearchQuery) !== -1;
+        });
+      },
+      preparedSearchQuery() {
+        return this.searchQuery.trim().toLowerCase();
+      }
+    },
     methods: {
       async loadManagers() {
         this.isDataLoading = true;
@@ -43,19 +58,28 @@
 
 <template>
     <page-container>
-        <div slot="header">
-            <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item :to="{ path: '/managers' }">Менеджеры</el-breadcrumb-item>
-            </el-breadcrumb>
-        </div>
+        <template slot="header">
+            <div class="header">
+                <el-breadcrumb separator-class="el-icon-arrow-right">
+                    <el-breadcrumb-item :to="{ path: '/managers' }">Менеджеры</el-breadcrumb-item>
+                </el-breadcrumb>
+                <el-input
+                    placeholder="Имя, Фамилия"
+                    v-model="searchQuery"
+                >
+                    <i slot="prefix" class="el-input__icon el-icon-search"></i>
+                </el-input>
+            </div>
+        </template>
         <el-table
             border
-            :data="managers"
+            :data="filteredManagers"
             style="width: 100%"
             v-loading="isDataLoading"
         >
             <el-table-column
                 v-for="column in columns"
+                :key="column.key"
                 :prop="column.key"
                 :label="column.name"
                 :width="column.width"
@@ -64,6 +88,7 @@
             <el-table-column
                 label="Сделки"
                 width="100"
+                align="center"
             >
                 <template slot-scope="scope">
                     {{scope.row.deals.length}}
@@ -79,3 +104,16 @@
         </el-table>
     </page-container>
 </template>
+
+<style scoped>
+    .header {
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .el-input {
+        width: 300px;
+    }
+</style>
