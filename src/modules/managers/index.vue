@@ -1,32 +1,41 @@
 <script>
   export default {
+    mounted() {
+      this.loadManagers();
+    },
     data() {
       return {
-        tableData: [{
-          date: '2016-05-03',
-          name: 'Manager 1',
-          address: 'No. 189, Grove St, Los Angeles'
-        }, {
-          date: '2016-05-02',
-          name: 'Manager 2',
-          address: 'No. 189, Grove St, Los Angeles'
-        }, {
-          date: '2016-05-04',
-          name: 'Manager 3',
-          address: 'No. 189, Grove St, Los Angeles'
-        }, {
-          date: '2016-05-01',
-          name: 'Manager 4',
-          address: 'No. 189, Grove St, Los Angeles'
-        }]
+        isDataLoading: false,
+        managers: [],
+        columns: [
+          {
+            key: 'id',
+            name: 'ID',
+            width: 50,
+            align: 'center'
+          },
+          {
+            key: 'firstName',
+            name: 'Имя',
+            width: 180
+          },
+          {
+            key: 'lastName',
+            name: 'Фамилия',
+            width: 180
+          }
+        ]
       }
     },
     methods: {
-      handleEdit(index, row) {
-        console.log(index, row);
+      async loadManagers() {
+        this.isDataLoading = true;
+        const { data: managers } = await this.$locator.Api.get('managersUsingGET');
+        this.managers = managers;
+        this.isDataLoading = false;
       },
-      handleDelete(index, row) {
-        console.log(index, row);
+      goToManagerPage(managerID) {
+        this.$router.push({ path: `/managers/${managerID}` })
       }
     }
   }
@@ -34,40 +43,37 @@
 
 <template>
     <page-container>
+        <div slot="header">
+            <el-breadcrumb separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item :to="{ path: '/managers' }">Менеджеры</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
         <el-table
-                :data="tableData"
-                style="width: 100%">
+            border
+            :data="managers"
+            style="width: 100%"
+            v-loading="isDataLoading"
+        >
             <el-table-column
-                    label="Name"
-                    width="180">
+                v-for="column in columns"
+                :prop="column.key"
+                :label="column.name"
+                :width="column.width"
+                :align="column.align"
+            />
+            <el-table-column
+                label="Сделки"
+                width="100"
+            >
                 <template slot-scope="scope">
-                    <el-popover trigger="hover" placement="top">
-                        <p>Name: {{ scope.row.name }}</p>
-                        <p>Addr: {{ scope.row.address }}</p>
-                        <div slot="reference" class="name-wrapper">
-                            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-                        </div>
-                    </el-popover>
+                    {{scope.row.deals.length}}
                 </template>
             </el-table-column>
             <el-table-column
-                    label="Date"
-                    width="180">
+                label="Действия"
+            >
                 <template slot-scope="scope">
-                    <i class="el-icon-time"></i>
-                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column
-                    label="Operations">
-                <template slot-scope="scope">
-                    <el-button
-                            size="mini"
-                            @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
-                    <el-button
-                            size="mini"
-                            type="danger"
-                            @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+                    <el-button size="mini" type="primary" @click="goToManagerPage(scope.row.id)">Перейти</el-button>
                 </template>
             </el-table-column>
         </el-table>

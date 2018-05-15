@@ -4,6 +4,7 @@ const AuthPage = () => import(/* webpackChunkName: "auth" */'./modules/auth/inde
 const ProfilePage = () => import(/* webpackChunkName: "profile" */'./modules/profile/index.vue');
 const SettingsPage = () => import(/* webpackChunkName: "settings" */'./modules/settings/index.vue');
 const ManagersPage = () => import(/* webpackChunkName: "managers" */'./modules/managers/index.vue');
+const ManagerCard = () => import(/* webpackChunkName: "manager" */'./modules/managers/pages/Card.vue');
 const RegistrationPage = () => import(/* webpackChunkName: "register" */'./modules/registration/index.vue');
 const DashboardsPage = () => import(/* webpackChunkName: "dashboard" */'./modules/dashboards/index.vue');
 const MarketplacePage = () => import(/* webpackChunkName: "marketplace"*/'./modules/marketplace/index.vue');
@@ -38,6 +39,11 @@ const routes = [
     path: '/managers',
     name: 'ManagersPage',
     component: ManagersPage
+  },
+  {
+    path: '/managers/:id',
+    name: 'ManagersPage',
+    component: ManagerCard
   },
   {
     path: '/marketplace',

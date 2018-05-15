@@ -56,10 +56,12 @@
                         width: calcWidth(item.count),
                     }"
                 >
-                    <span class="count">{{item.count}}</span>
-                </div>
-                <div class="name">
-                    {{item.statusName}}
+                    <div class="name">
+                        {{item.statusName}}
+                    </div>
+                    <span class="count">&nbsp;
+                        <strong>{{item.count}}</strong>
+                    </span>
                 </div>
             </div>
         </transition-group>
