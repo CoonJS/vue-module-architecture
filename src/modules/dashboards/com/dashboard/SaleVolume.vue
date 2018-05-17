@@ -52,7 +52,7 @@
             },
             labels: {
               formatter: function () {
-                return this.value / 1000 + 'Тыс. руб.';
+                return this.value / 1000 + ' Тыс. руб.';
               }
             }
           },
