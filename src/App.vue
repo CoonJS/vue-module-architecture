@@ -28,7 +28,12 @@
             key:'managers',
             title: 'Менеджеры',
             link: '/managers'
-          }
+          },
+          {
+            key:'wiki',
+            title: 'Wiki',
+            link: '/wiki'
+          },
         ]
       };
     },

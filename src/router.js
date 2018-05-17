@@ -1,5 +1,6 @@
 import VueRouter from 'vue-router';
 
+const WikiPage = () => import(/* webpackChunkName: "wiki"*/'./modules/wiki/index.vue');
 const AuthPage = () => import(/* webpackChunkName: "auth" */'./modules/auth/index.vue');
 const ProfilePage = () => import(/* webpackChunkName: "profile" */'./modules/profile/index.vue');
 const SettingsPage = () => import(/* webpackChunkName: "settings" */'./modules/settings/index.vue');
@@ -49,6 +50,11 @@ const routes = [
     path: '/marketplace',
     name: 'MarketplacePage',
     component: MarketplacePage
+  },
+  {
+    path: '/wiki',
+    name: 'WikiPage',
+    component: WikiPage
   }
 ];
 
