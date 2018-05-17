@@ -33,6 +33,7 @@
     "less-loader": "^4.1.0",
     "style-loader": "^0.20.3",
     "uglifyjs-webpack-plugin": "^1.2.4",
+    "underscore": "^1.9.0",
     "vue-loader": "^14.2.2",
     "vue-template-compiler": "^2.5.16",
     "webpack": "^4.3.0",
