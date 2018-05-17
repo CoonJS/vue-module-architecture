@@ -18,23 +18,18 @@
       }
     },
     data() {
-      const statusesMap = this.arrayUtils.indexBy(this.sales, (prop) => {
+      const groupedStatuses = this.arrayUtils.groupBy(this.sales, (prop) => {
         return prop.status;
       });
 
-      console.log(statusesMap);
-
       return {
-        selectedStatuses: Object.keys(statusesMap)
+        groupedStatuses: groupedStatuses,
+        selectedStatuses: Object.keys(groupedStatuses)
       }
     },
     computed: {
       statuses() {
-        const statusesMap = this.arrayUtils.indexBy(this.sales, (prop) => {
-          return prop.status;
-        });
-
-        return Object.keys(statusesMap);
+        return Object.keys(this.groupedStatuses);
       },
       filteredSales() {
         return this.sales.filter(sale => {
@@ -54,7 +49,7 @@
                     v-for="status in statuses"
                     :label="status"
                 >
-                    {{status}}
+                    {{`${status} (${groupedStatuses[status].length})`}}
                 </el-checkbox-button>
             </el-checkbox-group>
         </div>

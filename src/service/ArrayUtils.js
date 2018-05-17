@@ -8,4 +8,8 @@ export default class ArrayUtils {
   indexBy( array = [], cb) {
     return _.indexBy(array, cb);
   }
+
+  groupBy( array = [], cb) {
+    return _.groupBy(array, cb);
+  }
 }
