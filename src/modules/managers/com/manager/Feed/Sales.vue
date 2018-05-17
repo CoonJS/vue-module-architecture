@@ -65,7 +65,7 @@
     }
 
     .sales-filter {
-
+        margin-bottom: 16px;
     }
 
     .sale-card {
