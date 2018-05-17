@@ -43,7 +43,7 @@ const routes = [
   },
   {
     path: '/managers/:id',
-    name: 'ManagersPage',
+    name: 'ManagerPage',
     component: ManagerCard
   },
   {
