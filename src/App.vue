@@ -21,7 +21,7 @@
         menuItems: [
           {
             key:'dashboards',
-            title: 'Дашборды (edited)',
+            title: 'Дашборды',
             link: '/'
           },
           {
