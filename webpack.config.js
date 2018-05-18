@@ -47,7 +47,7 @@ module.exports = {
     port: '8080',
     proxy: {
       '*': {
-        target: 'https://77.244.213.135',
+        target: 'https://uwared.ru',
         secure: false
       }
     },
