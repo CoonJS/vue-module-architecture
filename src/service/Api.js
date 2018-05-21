@@ -66,15 +66,15 @@ export default class Api {
     this.event.emit('login');
   }
 
-  async register(name, email, password, adminFirstName, adminLastName) {
+  async registerUser({ token, login, firstName, lastName, password }) {
     try {
-      await this.post('createdAccountUsingPOST', {},
+      await this.post('createdUserUsingPOST', {},
         {
-          name,
-          email,
-          password,
-          adminFirstName,
-          adminLastName
+          token,
+          login,
+          firstName,
+          lastName,
+          password
         }
       );
 

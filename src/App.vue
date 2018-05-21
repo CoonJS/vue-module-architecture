@@ -55,9 +55,13 @@
       },
       redirectToLoginPage() {
         const isAuthPage = this.$route.name === 'AuthPage';
-        if (isAuthPage) {
+        const isRegisterAccountPage = this.$route.name === 'AccountRegistration';
+        const isUserRegistrationPage = this.$route.name === 'UserRegistration';
+
+        if (isAuthPage || isRegisterAccountPage || isUserRegistrationPage) {
           return;
         }
+
         this.$router.push('/auth');
       },
       redirectToHomePage() {
