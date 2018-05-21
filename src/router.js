@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 const WikiPage = () => import(/* webpackChunkName: "wiki"*/'./modules/wiki/index.vue');
 const AuthPage = () => import(/* webpackChunkName: "auth" */'./modules/auth/index.vue');
 const ProfilePage = () => import(/* webpackChunkName: "profile" */'./modules/profile/index.vue');
+const UsersPage = () => import(/* webpackChunkName: "users" */'./modules/users/index.vue');
 const SettingsPage = () => import(/* webpackChunkName: "settings" */'./modules/settings/index.vue');
 const ManagersPage = () => import(/* webpackChunkName: "managers" */'./modules/managers/index.vue');
 const ManagerCard = () => import(/* webpackChunkName: "manager" */'./modules/managers/pages/Card.vue');
@@ -35,6 +36,11 @@ const routes = [
     path: '/profile',
     name: 'UserProfile',
     component: ProfilePage
+  },
+  {
+    path: '/users',
+    name: 'Users',
+    component: UsersPage
   },
   {
     path: '/managers',

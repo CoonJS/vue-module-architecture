@@ -39,7 +39,7 @@
     },
     computed: {
       hasUser() {
-        return this.user != null;
+        return this.user !== null;
       },
       userInfo() {
         const user = this.user || null;
@@ -58,7 +58,7 @@
         if (isAuthPage) {
           return;
         }
-        this.$router.push('auth');
+        this.$router.push('/auth');
       },
       redirectToHomePage() {
         const isRootPage = this.$route.name === 'Root';

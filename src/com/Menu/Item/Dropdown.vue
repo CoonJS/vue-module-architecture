@@ -9,10 +9,13 @@
         </div>
         <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
-                <router-link to="profile">Профиль</router-link>
+                <router-link to="/profile">Профиль</router-link>
             </el-dropdown-item>
             <el-dropdown-item divided>
-                <router-link to="settings">Настройки</router-link>
+                <router-link to="/users">Пользователи</router-link>
+            </el-dropdown-item>
+            <el-dropdown-item divided>
+                <router-link to="/settings">Настройки</router-link>
             </el-dropdown-item>
             <el-dropdown-item divided @click.native="logout">Выйти</el-dropdown-item>
         </el-dropdown-menu>
