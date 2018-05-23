@@ -86,7 +86,7 @@ export default class Api {
 
   async registerAccount({ name, token, adminFirstName, adminLastName, password }) {
     try {
-      await this.post('createAccountRegistrationRequestUsingPOST', {},
+      await this.post('createdAccountUsingPOST', {},
         {
           name,
           token,
