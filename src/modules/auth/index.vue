@@ -24,9 +24,6 @@
           type: 'error',
           duration: 2000
         });
-      },
-      redirectToRegisterPage() {
-        this.$router.push('registration');
       }
     }
   }
@@ -50,13 +47,6 @@
                         @click="login"
                     >
                         Войти
-                    </el-button>
-                    <el-button
-                        type="primary"
-                        class="register-button"
-                        @click="redirectToRegisterPage"
-                    >
-                        Зарегистрироваться
                     </el-button>
                 </div>
             </div>
@@ -83,13 +73,7 @@
         padding: 12px 0;
     }
 
-    .actions {
-        margin-top: 12px;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .register-button {
-        flex: 1;
+    .actions button {
+        width: 100%;
     }
 </style>

@@ -84,6 +84,24 @@ export default class Api {
     }
   }
 
+  async registerAccount({ name, token, adminFirstName, adminLastName, password }) {
+    try {
+      await this.post('createAccountRegistrationRequestUsingPOST', {},
+        {
+          name,
+          token,
+          adminFirstName,
+          adminLastName,
+          password
+        }
+      );
+
+      this.event.emit('login');
+    } catch (e) {
+      throw e;
+    }
+  }
+
   async logout() {
     const response = await this.get('logoutUsingGET');
     await this.get('currentUserUsingGET');

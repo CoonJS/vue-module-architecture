@@ -29,7 +29,7 @@ const routes = [
     component: SettingsPage
   },
   {
-    path: '/registration',
+    path: '/account-registration',
     name: 'AccountRegistration',
     component: AccountRegistrationPage
   },

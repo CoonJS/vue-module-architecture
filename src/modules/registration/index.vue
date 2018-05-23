@@ -9,9 +9,6 @@
                     <el-input type="text" placeholder="Название кампании" v-model="name"/>
                 </div>
                 <div class="field">
-                    <el-input type="text" placeholder="Почта" v-model="email"/>
-                </div>
-                <div class="field">
                     <el-input type="text" placeholder="Имя" v-model="adminFirstName"/>
                 </div>
                 <div class="field">
@@ -42,7 +39,7 @@
     data () {
       return {
         name: '',
-        email: '',
+        token: this.$route.query.token,
         adminFirstName: '',
         adminLastName: '',
         password: '',
@@ -53,7 +50,7 @@
       async register() {
         const {
           name,
-          email,
+          token,
           password,
           adminFirstName,
           adminLastName
@@ -65,7 +62,7 @@
         }
 
         try {
-          await this.$locator.Api.register(name, email, password, adminFirstName, adminLastName);
+          await this.$locator.Api.registerAccount(this);
           this.redirectToRegisterPage();
         } catch(e) {
           throw e;
