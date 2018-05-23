@@ -4,15 +4,58 @@
       /** @type {Api}*/
       this.api = this.$locator.Api;
     },
+    mounted() {
+      this.loadUsers();
+    },
     data () {
       return {
         users: [],
         email: '',
+        isUsersLoading: false,
         isShowModal: false,
-        isInviting: false
+        isInviting: false,
+        columns: [
+          {
+            key: 'id',
+            name: 'ID',
+            width: 50,
+            align: 'center'
+          },
+          {
+            key: 'username',
+            name: 'Логин',
+            width: 250,
+            align: 'left'
+          },
+          {
+            key: 'firstName',
+            name: 'Имя',
+            width: 180
+          },
+          {
+            key: 'lastName',
+            name: 'Фамилия',
+            width: 180
+          },
+          {
+            key: 'email',
+            name: 'Почта',
+            width: 180
+          }
+        ],
+        rolesMap: {
+          'ROLE_ADMIN': 'Admin',
+          'ROLE_USER': 'User',
+        }
       }
     },
     methods: {
+      async loadUsers() {
+        this.isUsersLoading = true;
+        const { data: users } = await this.api.get('accountUsersUsingGET');
+        this.users = users;
+        this.isUsersLoading = false;
+      },
       async inviteUser() {
         this.isInviting = true;
         try {
@@ -29,6 +72,9 @@
       },
       closeInviteModal() {
         this.isShowModal = false;
+      },
+      isAdmin(row) {
+        return row.role === 'ROLE_ADMIN'
       }
     }
   }
@@ -50,7 +96,33 @@
             </div>
         </el-dialog>
         <div class="users">
+            <el-table
+                border
+                :data="users"
+                style="width: 100%"
+                v-loading="isUsersLoading"
+            >
 
+                <el-table-column
+                    v-for="column in columns"
+                    :key="column.key"
+                    :prop="column.key"
+                    :label="column.name"
+                    :width="column.width"
+                    :align="column.align"
+                />
+                <el-table-column prop="role" label="Роль" width="180">
+                    <template slot-scope="scope">
+                        <el-tag v-if="isAdmin(scope.row)" type="danger">{{rolesMap[scope.row.role]}}</el-tag>
+                        <el-tag v-else >{{rolesMap[scope.row.role]}}</el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column label="Действия">
+                    <template slot-scope="scope">
+                        <el-button v-if="!isAdmin(scope.row)" size="mini" type="danger">Удалить</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
         </div>
     </page-container>
 </template>
