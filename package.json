@@ -17,6 +17,7 @@
     "highcharts": "^6.1.0",
     "query-string": "^6.1.0",
     "vue": "^2.5.16",
+    "vue2-editor": "^2.4.4",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
