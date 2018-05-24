@@ -1,4 +1,5 @@
 import Api from './service/Api';
+import Router from './service/Router';
 import DateTime from './service/DateTime';
 import Component from './service/Component';
 import ArrayUtils from './service/ArrayUtils';
@@ -26,6 +27,7 @@ const locator = new Locator();
 locator.registerService(ArrayUtils);
 locator.registerService(DateTime);
 locator.registerService(Api);
+locator.registerService(Router);
 locator.registerService(Component);
 
 export default locator;

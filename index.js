@@ -4,6 +4,9 @@ import ElementUI from 'element-ui';
 import { run } from './src/bootstrap';
 import { registerGlobalComponents } from './src/components';
 
+import App from './src/App.vue';
+import locator from './src/locator';
+
 import './src/global.css';
 import 'element-ui/lib/theme-chalk/index.css';
 
@@ -12,10 +15,6 @@ import lang from 'element-ui/lib/locale/lang/ru-RU';
 
 locale.use(lang);
 
-import App from './src/App.vue';
-import router from './src/router';
-import locator from './src/locator';
-
 Vue.use(ElementUI);
 Vue.use(VueRouter);
 
@@ -23,6 +22,9 @@ Vue.prototype.$locator = locator;
 registerGlobalComponents(locator);
 
 run(locator).then(() => {
+  const routes = locator.Router.getRoutes();
+  const router = new VueRouter({ routes });
+
   new Vue({
     router,
     render: h => h(App)

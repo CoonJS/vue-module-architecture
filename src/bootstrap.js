@@ -1,11 +1,13 @@
 const modules = [
-  require('./modules/settings/index'),
   require('./modules/auth/index'),
   require('./modules/dashboards/index'),
   require('./modules/managers/index'),
   require('./modules/marketplace/index'),
   require('./modules/profile/index'),
-  require('./modules/registration/index'),
+  require('./modules/registerAccount/index'),
+  require('./modules/registerUser/index'),
+  require('./modules/settings/index'),
+  require('./modules/users/index'),
   require('./modules/wiki/index')
 ];
 
