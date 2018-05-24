@@ -31,8 +31,8 @@
     computed: {
       filteredManagers() {
         return this.managers.filter(manager => {
-          const preparedFirstName = manager.firstName.toLowerCase();
-          const preparedLastName = manager.lastName.toLowerCase();
+          const preparedFirstName = typeof manager.firstName === 'string' ? manager.firstName.toLowerCase() : '';
+          const preparedLastName = typeof manager.lastName === 'string' ? manager.lastName.toLowerCase() : '';
           const searchString = `${preparedFirstName} ${preparedLastName}`;
 
           return searchString.indexOf(this.preparedSearchQuery) !== -1;
@@ -50,7 +50,7 @@
         this.isDataLoading = false;
       },
       goToManagerPage(managerID) {
-        this.$router.push({ path: `/managers/${managerID}` })
+        this.$router.push({ path: `/managers/${managerID}` });
       }
     }
   }
