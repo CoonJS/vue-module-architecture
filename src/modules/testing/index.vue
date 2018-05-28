@@ -135,8 +135,10 @@
                             Добавить вопрос
                         </el-button>
                     </div>
-                    <div class="question-wrapper" v-for="question in selectedTest.questions" :key="question.id">
-                        <question-card :question="question"/>
+                    <div class="questions-container">
+                        <div class="question-wrapper" v-for="question in selectedTest.questions" :key="question.id">
+                            <question-card :question="question"/>
+                        </div>
                     </div>
                 </template>
             </div>
@@ -179,9 +181,15 @@
     }
 
     .questions {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
         width: 100%;
-        overflow: auto;
         background-color: #eee;
+    }
+
+    .questions-container {
+        overflow: auto;
     }
 
     .panel {

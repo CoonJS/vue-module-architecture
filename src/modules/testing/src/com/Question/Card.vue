@@ -18,11 +18,13 @@
     <div class="question">
         <h5>{{question.text}}</h5>
         <div class="answers">
-            <div
-                class="answer"
-                v-for="answer in question.answers"
+            <div class="answer"
+                 v-for="answer in question.answers"
+                 :key="answer.id"
             >
-                <span class="text">{{answer.text}}</span>
+                <el-checkbox>
+                    <span class="text">{{answer.text}}</span>
+                </el-checkbox>
             </div>
         </div>
     </div>
