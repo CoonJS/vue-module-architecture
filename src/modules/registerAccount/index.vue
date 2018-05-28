@@ -1,5 +1,5 @@
 <template>
-    <page-container style="display: flex; align-items: center">
+    <page-container style="display: flex; margin-top: 150px;">
         <div class="form-wrapper">
             <div class="register-form">
                 <div class="title">

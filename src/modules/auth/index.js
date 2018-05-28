@@ -1,6 +1,7 @@
 const AuthPage = () => import(/* webpackChunkName: "auth" */'./index.vue');
 
 export default async function(locator) {
+  /** @type {Router}*/
   const routerService = locator.Router;
 
   routerService.registerModuleRoutes([
@@ -9,5 +10,5 @@ export default async function(locator) {
       name: 'AuthPage',
       component: AuthPage
     }
-  ])
+  ]);
 }

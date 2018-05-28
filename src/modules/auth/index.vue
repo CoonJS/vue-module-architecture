@@ -30,7 +30,7 @@
 </script>
 
 <template>
-    <page-container style="display: flex; align-items: center">
+    <page-container style="display: flex; margin-top: 150px;">
         <div class="form-wrapper">
             <div class="auth-form">
                 <div class="title"><h1>Вход</h1></div>

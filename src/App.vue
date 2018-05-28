@@ -34,6 +34,11 @@
             title: 'Wiki',
             link: '/wiki'
           },
+          {
+            key:'testing',
+            title: 'Тесты',
+            link: '/testing'
+          },
         ]
       };
     },
