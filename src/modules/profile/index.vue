@@ -5,6 +5,10 @@
     components: {
       ChangePasswordForm
     },
+    created() {
+      /**@type {Api}*/
+      this.api = this.$locator.Api;
+    },
     mounted() {
       this.loadUser();
     },
@@ -52,7 +56,7 @@
     methods: {
       async loadUser() {
         this.isUserLoading = true;
-        const { data: user } = await this.$locator.Api.get('currentUserUsingGET');
+        const { data: user } = await this.api.get('currentUserUsingGET');
         this.user = user;
         this.isUserLoading = false;
       },
@@ -62,8 +66,18 @@
           return;
         }
 
-        await {};
-        // this.closeChangePasswordForm();
+          await this.updateUserData();
+          this.closeChangePasswordForm();
+      },
+      async updateUserData() {
+        const password = this.hasInputError ? undefined : this.password.newPassword;
+        const newUserData = {
+          password,
+          firstName: this.user.firstName,
+          lastName: this.user.lastName,
+        };
+
+        return await this.api.put('updatedUserUsingPUT', {}, newUserData);
       },
       showChangePasswordForm() {
         this.isShowChangePasswordForm = true;
@@ -83,10 +97,10 @@
         <div class="form-wrapper">
             <el-form v-if="hasUser" label-width="100px" style="width: 500px;">
                 <el-form-item label="Имя">
-                    <el-input v-model="user.firstName" />
+                    <el-input v-model="user.firstName" @blur="updateUserData"/>
                 </el-form-item>
                 <el-form-item label="Фамилия">
-                    <el-input v-model="user.lastName" />
+                    <el-input v-model="user.lastName" @blur="updateUserData"/>
                 </el-form-item>
                 <el-form-item label="Почта">
                     <el-input v-model="user.email" disabled/>
