@@ -48,7 +48,7 @@
       },
       userInfo() {
         const user = this.user || null;
-        return user !== null ? `${user.lastName} ${user.firstName}` : '';
+        return user !== null ? `${user.firstName} ${user.lastName} (${user.username})` : '';
       }
     },
     methods: {
