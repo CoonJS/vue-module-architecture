@@ -45,7 +45,7 @@
 
       },
       redirectToAuth() {
-        this.$router.push('/auth');
+        this.$router.push('/');
       },
       showErrorMessage() {
         this.$message({
