@@ -47,10 +47,22 @@
             <div class="auth-form" v-if="!isShowRemindPasswordForm">
                 <div class="title"><h1>Вход</h1></div>
                 <div class="field">
-                    <el-input type="text" placeholder="Логин" v-model="userName"/>
+                    <el-input
+                        type="text"
+                        placeholder="Логин"
+                        :disabled="isLoading"
+                        v-model="userName"
+                        @keydown.native.enter="login"
+                    />
                 </div>
                 <div class="field">
-                    <el-input type="password" placeholder="Пароль" v-model="password"/>
+                    <el-input
+                        type="password"
+                        placeholder="Пароль"
+                        :disabled="isLoading"
+                        v-model="password"
+                        @keydown.native.enter="login"
+                    />
                 </div>
                 <div class="actions">
                     <el-button

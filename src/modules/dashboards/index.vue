@@ -68,16 +68,13 @@
         </div>
         <div class="dashboards">
             <div class="row">
-                <el-card class="box-card">
-                    <sale-volume-dashboard :items="chartData"/>
-                </el-card>
                 <el-card class="box-card" :body-style="{display: 'flex', flex: 1}">
-                    <div slot="header">
-                        <span>Воронка продаж</span>
-                    </div>
                     <div v-loading.body="isDataLoading" class="loader">
                         <funnel-dashboard :items="funnelItems"/>
                     </div>
+                </el-card>
+                <el-card class="box-card">
+                    <sale-volume-dashboard :items="chartData"/>
                 </el-card>
             </div>
             <div class="row">
