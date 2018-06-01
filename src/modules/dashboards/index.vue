@@ -77,18 +77,6 @@
                     <sale-volume-dashboard :items="chartData"/>
                 </el-card>
             </div>
-            <div class="row">
-                <el-card class="box-card">
-                    <div slot="header">
-                        <span>Dashboard 3</span>
-                    </div>
-                </el-card>
-                <el-card class="box-card">
-                    <div slot="header">
-                        <span>Dashboard 4</span>
-                    </div>
-                </el-card>
-            </div>
         </div>
     </page-container>
 </template>
