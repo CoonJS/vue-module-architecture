@@ -1,10 +1,12 @@
 <script>
-    import FunnelDashboard from './com/dashboard/Funnel.vue';
-    import SaleVolumeDashboard from './com/dashboard/SaleVolume.vue';
+  import FunnelDashboard from './com/dashboard/Funnel.vue';
+  import SaleVolumeDashboard from './com/dashboard/SaleVolume.vue';
+  import NoDataDashboard from './com/dashboard/NoData.vue';
 
   export default {
     components: {
       FunnelDashboard,
+      NoDataDashboard,
       SaleVolumeDashboard
     },
     mounted() {
@@ -27,6 +29,16 @@
         handler() {
           this.loadDashboardData();
         }
+      }
+    },
+    computed: {
+      hasChartData() {
+        const items = this.funnelItems;
+        return Array.isArray(items) && items.length > 0;
+      },
+      hasFunnelData() {
+        const items = this.chartData;
+        return Array.isArray(items) && items.length > 0;
       }
     },
     methods: {
@@ -70,11 +82,15 @@
             <div class="row">
                 <el-card class="box-card" :body-style="{display: 'flex', flex: 1}">
                     <div v-loading.body="isDataLoading" class="loader">
-                        <funnel-dashboard :items="funnelItems"/>
+                        <funnel-dashboard v-if="hasFunnelData" :items="funnelItems"/>
+                        <no-data-dashboard v-else/>
                     </div>
                 </el-card>
                 <el-card class="box-card">
-                    <sale-volume-dashboard :items="chartData"/>
+                    <div v-loading.body="isDataLoading" class="loader">
+                        <sale-volume-dashboard v-if="hasChartData" :items="chartData"/>
+                        <no-data-dashboard v-else/>
+                    </div>
                 </el-card>
             </div>
         </div>

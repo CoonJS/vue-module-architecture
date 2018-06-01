@@ -37,7 +37,7 @@
 
 <template>
     <div>
-        <h3>Форма восстановления пароля</h3>
+        <h3>Восстановление пароля</h3>
         <div class="form">
             <div class="title">Введите email, на который придет письмо со ссылкой на сброс пароля</div>
             <el-input v-model="email">
