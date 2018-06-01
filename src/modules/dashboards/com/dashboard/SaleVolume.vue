@@ -11,6 +11,9 @@
         }
       }
     },
+    mounted() {
+      this.renderLineChart();
+    },
     watch: {
       items() {
         this.renderLineChart();
@@ -66,13 +69,12 @@
 </script>
 
 <template>
-    <div id="line-chart-container">
-
-    </div>
+    <div id="line-chart-container"></div>
 </template>
 
 <style scoped>
     #line-chart-container {
+        width: 100%;
         height: 350px;
     }
 </style>

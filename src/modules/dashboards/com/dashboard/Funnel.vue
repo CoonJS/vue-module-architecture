@@ -14,13 +14,16 @@
         }
       }
     },
+    mounted() {
+      this.renderFunnel();
+    },
     watch: {
       items() {
-        this.renderLineChart();
+        this.renderFunnel();
       }
     },
     methods: {
-      renderLineChart() {
+      renderFunnel() {
         const data = this.items.map(item => {
           return [item.statusName, item.count];
         });
@@ -69,7 +72,8 @@
 </template>
 
 <style scoped>
-    #line-chart-container {
+    #funnel-container {
+        width: 100%;
         height: 350px;
     }
 </style>

@@ -14,6 +14,7 @@
     },
     data () {
       return {
+        isDataLoaded: false,
         isDataLoading: false,
         funnelItems: [],
         chartData: [],
@@ -49,6 +50,7 @@
         const toMoment = dateTo && new Date(dateTo).toISOString();
 
         this.isDataLoading = true;
+        this.isDataLoaded = false;
 
         const { data } = await this.$locator.Api.get('currentAccountDashboardsUsingGET', {}, {
           fromMoment,
@@ -58,6 +60,7 @@
         this.funnelItems = data[0].data;
         this.chartData = data[1].data;
 
+        this.isDataLoaded = true;
         this.isDataLoading = false;
       }
     }
@@ -80,17 +83,13 @@
         </div>
         <div class="dashboards">
             <div class="row">
-                <el-card class="box-card" :body-style="{display: 'flex', flex: 1}">
-                    <div v-loading.body="isDataLoading" class="loader">
-                        <funnel-dashboard v-if="hasFunnelData" :items="funnelItems"/>
-                        <no-data-dashboard v-else/>
-                    </div>
+                <el-card class="box-card" :body-style="{display: 'flex', flex: 1}" v-loading.body="isDataLoading">
+                    <funnel-dashboard v-if="isDataLoaded && hasFunnelData" :items="funnelItems"/>
+                    <no-data-dashboard v-else-if="isDataLoaded"/>
                 </el-card>
-                <el-card class="box-card">
-                    <div v-loading.body="isDataLoading" class="loader">
-                        <sale-volume-dashboard v-if="hasChartData" :items="chartData"/>
-                        <no-data-dashboard v-else/>
-                    </div>
+                <el-card class="box-card" v-loading.body="isDataLoading">
+                    <sale-volume-dashboard v-if="hasChartData" :items="chartData"/>
+                    <no-data-dashboard v-else-if="isDataLoaded"/>
                 </el-card>
             </div>
         </div>
