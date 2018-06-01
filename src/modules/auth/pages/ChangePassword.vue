@@ -31,10 +31,7 @@
         this.loading = true;
 
         try {
-          await this.api.put('setNewPasswordAndLoginUsingPUT', {}, {
-            token: this.token,
-            newPassword: this.newPassword
-          });
+          await this.api.changePassword(this.token, this.newPassword);
         } catch(e) {
           throw e;
         }

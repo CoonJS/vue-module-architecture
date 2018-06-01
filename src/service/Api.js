@@ -66,6 +66,20 @@ export default class Api {
     this.event.emit('login');
   }
 
+  async changePassword(token, newPassword) {
+    try {
+      await this.put('setNewPasswordAndLoginUsingPUT', {}, {
+        token,
+        newPassword
+      });
+    } catch (e) {
+      throw e;
+    }
+
+    this.event.emit('login');
+
+  }
+
   async registerUser({ token, login, firstName, lastName, password }) {
     try {
       await this.post('createdUserUsingPOST', {},
