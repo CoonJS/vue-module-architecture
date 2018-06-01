@@ -24,6 +24,7 @@
 
         this.loading = false;
         this.showSuccessMessage();
+        this.$emit('send');
       },
       showSuccessMessage() {
         this.$message({
@@ -37,7 +38,6 @@
 
 <template>
     <div>
-        <h3>Восстановление пароля</h3>
         <div class="form">
             <div class="title">Введите email, на который придет письмо со ссылкой на сброс пароля</div>
             <el-input v-model="email">

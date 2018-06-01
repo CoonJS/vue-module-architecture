@@ -44,7 +44,7 @@
 <template>
     <page-container style="display: flex; margin-top: 150px;">
         <div class="form-wrapper">
-            <div class="auth-form" v-if="!isShowRemindPasswordForm">
+            <div class="auth-form">
                 <div class="title"><h1>Вход</h1></div>
                 <div class="field">
                     <el-input
@@ -81,8 +81,14 @@
                     </el-button>
                 </div>
             </div>
-            <div v-else>
-                <remind-password-form />
+            <div>
+                <el-dialog
+                    title="Восстановление пароля"
+                    :visible.sync="isShowRemindPasswordForm"
+                    width="560px"
+                >
+                    <remind-password-form @send="closeRemindPasswordForm"/>
+                </el-dialog>
             </div>
         </div>
     </page-container>
