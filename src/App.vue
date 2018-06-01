@@ -142,6 +142,8 @@
     }
 
     .login {
+        display: flex;
+        justify-content: flex-end;
         font-size: 10px;
         color: rgba(255,255,255, .7);
     }
