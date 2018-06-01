@@ -1,4 +1,5 @@
 const AuthPage = () => import(/* webpackChunkName: "auth" */'./index.vue');
+const ChangePasswordPage = () => import(/* webpackChunkName: "change-password" */'./pages/ChangePassword.vue');
 
 export default async function(locator) {
   /** @type {Router}*/
@@ -9,6 +10,11 @@ export default async function(locator) {
       path: '/auth',
       name: 'AuthPage',
       component: AuthPage
+    },
+    {
+      path: '/password-remind',
+      name: 'ChangePassword',
+      component: ChangePasswordPage
     }
   ]);
 }

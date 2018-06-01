@@ -1,10 +1,16 @@
 <script>
+  import RemindPasswordForm from './com/Form/RemindPassword.vue'
+
   export default {
+    components: {
+      RemindPasswordForm
+    },
     data () {
       return {
         userName: '',
         password: '',
-        isLoading: false
+        isLoading: false,
+        isShowRemindPasswordForm: false
       }
     },
     methods: {
@@ -24,6 +30,12 @@
           type: 'error',
           duration: 2000
         });
+      },
+      showRemindPasswordForm() {
+        this.isShowRemindPasswordForm = true;
+      },
+      closeRemindPasswordForm() {
+        this.isShowRemindPasswordForm = false;
       }
     }
   }
@@ -32,7 +44,7 @@
 <template>
     <page-container style="display: flex; margin-top: 150px;">
         <div class="form-wrapper">
-            <div class="auth-form">
+            <div class="auth-form" v-if="!isShowRemindPasswordForm">
                 <div class="title"><h1>Вход</h1></div>
                 <div class="field">
                     <el-input type="text" placeholder="Логин" v-model="userName"/>
@@ -48,7 +60,17 @@
                     >
                         Войти
                     </el-button>
+                    <el-button
+                        type="warning"
+                        plain
+                        @click="showRemindPasswordForm"
+                    >
+                        Забыли пароль?
+                    </el-button>
                 </div>
+            </div>
+            <div v-else>
+                <remind-password-form />
             </div>
         </div>
     </page-container>
@@ -73,7 +95,13 @@
         padding: 12px 0;
     }
 
+    .actions {
+        display: flex;
+        flex-direction: column;
+    }
+
     .actions button {
+        margin: 8px 0;
         width: 100%;
     }
 </style>

@@ -62,8 +62,9 @@
         const isAuthPage = this.$route.name === 'AuthPage';
         const isRegisterAccountPage = this.$route.name === 'AccountRegistration';
         const isUserRegistrationPage = this.$route.name === 'UserRegistration';
+        const isChangePasswordChange = this.$route.name === 'ChangePassword';
 
-        if (isAuthPage || isRegisterAccountPage || isUserRegistrationPage) {
+        if (isAuthPage || isRegisterAccountPage || isUserRegistrationPage || isChangePasswordChange) {
           return;
         }
 
@@ -82,7 +83,7 @@
 
 <template>
     <page-layout>
-        <nav-layout v-if="isShowMenu">
+        <nav-layout v-if="hasUser && isShowMenu">
             <menu-item-logo slot="left"/>
             <menu-item-link
                     slot="left"
