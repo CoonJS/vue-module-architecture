@@ -48,7 +48,11 @@
       },
       userInfo() {
         const user = this.user || null;
-        return user !== null ? `${user.firstName} ${user.lastName} (${user.username})` : '';
+        return user !== null ? `${user.firstName} ${user.lastName}` : '';
+      },
+      userLogin() {
+        const user = this.user || null;
+        return user !== null ? `${user.username}` : '';
       }
     },
     methods: {
@@ -95,7 +99,12 @@
             </menu-item-link>
             <menu-item-icon icon="goods" slot="right" link="/marketplace"/>
             <menu-item-icon icon="bell" slot="right" link="/notifications"/>
-            <menu-item-dropdown slot="right">{{userInfo}}</menu-item-dropdown>
+            <menu-item-dropdown slot="right">
+                <div class="user-info">
+                    <div>{{userInfo}}</div>
+                    <div class="login">{{userLogin}}</div>
+                </div>
+            </menu-item-dropdown>
         </nav-layout>
         <root-container>
             <router-view></router-view>
@@ -125,6 +134,16 @@
 
     .actions {
         display: flex;
+    }
+
+    .user-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .login {
+        font-size: 10px;
+        color: rgba(255,255,255, .7);
     }
 
 </style>
