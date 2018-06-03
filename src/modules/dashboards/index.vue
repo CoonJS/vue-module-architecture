@@ -34,12 +34,12 @@
     },
     computed: {
       hasChartData() {
-        const items = this.funnelItems;
-        return Array.isArray(items) && items.length > 0;
+        const items = this.chartData;
+        return this.isDataLoaded && Array.isArray(items) && items.length > 0;
       },
       hasFunnelData() {
-        const items = this.chartData;
-        return Array.isArray(items) && items.length > 0;
+        const items = this.funnelItems;
+        return this.isDataLoaded && Array.isArray(items) && items.length > 0;
       }
     },
     methods: {
@@ -84,12 +84,12 @@
         <div class="dashboards">
             <div class="row">
                 <el-card class="box-card" :body-style="{display: 'flex', flex: 1}" v-loading.body="isDataLoading">
-                    <funnel-dashboard v-if="isDataLoaded && hasFunnelData" :items="funnelItems"/>
-                    <no-data-dashboard v-else-if="isDataLoaded"/>
+                    <funnel-dashboard v-if="hasFunnelData" :items="funnelItems"/>
+                    <no-data-dashboard v-else="isDataLoaded"/>
                 </el-card>
                 <el-card class="box-card" v-loading.body="isDataLoading">
                     <sale-volume-dashboard v-if="hasChartData" :items="chartData"/>
-                    <no-data-dashboard v-else-if="isDataLoaded"/>
+                    <no-data-dashboard v-else="isDataLoaded"/>
                 </el-card>
             </div>
         </div>

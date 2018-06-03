@@ -48,7 +48,7 @@ export default class Api {
   }
 
   async delete(id, params, body) {
-    const path = self._buildUrlById(id, params, 'delete');
+    const path = this._buildUrlById(id, params, 'delete');
     return await this.axios.delete(path, body);
   }
 
