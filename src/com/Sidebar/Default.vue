@@ -22,7 +22,7 @@
     <transition name="slide-fade">
         <div class="sidebar" v-show="value">
             <div class="sidebar-container">
-                <div class="header">
+                <div v-if="$slots.header" class="header">
                     <slot name="header"></slot>
                 </div>
                 <div class="content">

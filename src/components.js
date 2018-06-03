@@ -13,6 +13,7 @@ import LinkMenuItem from './com/Menu/Item/Link.vue';
 import LogoMenuItem from './com/Menu/Item/Logo.vue';
 import ActionMenuItem from './com/Menu/Item/Action.vue';
 import DropdownMenuItem from './com/Menu/Item/Dropdown.vue';
+import FeedbackMenuItem from './com/Menu/Item/Feedback.vue';
 
 /*===UI===*/
 import Sidebar from './com/Sidebar/Default.vue';
@@ -34,7 +35,8 @@ const menuItems = [
   DropdownMenuItem,
   IconMenuItem,
   LinkMenuItem,
-  LogoMenuItem
+  LogoMenuItem,
+  FeedbackMenuItem
 ];
 
 const commonUiComponents = [
