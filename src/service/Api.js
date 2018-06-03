@@ -21,7 +21,6 @@ export default class Api {
     this.configureAxios();
   }
 
-
   async get(id, templateParams, queryParams) {
     const hasQueryParams = queryParams !== undefined;
     const urlPath = this._buildUrlById(id, templateParams, 'get');

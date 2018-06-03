@@ -58,8 +58,8 @@
     methods: {
       async loadUser() {
         this.isUserLoaded = false;
-        const { data } = await this.$locator.Api.get('currentUserUsingGET');
-        this.user = data;
+        const response = await this.$locator.Api.get('currentUserUsingGET');
+        this.user = response ? response.data : null;
         this.isUserLoaded = true;
       },
       redirectToLoginPage() {
@@ -106,7 +106,7 @@
                 </div>
             </menu-item-dropdown>
         </nav-layout>
-        <root-container v-if="hasUser">
+        <root-container v-if="isUserLoaded">
             <router-view></router-view>
         </root-container>
     </page-layout>
