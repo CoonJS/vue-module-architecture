@@ -49,7 +49,7 @@
         <div slot="header" class="header">
             <el-breadcrumb separator-class="el-icon-arrow-right" v-if="hasManager">
                 <el-breadcrumb-item :to="{ path: '/managers' }">Менеджеры</el-breadcrumb-item>
-                <el-breadcrumb-item>{{`${manager.firstName}${manager.lastName || ''}`}}</el-breadcrumb-item>
+                <el-breadcrumb-item>{{`${manager.firstName} ${manager.lastName || ''}`}}</el-breadcrumb-item>
                 <el-breadcrumb-item v-if="isShowSalesFeed">Сделки</el-breadcrumb-item>
                 <el-breadcrumb-item v-if="isShowActivityFeed">Активность</el-breadcrumb-item>
             </el-breadcrumb>
@@ -89,6 +89,6 @@
     .feed {
         width: 100%;
         overflow: auto;
-        background-color: #eee;
+        background-color: #f5f5f5;
     }
 </style>

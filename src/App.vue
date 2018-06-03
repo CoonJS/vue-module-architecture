@@ -106,7 +106,7 @@
                 </div>
             </menu-item-dropdown>
         </nav-layout>
-        <root-container>
+        <root-container v-if="hasUser">
             <router-view></router-view>
         </root-container>
     </page-layout>
@@ -124,4 +124,14 @@
         font-size: 10px;
         color: rgba(255,255,255, .7);
     }
+
+    /*BGC ANIMATION*/
+    /*-webkit-animation: card-plug-loader 1.5s infinite;*/
+    /*animation: card-plug-loader 1.5s infinite;*/
+    /*-webkit-animation-timing-function: linear;*/
+    /*animation-timing-function: linear;*/
+    /*-webkit-animation-fill-mode: forwards;*/
+    /*animation-fill-mode: forwards;*/
+    /*background: -webkit-linear-gradient(left,#eaeaea 8%,#e4e3e3 18%,#eaeaea 33%);*/
+    /*background: linear-gradient(to right,#eaeaea 8%,#e4e3e3 18%,#eaeaea 33%);*/
 </style>

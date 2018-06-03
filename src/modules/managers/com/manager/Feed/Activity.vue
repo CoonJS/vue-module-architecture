@@ -1,5 +1,10 @@
 <script>
+  import EventCard from './Card/Event.vue';
+
   export default {
+    components: {
+      EventCard
+    },
     props: {
       events: {
         type: Array,
@@ -7,14 +12,103 @@
           return [];
         }
       }
+    },
+    computed: {
+      todayEvents() {
+        return this.events.filter(event => {
+          const today = new Date().toDateString();
+          const date = new Date(event.createdMoment).toDateString();
+          return today === date;
+        });
+      },
+      anotherEvents() {
+        return this.events.filter(event => {
+          const today = new Date().toDateString();
+          const date = new Date(event.createdMoment).toDateString();
+          return today !== date;
+        });
+      }
     }
   }
 </script>
 
 <template>
-    <h1>Managers activity</h1>
+    <div class="activity-wrapper">
+        <div class="time-label" v-if="todayEvents.length > 0">
+            <div class="label">Сегодня</div>
+        </div>
+        <div class="events-wrap">
+            <event-card
+                v-for="event in todayEvents"
+                :key="event.id"
+                :date="event.createdMoment"
+            >
+                <span class="event-type">
+                    Смена статуса:
+                </span>
+                <span class="status">{{event.newStatus}}</span>
+                <span>на</span>
+                <span class="status">{{event.oldStatus}}</span>
+
+            </event-card>
+        </div>
+        <div class="time-label" v-if="anotherEvents.length > 0 && todayEvents.length > 0">
+            <div class="label">Остальные</div>
+        </div>
+        <div class="events-wrap">
+            <event-card
+                v-for="event in anotherEvents"
+                :key="event.id"
+                :date="event.createdMoment"
+            >
+                <span class="event-type">
+                    Смена статуса:
+                </span>
+                <span class="status">{{event.newStatus}}</span>
+                <span>на</span>
+                <span class="status">{{event.oldStatus}}</span>
+            </event-card>
+        </div>
+    </div>
 </template>
 
 <style scoped>
+    .activity-wrapper {
+        padding: 16px;
+    }
 
+    .time-label {
+        margin-top: 12px;
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        position: relative;
+        border: 1px solid #eee;
+    }
+
+    .label {
+        color: #6b6d72;
+        position: absolute;
+        top: -12px;
+        padding: 4px 12px;
+        font-size: 12px;
+        background-color: #fff;
+        border-radius: 12px;
+    }
+
+    .events-wrap {
+        margin-top: 24px;
+    }
+
+    .event {
+        margin: 8px 0;
+    }
+
+    .event-type {
+        font-weight: bold;
+    }
+
+    .status {
+        font-style: italic;
+    }
 </style>
