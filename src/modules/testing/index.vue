@@ -81,6 +81,9 @@
         this.clearQuestionForm();
         await this.loadTests();
       },
+      handleSelect(questionId, answers) {
+
+      },
       clearQuestionForm() {
         this.question = DEFAULT_QUESTION;
         this.$refs.questionForm.clearForm()
@@ -150,7 +153,7 @@
                     </div>
                     <div class="questions-container">
                         <div class="question-wrapper" v-for="question in selectedTest.questions" :key="question.id">
-                            <question-card :question="question"/>
+                            <question-card :question="question" @select="handleSelect"/>
                         </div>
                         <div class="actions-block">
                             <el-button type="success" icon="el-icon-circle-check-outline">Отправить ответы</el-button>

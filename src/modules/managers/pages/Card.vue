@@ -62,7 +62,7 @@
             </div>
             <div class="feed">
                 <sales-feed v-if="isShowSalesFeed && hasManager" :sales="manager.deals"/>
-                <activity-feed v-if="isShowActivityFeed"/>
+                <activity-feed v-if="isShowActivityFeed && hasManager" :events="manager.events"/>
             </div>
         </div>
     </page-container>

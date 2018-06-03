@@ -1,7 +1,12 @@
 <script>
   export default {
     props: {
-
+      events: {
+        type: Array,
+        default() {
+          return [];
+        }
+      }
     }
   }
 </script>
@@ -11,4 +16,5 @@
 </template>
 
 <style scoped>
+
 </style>

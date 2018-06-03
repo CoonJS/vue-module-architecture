@@ -8,15 +8,15 @@
             </div>
         </div>
         <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>
-                <router-link to="/profile">Профиль</router-link>
-            </el-dropdown-item>
-            <el-dropdown-item divided>
-                <router-link to="/users">Пользователи</router-link>
-            </el-dropdown-item>
-            <el-dropdown-item divided>
-                <router-link to="/settings">Настройки</router-link>
-            </el-dropdown-item>
+            <router-link to="/profile">
+                <el-dropdown-item>Профиль</el-dropdown-item>
+            </router-link>
+            <router-link to="/users">
+                <el-dropdown-item divided>Пользователи</el-dropdown-item>
+            </router-link>
+            <router-link to="/settings">
+                <el-dropdown-item divided>Настройки</el-dropdown-item>
+            </router-link>
             <el-dropdown-item divided @click.native="logout">Выйти</el-dropdown-item>
         </el-dropdown-menu>
     </el-dropdown>
@@ -49,7 +49,6 @@
         align-items: center;
         color: #fff;
         font-size: 12px;
-
     }
 
     .menu-item:hover {
