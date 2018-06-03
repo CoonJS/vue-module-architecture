@@ -90,15 +90,15 @@
         <nav-layout v-if="hasUser && isShowMenu">
             <menu-item-logo slot="left"/>
             <menu-item-link
-                    slot="left"
-                    v-for="item in menuItems"
-                    :key="item.key"
-                    :link="item.link"
+                slot="left"
+                v-for="item in menuItems"
+                :key="item.key"
+                :link="item.link"
             >
                 {{item.title}}
             </menu-item-link>
             <menu-item-icon icon="goods" slot="right" link="/marketplace"/>
-            <menu-item-icon icon="bell" slot="right" link="/notifications"/>
+            <!--<menu-item-icon icon="bell" slot="right" link="/notifications"/>-->
             <menu-item-dropdown slot="right">
                 <div class="user-info">
                     <div>{{userInfo}}</div>
@@ -113,29 +113,6 @@
 </template>
 
 <style scoped>
-
-    .menu {
-        height: 40px;
-        padding: 0 16px;
-        background-color: #2a3a4d;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .page {
-        height: 100%;
-        padding: 16px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    }
-
-    .pages {
-        display: flex;
-    }
-
-    .actions {
-        display: flex;
-    }
-
     .user-info {
         display: flex;
         flex-direction: column;
@@ -147,5 +124,4 @@
         font-size: 10px;
         color: rgba(255,255,255, .7);
     }
-
 </style>
