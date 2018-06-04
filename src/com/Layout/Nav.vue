@@ -19,7 +19,7 @@
     .nav-layout {
         height: 46px;
         position: fixed;
-        z-index: 10;
+        z-index: 1000;
         top: 0;
         left: 0;
         width: 100%;

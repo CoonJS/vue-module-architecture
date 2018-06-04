@@ -20,9 +20,6 @@
     data() {
       return {
         user: null,
-        loading: false,
-        feedbackType: 'POSITIVE',
-        feedbackComment: '',
         isUserLoaded: false,
         isShowMenu: true,
         isShowSidebar: false,
@@ -70,20 +67,6 @@
         this.user = response ? response.data : null;
         this.isUserLoaded = true;
       },
-      async sendFeedBack() {
-        this.loading = true;
-        try {
-          await this.api.post('createFeedbackUsingPOST', {}, {
-            type: this.feedbackType,
-            text: this.feedbackComment
-          });
-        } catch(e) {
-          throw e;
-        }
-
-        this.loading = false;
-        this.closeSidebar();
-      },
       redirectToLoginPage() {
         const isAuthPage = this.$route.name === 'AuthPage';
         const isRegisterAccountPage = this.$route.name === 'AccountRegistration';
@@ -102,15 +85,6 @@
           return;
         }
         this.$router.push('/');
-      },
-      showSidebar() {
-        this.isShowSidebar = true;
-      },
-      closeSidebar() {
-        this.isShowSidebar = false;
-      },
-      toggleSidebar() {
-        this.isShowSidebar = !this.isShowSidebar;
       }
     }
   }
@@ -128,7 +102,7 @@
             >
                 {{item.title}}
             </menu-item-link>
-            <menu-item-feedback slot="right" @click="toggleSidebar"/>
+            <menu-item-feedback slot="right"/>
             <menu-item-icon icon="goods" slot="right" link="/marketplace"/>
             <menu-item-dropdown slot="right">
                 <div class="user-info">
@@ -140,35 +114,6 @@
         <root-container v-if="isUserLoaded">
             <router-view></router-view>
         </root-container>
-
-
-
-        <sidebar v-model="isShowSidebar">
-            <div>
-                <h4>Оставьте свой фидбэк</h4>
-                <div class="feedback-form">
-                    <div class="field">
-                        <div class="text-hint">Ваш отзыв о нашей системе:</div>
-                        <el-radio-group size="small" v-model="feedbackType">
-                            <el-radio-button label="POSITIVE">Позитивный</el-radio-button>
-                            <el-radio-button label="NEUTRAL">Нейтральный</el-radio-button>
-                            <el-radio-button label="NEGATIVE">Негативный</el-radio-button>
-                        </el-radio-group>
-                    </div>
-                    <div class="field">
-                        <div class="text-hint">Комментарий:</div>
-                        <el-input type="textarea" v-model="feedbackComment"></el-input>
-                    </div>
-                </div>
-            </div>
-            <div slot="footer">
-                <el-button :loading="loading" type="success" @click="sendFeedBack">Отправить</el-button>
-                <el-button @click="closeSidebar">Отмена</el-button>
-            </div>
-        </sidebar>
-
-
-
     </page-layout>
 </template>
 
@@ -183,36 +128,6 @@
         justify-content: flex-end;
         font-size: 10px;
         color: rgba(255,255,255, .7);
-    }
-
-    .settings-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .settings-title {
-        color: #000;
-        margin-left: 16px;
-    }
-
-    .left-side {
-        display: flex;
-        align-items: center;
-    }
-
-    .feedback-form {
-        margin-top: 32px;
-    }
-
-    .field {
-        margin-top: 16px;
-    }
-
-    .text-hint {
-        padding: 8px 0;
-        font-size: 14px;
-        color: #999;
     }
 
     /*BGC ANIMATION*/

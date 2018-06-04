@@ -231,7 +231,7 @@
         align-items: center;
         justify-content: flex-end;
         position: absolute;
-        z-index: 1000;
+        z-index: 10;
         bottom: 0;
         left: 0;
         width: 100%;

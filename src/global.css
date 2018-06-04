@@ -8,3 +8,7 @@
 html, body {
     height: 100%;
 }
+
+.v-modal {
+    z-index: 100 !important;
+}
