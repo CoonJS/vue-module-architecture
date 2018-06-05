@@ -45,7 +45,7 @@
     },
     computed: {
       hasSelectedTest() {
-        return this.selectedTest !== null;
+        return this.selectedTest != null;
       },
       hasTestQuestions() {
         return this.hasSelectedTest && this.questions.length > 0;
@@ -157,7 +157,10 @@
           return;
         }
         this.selectedTest = test;
-        this.loadQuestions(test.id);
+
+        if (test) {
+          this.loadQuestions(test.id);
+        }
       },
       showCreateTestPopup() {
         this.isShowTestPopup = true;
@@ -240,8 +243,9 @@
         </el-dialog>
 
         <div class="testing-data" v-loading.body="loading">
-            <div class="tests">
+            <div class="tests" v-if="tests.length > 0">
                 <test-card
+                    v-if="hasSelectedTest"
                     v-for="test in tests"
                     :key="test.id"
                     :test="test"
@@ -250,7 +254,7 @@
                     @click.native="selectTest(test)"
                 />
             </div>
-            <div class="questions" v-loading.body="questionsLoading">
+            <div class="questions" v-if="tests.length > 0" v-loading.body="questionsLoading">
                 <template v-if="hasSelectedTest">
                     <div class="panel">
                         <el-button
@@ -295,6 +299,16 @@
                     </div>
                 </template>
             </div>
+            <div v-else class="no-tests">
+                <div>Тесты отсутствуют</div>
+                <el-button
+                        size="mini"
+                        type="info"
+                        @click="showCreateTestPopup"
+                >
+                    Создать тест
+                </el-button>
+            </div>
         </div>
     </page-container>
 </template>
@@ -313,6 +327,7 @@
     }
 
     .tests {
+        min-width: 300px;
         width: 300px;
         border-right: 1px solid #cacaca;
     }
@@ -353,6 +368,20 @@
     }
 
     .no-questions .el-button {
+        margin-top: 16px;
+    }
+
+    .no-tests {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 32px;
+        font-size: 32px;
+        color: rgba(0,0,0, .2);
+    }
+
+    .no-tests .el-button {
         margin-top: 16px;
     }
 

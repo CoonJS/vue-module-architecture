@@ -8,6 +8,9 @@
         }
       }
     },
+    mounted() {
+      this.focusInput();
+    },
     data () {
       return {
         name: this.value
@@ -17,12 +20,17 @@
       name(val) {
         this.$emit('input', val);
       }
+    },
+    methods: {
+      focusInput() {
+        this.$refs.input.$el.querySelector('input').focus();
+      }
     }
   }
 </script>
 
 <template>
-    <el-input placeholder="Название" v-model="name"/>
+    <el-input ref="input" placeholder="Название" v-model="name"/>
 </template>
 
 <style scoped>
