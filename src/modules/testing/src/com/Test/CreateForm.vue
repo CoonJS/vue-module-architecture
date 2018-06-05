@@ -17,9 +17,6 @@
       name(val) {
         this.$emit('input', val);
       }
-    },
-    methods: {
-
     }
   }
 </script>

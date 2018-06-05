@@ -83,16 +83,20 @@
             size="mini"
             @blur="saveTestName"
             @keydown.native.enter="saveTestName"
+            @keydown.native.escape="disableEditMode"
         />
         <div v-else class="test-name">{{name}}</div>
         <div class="actions">
-
-            <div v-if="!editMode" @click.prevent.stop="enableEditMode">
-                <i class="el-icon-edit"/>
-            </div>
-            <div @click.prevent.stop="removeTest(test.id)">
-                <i class="el-icon-delete"/>
-            </div>
+            <el-tooltip effect="dark" content="Редактировать тест" placement="top-start">
+                <div v-if="!editMode" @click.prevent.stop="enableEditMode">
+                    <i class="el-icon-edit"/>
+                </div>
+            </el-tooltip>
+            <el-tooltip effect="dark" content="Удалить тест" placement="top-start">
+                <div @click.prevent.stop="removeTest(test.id)">
+                    <i class="el-icon-delete"/>
+                </div>
+            </el-tooltip>
         </div>
     </div>
 </template>

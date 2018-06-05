@@ -8,23 +8,57 @@
         }
       }
     },
+    created() {
+      /** @type {Api}*/
+      this.api = this.$locator.Api;
+    },
     data () {
       return {};
+    },
+    methods: {
+      editQuestion() {
+        const questionCopy = JSON.parse(JSON.stringify(this.question));
+        this.$emit('edit', questionCopy);
+      },
+      removeQuestion() {
+        this.$emit('remove', this.question.id);
+      }
     }
   }
 </script>
 
 <template>
     <div class="question">
-        <h5>{{question.text}}</h5>
-        <div class="answers">
-            <div class="answer"
-                 v-for="answer in question.answers"
-                 :key="answer.id"
-            >
-                <el-checkbox>
-                    <span class="text">{{answer.text}}</span>
-                </el-checkbox>
+        <div>
+            <h5>{{question.text}}</h5>
+            <div class="answers">
+                <div>
+                    <div
+                        class="answer"
+                        v-for="answer in question.answers"
+                        :key="answer.id"
+                    >
+                        <el-checkbox>
+                            <span class="text">{{answer.text}}</span>
+                        </el-checkbox>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="actions">
+            <div>
+                <el-tooltip effect="dark" content="Редактировать вопрос" placement="top-start">
+                    <div @click="editQuestion">
+                        <i class="el-icon-edit"></i>
+                    </div>
+                </el-tooltip>
+            </div>
+            <div>
+                <el-tooltip effect="dark" content="Удалить вопрос" placement="top-start">
+                    <div @click="removeQuestion">
+                        <i class="el-icon-delete"></i>
+                    </div>
+                </el-tooltip>
             </div>
         </div>
     </div>
@@ -32,17 +66,42 @@
 
 <style scoped>
     .question {
-        background-color: #fff;
+        display: flex;
         padding: 16px;
+        background-color: #fff;
         border: 1px solid #cacaca;
+        justify-content: space-between;
     }
 
     .answers {
+        display: flex;
         padding: 8px 0;
+        justify-content: space-between;
     }
 
     .answer .text {
         font-size: 14px;
+    }
+
+    .actions {
+        display: flex;
+    }
+
+    .actions div div {
+        padding: 8px;
+        cursor: pointer;
+    }
+
+    .actions div div i {
+        font-size: 18px;
+    }
+
+    .el-icon-edit {
+        color: #409EFF;
+    }
+
+    .el-icon-delete {
+        color: #f56c6c;
     }
 
 </style>

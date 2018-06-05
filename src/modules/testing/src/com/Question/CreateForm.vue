@@ -36,6 +36,12 @@
         deep: true,
         handler(val) {
           this.$emit('input', val);
+        },
+      },
+      value: {
+        deep: true,
+        handler(val) {
+          this.question = val;
         }
       },
       hasMaxAnswersCountError(value) {
@@ -51,16 +57,12 @@
           correct: false
         };
 
-
         if (this.hasMaxAnswersCountError) {
           this.isShowMaxAnswersCountError = true;
           return;
         }
 
         this.question.answers = [ ...this.question.answers, newAnswer ];
-      },
-      clearForm() {
-        this.question = Object.assign({}, DEFAULT_QUESTION, { answers: [{ text: '', correct: false } ]});
       },
       removeAnswerByIndex(removeIndex) {
         const answers = this.question.answers;
@@ -70,6 +72,9 @@
         }
 
         this.question.answers = answers.filter((answer,idx) => idx !== removeIndex);
+      },
+      clearForm() {
+        this.question = Object.assign({}, DEFAULT_QUESTION, { answers: [{ text: '', correct: false } ]});
       }
     }
   }
@@ -98,7 +103,6 @@
                     inactive-color="#ff4949"
                     active-text="Правильный"
                 />
-                <!--<i class="el-icon-delete delete-icon"/>-->
             </div>
             <div class="action-button">
                 <el-button type="primary" @click="addAnswer" size="mini">Добавить вариант</el-button>
