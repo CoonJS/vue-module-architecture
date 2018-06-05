@@ -32,9 +32,9 @@
             </div>
         </div>
         <div class="content">
-            <div class="progress">
-                <el-progress :percentage="70" status="success" :text-inside="true" :stroke-width="24"/>
-            </div>
+            <!--<div class="progress">-->
+                <!--<el-progress :percentage="70" status="success" :text-inside="true" :stroke-width="24"/>-->
+            <!--</div>-->
         </div>
     </div>
 </template>

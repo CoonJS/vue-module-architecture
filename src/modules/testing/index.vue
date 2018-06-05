@@ -1,4 +1,5 @@
 <script>
+  import TestCard from './src/com/Test/Card.vue';
   import QuestionCard from './src/com/Question/Card.vue';
   import CreateTestForm from './src/com/Test/CreateForm.vue';
   import CreateQuestionForm from './src/com/Question/CreateForm.vue';
@@ -15,8 +16,9 @@
 
   export default {
     components: {
-      CreateTestForm,
+      TestCard,
       QuestionCard,
+      CreateTestForm,
       CreateQuestionForm
     },
     created() {
@@ -51,6 +53,7 @@
     },
     methods: {
       async loadTests() {
+        this.loading = true;
         const { data: tests } = await this.api.get('testsUsingGET');
         this.tests = tests;
 
@@ -63,6 +66,8 @@
         if (!this.hasSelectedTest) {
           this.selectTest(tests[0]);
         }
+
+        this.loading = false;
       },
       async saveTest() {
         this.saving = true;
@@ -81,8 +86,20 @@
         this.clearQuestionForm();
         await this.loadTests();
       },
-      handleSelect(questionId, answers) {
+      async handleRemoveTest(testId) {
+        try {
+          await this.api.delete('deleteTestUsingDELETE', { id: testId });
+        } catch (e) {
+          throw e;
+        }
 
+        if (this.tests.length > 0) {
+          this.selectTest(this.tests[0]);
+        } else {
+          this.selectedTest = null;
+        }
+
+        this.tests = this.tests.filter(test => test.id !== testId);
       },
       clearQuestionForm() {
         this.question = DEFAULT_QUESTION;
@@ -127,17 +144,16 @@
                 <el-button @click="closeCreateQuestionPopup">Отмена</el-button>
             </div>
         </el-dialog>
-        <div class="testing-data">
+        <div class="testing-data" v-loading.body="loading">
             <div class="tests">
-                <div
-                    class="test"
+                <test-card
                     v-for="test in tests"
                     :key="test.id"
-                    :class="{ active: test.id === selectedTest.id}"
-                    @click="selectTest(test)"
-                >
-                    {{test.name}}
-                </div>
+                    :test="test"
+                    :active="test.id === selectedTest.id"
+                    @remove="handleRemoveTest"
+                    @select="selectTest"
+                />
             </div>
             <div class="questions">
                 <template v-if="hasSelectedTest">
@@ -153,7 +169,7 @@
                     </div>
                     <div class="questions-container">
                         <div class="question-wrapper" v-for="question in selectedTest.questions" :key="question.id">
-                            <question-card :question="question" @select="handleSelect"/>
+                            <question-card :question="question"/>
                         </div>
                         <div class="actions-block">
                             <el-button type="success" icon="el-icon-circle-check-outline">Отправить ответы</el-button>
@@ -181,22 +197,6 @@
     .tests {
         width: 300px;
         border-right: 1px solid #cacaca;
-    }
-
-    .test {
-        padding: 16px;
-        background: #fff;
-        cursor: pointer;
-        font-size: 14px;
-        border-bottom: 1px solid #eee;
-    }
-
-    .test.active {
-        background: rgba(14, 176, 253, .1);
-    }
-
-    .test:hover {
-        background: rgba(14, 176, 253, .1);
     }
 
     .questions {
