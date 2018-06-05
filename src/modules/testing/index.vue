@@ -153,6 +153,9 @@
         this.showCreateQuestionPopup();
       },
       selectTest(test) {
+        if (this.questionsLoading) {
+          return;
+        }
         this.selectedTest = test;
         this.loadQuestions(test.id);
       },
@@ -244,7 +247,7 @@
                     :test="test"
                     :active="test.id === selectedTest.id"
                     @remove="handleRemoveTest"
-                    @select="selectTest"
+                    @click.native="selectTest(test)"
                 />
             </div>
             <div class="questions" v-loading.body="questionsLoading">

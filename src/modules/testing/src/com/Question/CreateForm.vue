@@ -134,24 +134,10 @@
 
     .answer .el-input {
         margin-right: 24px;
-    }
-
-    .delete-icon {
-        padding: 0 16px;
-        cursor: pointer;
-        color: #f56c6c;
+        width: 290px;
     }
 
     .action-button {
         padding: 16px 0;
     }
-
-    .checkbox-title {
-        font-size: 12px;
-    }
-
-    .el-tag {
-        margin-left: 16px;
-    }
-
 </style>

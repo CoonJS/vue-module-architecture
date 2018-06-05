@@ -13,7 +13,9 @@
       this.api = this.$locator.Api;
     },
     data () {
-      return {};
+      return {
+        loading: false
+      };
     },
     methods: {
       editQuestion() {
@@ -21,6 +23,7 @@
         this.$emit('edit', questionCopy);
       },
       removeQuestion() {
+        this.loading = true;
         this.$emit('remove', this.question.id);
       }
     }
@@ -56,7 +59,8 @@
             <div>
                 <el-tooltip effect="dark" content="Удалить вопрос" placement="top-start">
                     <div @click="removeQuestion">
-                        <i class="el-icon-delete"></i>
+                        <i v-if="loading" class="el-icon-loading"></i>
+                        <i v-else class="el-icon-delete"></i>
                     </div>
                 </el-tooltip>
             </div>

@@ -46,9 +46,6 @@
         this.disableEditMode();
         this.loading = false;
       },
-      selectTest(test) {
-        this.$emit('select',test);
-      },
       removeTest(testId) {
         this.loading = true;
         this.$emit('remove',testId);
@@ -73,8 +70,6 @@
     <div
         class="test"
         :class="{ active: active }"
-        v-loading.body="loading"
-        @click="selectTest(test)"
     >
         <el-input
             ref="input"
@@ -94,7 +89,8 @@
             </el-tooltip>
             <el-tooltip effect="dark" content="Удалить тест" placement="top-start">
                 <div @click.prevent.stop="removeTest(test.id)">
-                    <i class="el-icon-delete"/>
+                    <i v-if="loading" class="el-icon-loading"/>
+                    <i v-else class="el-icon-delete"/>
                 </div>
             </el-tooltip>
         </div>
