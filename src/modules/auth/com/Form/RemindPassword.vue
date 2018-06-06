@@ -4,6 +4,9 @@
       /** @type {Api}*/
       this.api = this.$locator.Api;
     },
+    mounted() {
+      this.focusInput();
+    },
     data () {
       return {
         email: '',
@@ -26,6 +29,9 @@
         this.showSuccessMessage();
         this.$emit('send');
       },
+      focusInput() {
+        this.$refs.input.$el.querySelector('input').focus();
+      },
       showSuccessMessage() {
         this.$message({
           message: `Письмо отправлено на почту ${this.email}`,
@@ -37,20 +43,22 @@
 </script>
 
 <template>
-    <div>
-        <div class="form">
-            <div class="title">Введите email, на который придет письмо со ссылкой на сброс пароля</div>
-            <el-input v-model="email">
-                <el-button
-                    slot="append"
-                    icon="el-icon-message"
-                    :loading="loading"
-                    @click="sendRemindPasswordRequest"
-                >
-                    Отправить
-                </el-button>
-            </el-input>
-        </div>
+    <div class="form">
+        <div class="title">Введите email, на который придет письмо со ссылкой на сброс пароля</div>
+        <el-input
+            v-model="email"
+            ref="input"
+            @keydown.native.enter="sendRemindPasswordRequest"
+        >
+            <el-button
+                slot="append"
+                icon="el-icon-message"
+                :loading="loading"
+                @click="sendRemindPasswordRequest"
+            >
+                Отправить
+            </el-button>
+        </el-input>
     </div>
 </template>
 
@@ -59,9 +67,5 @@
         padding: 16px 0;
         font-size: 14px;
         color: #999;
-    }
-
-    .form {
-
     }
 </style>

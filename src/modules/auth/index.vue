@@ -5,6 +5,9 @@
     components: {
       RemindPasswordForm
     },
+    mounted() {
+      this.focusLoginInput();
+    },
     data () {
       return {
         userName: '',
@@ -31,6 +34,11 @@
           duration: 2000
         });
       },
+      focusLoginInput() {
+        this.$nextTick(() => {
+          this.$refs.loginInput.$el.querySelector('input').focus();
+        });
+      },
       showRemindPasswordForm() {
         this.isShowRemindPasswordForm = true;
       },
@@ -48,6 +56,7 @@
                 <div class="title"><h1>Вход</h1></div>
                 <div class="field">
                     <el-input
+                        ref="loginInput"
                         type="text"
                         placeholder="Логин"
                         :disabled="isLoading"

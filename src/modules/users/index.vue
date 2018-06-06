@@ -49,6 +49,13 @@
         }
       }
     },
+    watch: {
+      isShowModal(val) {
+        if (val === true) {
+          this.focusInput();
+        }
+      }
+    },
     methods: {
       async loadUsers() {
         this.isUsersLoading = true;
@@ -66,6 +73,11 @@
         }
 
         this.isInviting = false;
+      },
+      focusInput() {
+        this.$nextTick(() => {
+          this.$refs.emailInput.$el.querySelector('input').focus();
+        });
       },
       showInviteModal() {
         this.isShowModal = true;
@@ -88,7 +100,13 @@
         </div>
         <el-dialog :visible.sync="isShowModal" title="Пригласить пользователя" width="400px">
             <div>
-                <el-input placeholder="Email" v-model="email"/>
+                <el-input
+                    ref="emailInput"
+                    v-model="email"
+                    placeholder="Email"
+                    :disabled="isInviting"
+                    @keydown.native.enter="inviteUser"
+                />
             </div>
             <div slot="footer">
                 <el-button type="success" @click="inviteUser" :loading="isInviting">Пригласить</el-button>

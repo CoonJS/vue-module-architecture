@@ -13,6 +13,13 @@
         feedbackComment: ''
       };
     },
+    watch: {
+      isShow(val) {
+        if (val === true) {
+          this.focusTextArea();
+        }
+      }
+    },
     methods: {
       async sendFeedBack() {
         this.loading = true;
@@ -28,6 +35,11 @@
         this.loading = false;
         this.showSuccessMessage();
         this.close();
+      },
+      focusTextArea() {
+        this.$nextTick(() => {
+          this.$refs.textArea.$el.querySelector('textarea').focus();
+        });
       },
       showSuccessMessage() {
         this.$message({
@@ -71,7 +83,7 @@
                 </div>
                 <div class="field">
                     <div class="text-hint">Комментарий:</div>
-                    <el-input v-model="feedbackComment" type="textarea" :disabled="loading"/>
+                    <el-input v-model="feedbackComment" ref="textArea" type="textarea" :disabled="loading"/>
                 </div>
             </div>
             <div slot="footer">

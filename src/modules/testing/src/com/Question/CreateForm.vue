@@ -8,6 +8,7 @@
       }
     ]
   };
+
   export default {
     props: {
       value: {
@@ -18,6 +19,9 @@
           }
         }
       }
+    },
+    mounted() {
+      this.focusTextArea();
     },
     data () {
       return {
@@ -73,6 +77,11 @@
 
         this.question.answers = answers.filter((answer,idx) => idx !== removeIndex);
       },
+      focusTextArea() {
+        this.$nextTick(() => {
+          this.$refs.textArea.$el.querySelector('textarea').focus();
+        });
+      },
       clearForm() {
         this.question = Object.assign({}, DEFAULT_QUESTION, { answers: [{ text: '', correct: false } ]});
       }
@@ -83,7 +92,7 @@
 <template>
     <div class="form">
         <div class="form-item">
-            <el-input type="textarea" placeholder="Текст вопроса" :rows="3" v-model="question.text"/>
+            <el-input type="textarea" ref="textArea" placeholder="Текст вопроса" :rows="3" v-model="question.text"/>
         </div>
         <div class="form-item">
             <div class="title">Варианты ответов</div>
@@ -113,10 +122,6 @@
 </template>
 
 <style scoped>
-    .form {
-
-    }
-
     .form-item {
         padding: 12px 0;
     }
