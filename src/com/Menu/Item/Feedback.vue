@@ -66,6 +66,7 @@
         <el-button
             type="primary"
             size="mini"
+            icon="el-icon-service"
             @click="show"
         >
             Обратная связь

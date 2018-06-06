@@ -242,7 +242,7 @@
             </div>
         </el-dialog>
 
-        <div class="testing-data" v-loading.body="loading">
+        <div class="testing-data">
             <div class="tests" v-if="tests.length > 0">
                 <test-card
                     v-if="hasSelectedTest"
