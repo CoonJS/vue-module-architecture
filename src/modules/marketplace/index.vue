@@ -6,6 +6,8 @@
       ModuleCard
     },
     created() {
+      /** @type {Api} */
+      this.api = this.$locator.Api;
       /** @type {Module} */
       this.moduleService = this.$locator.Module;
     },
@@ -85,21 +87,29 @@
         await this.$locator.Api.post('createdIntegrationUsingPOST', {}, preparedIntegrationData);
       },
       async updateIntegrationSettings(integration) {
-        await this.$locator.Api.put('updatedIntegrationUsingPUT', { id: integration.id }, integration);
+        await this.api.put('updatedIntegrationUsingPUT', { id: integration.id }, integration);
       },
       async disableIntegration() {
         const integration = this.selectedIntegration;
         const newIntegration = Object.assign({}, integration, { active: false });
-        await this.$locator.Api.put('updatedIntegrationUsingPUT', { id: integration.id }, newIntegration);
+        await this.api.put('updatedIntegrationUsingPUT', { id: integration.id }, newIntegration);
         await this.loadIntegrations();
         this.closeSideBar();
       },
       async enableIntegration() {
         const integration = this.selectedIntegration;
         const newIntegration = Object.assign({}, integration, { active: true });
-        await this.$locator.Api.put('updatedIntegrationUsingPUT', { id: integration.id }, newIntegration);
+        await this.api.put('updatedIntegrationUsingPUT', { id: integration.id }, newIntegration);
         await this.loadIntegrations();
         this.closeSideBar();
+      },
+      deleteIntegration() {
+        const integration = this.selectedIntegration;
+        this.showConfirmMessage().then(async () => {
+          await this.api.delete('deleteIntegrationUsingDELETE', { id: integration.id });
+          await this.loadIntegrations();
+          this.closeSideBar();
+        });
       },
       showEnabledIntegrationSettings(integration) {
         this.selectedIntegration = integration;
@@ -110,6 +120,13 @@
         this.selectedIntegration = integration;
         this.isEnabledSelectedModule = integration.active;
         this.isShowSidebar = true;
+      },
+      showConfirmMessage() {
+        return this.$confirm('Вы действительно хотите удалить интеграцию?', {
+          confirmButtonText: 'Удалить',
+          cancelButtonText: 'Отмена',
+          type: 'Danger'
+        })
       },
       closeSideBar() {
         this.isShowSidebar = false;
@@ -181,22 +198,31 @@
                     <h3 class="settings-title">{{selectedIntegration.displayName}}</h3>
                 </div>
                 <template v-if="selectedIntegration.id !== undefined">
-                    <el-button
-                        v-if="isEnabledSelectedModule"
-                        size="mini"
-                        type="danger"
-                        @click="disableIntegration"
-                    >
-                        Выключить
-                    </el-button>
-                    <el-button
-                        v-else
-                        size="mini"
-                        type="success"
-                        @click="enableIntegration"
-                    >
-                        Включить
-                    </el-button>
+                    <div class="integration-actions">
+                        <el-button
+                            v-if="isEnabledSelectedModule"
+                            size="mini"
+                            type="warning"
+                            @click="disableIntegration"
+                        >
+                            Выключить
+                        </el-button>
+                        <el-button
+                            v-else
+                            size="mini"
+                            type="success"
+                            @click="enableIntegration"
+                        >
+                            Включить
+                        </el-button>
+                        <el-button
+                            size="mini"
+                            type="danger"
+                            @click="deleteIntegration"
+                        >
+                            Удалить
+                        </el-button>
+                    </div>
                 </template>
             </div>
 
@@ -255,5 +281,9 @@
         color: #adadad;
         display: flex;
         justify-content: center;
+    }
+
+    .integration-actions {
+        display: flex;
     }
 </style>
