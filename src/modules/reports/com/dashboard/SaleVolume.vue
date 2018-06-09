@@ -38,7 +38,7 @@
             type: 'area'
           },
           title: {
-            text: 'Объём оплат/отказов'
+            text: 'Объём продаж'
           },
           series,
           xAxis: {
