@@ -48,7 +48,7 @@
     <page-container v-loading.body="isDataLoading" flex-content fluid>
         <div slot="header" class="header">
             <el-breadcrumb separator-class="el-icon-arrow-right" v-if="hasManager">
-                <el-breadcrumb-item :to="{ path: '/managers' }">Менеджеры</el-breadcrumb-item>
+                <el-breadcrumb-item :to="{ path: '/' }">Отчеты</el-breadcrumb-item>
                 <el-breadcrumb-item>{{`${manager.firstName} ${manager.lastName || ''}`}}</el-breadcrumb-item>
                 <el-breadcrumb-item v-if="isShowSalesFeed">Сделки</el-breadcrumb-item>
                 <el-breadcrumb-item v-if="isShowActivityFeed">Активность</el-breadcrumb-item>
