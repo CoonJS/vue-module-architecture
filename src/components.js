@@ -16,6 +16,8 @@ import DropdownMenuItem from './com/Menu/Item/Dropdown.vue';
 import FeedbackMenuItem from './com/Menu/Item/Feedback.vue';
 
 /*===UI===*/
+
+import Link from './com/Link/Default.vue';
 import Sidebar from './com/Sidebar/Default.vue';
 import LineChart from './com/Chart/Line.vue';
 import DynamicForm from './com/Form/Dynamic.vue';
@@ -40,6 +42,7 @@ const menuItems = [
 ];
 
 const commonUiComponents = [
+  Link,
   Sidebar,
   LineChart,
   DynamicForm

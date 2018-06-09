@@ -25,6 +25,9 @@
       removeQuestion() {
         this.loading = true;
         this.$emit('remove', this.question.id);
+      },
+      selectAnswer(value, answer) {
+        this.$emit('select', { value, id: answer.id });
       }
     }
   }
@@ -41,7 +44,7 @@
                         v-for="answer in question.answers"
                         :key="answer.id"
                     >
-                        <el-checkbox>
+                        <el-checkbox @change="selectAnswer($event, answer)">
                             <span class="text">{{answer.text}}</span>
                         </el-checkbox>
                     </div>

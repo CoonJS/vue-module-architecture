@@ -39,6 +39,7 @@
         isEditModeQuestion: false,
         tests: [],
         questions: [],
+        testAnswersMap: {},
         question: DEFAULT_QUESTION,
         selectedTest: null
       }
@@ -147,6 +148,20 @@
         this.loadQuestions(this.selectedTest.id);
         this.closeCreateQuestionPopup();
       },
+      async sendResults() {
+        this.loading = true;
+        const testId = this.selectedTest.id;
+        const answers = Object.keys(this.testAnswersMap).map(questionId => {
+          return {
+            questionId: Number(questionId),
+            answerIds: this.testAnswersMap[questionId]
+          }
+        });
+
+        await this.api.post('createdResultUsingPOST', { id: testId }, { answers });
+        this.testAnswersMap = {};
+        this.loading = false;
+      },
       showEditQuestionForm(question) {
         this.isEditModeQuestion = true;
         this.question = question;
@@ -160,6 +175,29 @@
 
         if (test) {
           this.loadQuestions(test.id);
+        }
+
+        this.testAnswersMap = {};2
+      },
+      handleSelectAnswers(answer, questionId) {
+        const answerId = answer.id;
+        const value = answer.value;
+        const hasQuestionAnswers = Array.isArray(this.testAnswersMap[questionId]);
+
+        if (!hasQuestionAnswers) {
+          this.testAnswersMap[questionId] = [ answerId ];
+          return;
+        }
+
+        const hasAnswerId = this.testAnswersMap[questionId].includes(answerId);
+
+        if (hasAnswerId) {
+          this.testAnswersMap[questionId] = this.testAnswersMap[questionId].filter(id => id !== answerId);
+          return;
+        }
+
+        if (value === true) {
+          this.testAnswersMap[questionId] = [...this.testAnswersMap[questionId], answerId ];
         }
       },
       showCreateTestPopup() {
@@ -185,7 +223,10 @@
 <template>
     <page-container flex-content fluid>
         <div slot="header" class="header">
-            <h3>Тестирование</h3>
+            <div class="header-info">
+                <h3>Тестирование</h3>
+                <ui-link to="/testing/statistics">Статистика</ui-link>
+            </div>
             <el-button
                 type="success"
                 size="medium"
@@ -275,6 +316,7 @@
                                 :question="question"
                                 @remove="removeQuestion"
                                 @edit="showEditQuestionForm"
+                                @select="handleSelectAnswers($event, question.id)"
                             />
                         </div>
                         <div v-if="!hasTestQuestions" class="no-questions">
@@ -292,6 +334,8 @@
                                 type="success"
                                 size="medium"
                                 icon="el-icon-circle-check-outline"
+                                :loading="loading"
+                                @click="sendResults"
                             >
                                 Отправить ответы
                             </el-button>
@@ -319,6 +363,15 @@
         width: 100%;
         align-items: center;
         justify-content: space-between;
+    }
+
+    .header-info {
+        display: flex;
+        align-items: center;
+    }
+
+    .header-info h3 {
+        margin-right: 8px;
     }
 
     .testing-data {
