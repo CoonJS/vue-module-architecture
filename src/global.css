@@ -9,6 +9,10 @@ html, body {
     height: 100%;
 }
 
+body {
+    overflow: hidden;
+}
+
 .v-modal {
     z-index: 100 !important;
 }
