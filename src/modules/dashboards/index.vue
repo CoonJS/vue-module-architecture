@@ -2,9 +2,11 @@
   import FunnelDashboard from './com/dashboard/Funnel.vue';
   import SaleVolumeDashboard from './com/dashboard/SaleVolume.vue';
   import NoDataDashboard from './com/dashboard/NoData.vue';
+  import ManagersTable from './com/dashboard/Managers.vue';
 
   export default {
     components: {
+      ManagersTable,
       FunnelDashboard,
       NoDataDashboard,
       SaleVolumeDashboard
@@ -92,6 +94,11 @@
                     <no-data-dashboard v-else="isDataLoaded"/>
                 </el-card>
             </div>
+            <div class="row">
+                <el-card class="box-card fluid" v-loading.body="isDataLoading">
+                    <managers-table/>
+                </el-card>
+            </div>
         </div>
     </page-container>
 </template>
@@ -103,6 +110,10 @@
         width: 50%;
         margin-right: 12px;
         height: 400px;
+    }
+
+    .box-card.fluid {
+        width: 100%;
     }
 
     .box-card:last-child {
