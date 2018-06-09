@@ -1,6 +1,6 @@
 const modules = [
   require('./modules/auth/index'),
-  require('./modules/dashboards/index'),
+  require('./modules/reports/index'),
   require('./modules/managers/index'),
   require('./modules/marketplace/index'),
   require('./modules/profile/index'),

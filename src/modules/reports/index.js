@@ -1,4 +1,4 @@
-const DashboardsPage = () => import(/* webpackChunkName: "dashboard" */'./index.vue');
+const ReportsPage = () => import(/* webpackChunkName: "reports" */'./index.vue');
 
 export default async function(locator) {
   const routerService = locator.Router;
@@ -7,7 +7,7 @@ export default async function(locator) {
     {
       path: '/',
       name: 'Root',
-      component: DashboardsPage
+      component: ReportsPage
     }
   ]);
 }

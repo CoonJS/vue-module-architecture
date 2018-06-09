@@ -25,8 +25,8 @@
         isShowSidebar: false,
         menuItems: [
           {
-            key:'dashboards',
-            title: 'Дашборды',
+            key:'reports',
+            title: 'Отчеты',
             link: '/'
           },
           {

@@ -1,8 +1,8 @@
 <script>
   import FunnelDashboard from './com/dashboard/Funnel.vue';
-  import SaleVolumeDashboard from './com/dashboard/SaleVolume.vue';
   import NoDataDashboard from './com/dashboard/NoData.vue';
   import ManagersTable from './com/dashboard/Managers.vue';
+  import SaleVolumeDashboard from './com/dashboard/SaleVolume.vue';
 
   export default {
     components: {
@@ -74,13 +74,17 @@
         <div slot="header">
             <el-date-picker
                 v-model="period.dateFrom"
+                size="medium"
                 type="datetime"
                 placeholder="От"
+                format="yyyy:MM:dd HH:mm:ss"
             />
             <el-date-picker
                 v-model="period.dateTo"
+                size="medium"
                 type="datetime"
                 placeholder="До"
+                format="yyyy:MM:dd HH:mm:ss"
             />
         </div>
         <div class="dashboards">
@@ -95,7 +99,7 @@
                 </el-card>
             </div>
             <div class="row">
-                <el-card class="box-card fluid" v-loading.body="isDataLoading">
+                <el-card class="box-card fluid">
                     <managers-table/>
                 </el-card>
             </div>
