@@ -22,8 +22,9 @@
         chartData: [],
         period: {
           dateFrom: null,
-          dateTo: null
-        }
+          dateTo: new Date()
+        },
+        preset: 'ALL'
       }
     },
     watch: {
@@ -31,6 +32,11 @@
         deep: true,
         handler() {
           this.loadDashboardData();
+        }
+      },
+      preset: {
+        handler(val) {
+          this.setPeriod(val);
         }
       }
     },
@@ -64,6 +70,54 @@
 
         this.isDataLoaded = true;
         this.isDataLoading = false;
+      },
+      setPeriod(preset) {
+        if (preset === 'ALL') {
+            this.period = {
+              dateFrom: null,
+              dateTo: new Date()
+            };
+        }
+
+        if (preset === 'YEAR') {
+          const yearAgo = new Date();
+          yearAgo.setTime(yearAgo.getTime() - 3600 * 1000 * 24 * 365);
+
+          this.period = {
+            dateFrom: yearAgo,
+            dateTo: new Date()
+          };
+        }
+
+        if (preset === 'MONTH') {
+          const monthAgo = new Date();
+          monthAgo.setTime(monthAgo.getTime() - 3600 * 1000 * 24 * 30);
+
+          this.period = {
+            dateFrom: monthAgo,
+            dateTo: new Date()
+          };
+        }
+
+        if (preset === 'WEEK') {
+          const weekAgo = new Date();
+          weekAgo.setTime(weekAgo.getTime() - 3600 * 1000 * 24 * 7);
+
+          this.period = {
+            dateFrom: weekAgo,
+            dateTo: new Date()
+          };
+        }
+
+        if (preset === 'DAY') {
+          const today = new Date();
+          today.setTime(today.getTime() - 3600 * 1000 * 24);
+
+          this.period = {
+            dateFrom: today,
+            dateTo: new Date()
+          };
+        }
       }
     }
   }
@@ -77,15 +131,22 @@
                 size="medium"
                 type="datetime"
                 placeholder="От"
-                format="yyyy:MM:dd HH:mm:ss"
+                format="dd:MM:yyyy HH:mm:ss"
             />
             <el-date-picker
                 v-model="period.dateTo"
                 size="medium"
                 type="datetime"
                 placeholder="До"
-                format="yyyy:MM:dd HH:mm:ss"
+                format="dd:MM:yyyy HH:mm:ss"
             />
+            <el-radio-group v-model="preset" size="mini">
+                <el-radio-button label="ALL">Все время</el-radio-button>
+                <el-radio-button label="YEAR">Год</el-radio-button>
+                <el-radio-button label="MONTH">Месяц</el-radio-button>
+                <el-radio-button label="WEEK">Неделя</el-radio-button>
+                <el-radio-button label="DAY">День</el-radio-button>
+            </el-radio-group>
         </div>
         <div class="dashboards">
             <div class="row">
@@ -108,6 +169,11 @@
 </template>
 
 <style scoped>
+
+    .el-radio-group {
+        margin-left: 16px;
+    }
+
     .box-card {
         display: flex;
         flex-direction: column;
