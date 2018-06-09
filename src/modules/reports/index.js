@@ -1,4 +1,6 @@
 const ReportsPage = () => import(/* webpackChunkName: "reports" */'./index.vue');
+const ManagersPage = () => import(/* webpackChunkName: "managers" */'./index.vue');
+const ManagerCard = () => import(/* webpackChunkName: "manager" */'./pages/Card.vue');
 
 export default async function(locator) {
   const routerService = locator.Router;
@@ -8,6 +10,16 @@ export default async function(locator) {
       path: '/',
       name: 'Root',
       component: ReportsPage
+    },
+    {
+      path: '/managers',
+      name: 'ManagersPage',
+      component: ManagersPage
+    },
+    {
+      path: '/managers/:id',
+      name: 'ManagerPage',
+      component: ManagerCard
     }
   ]);
 }
