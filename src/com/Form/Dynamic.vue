@@ -30,19 +30,32 @@
 </script>
 
 <template>
-    <el-form :model="form" label-width="150px">
-        <el-form-item
-            v-for="field in fields"
-            v-if="field.name !== 'type'"
-            :key="field.name"
-            :label="field.displayName"
-            :rules="[{ required: true }]"
-        >
-            <el-input v-model="form[field.name]" />
-        </el-form-item>
+    <el-form :model="form" size="medium">
+        <div class="field" v-for="field in fields">
+            <div class="label">{{field.displayName}}</div>
+            <el-form-item
+                v-if="field.name !== 'type'"
+                :key="field.name"
+                :rules="[{ required: true }]"
+            >
+                <el-input v-model="form[field.name]" />
+            </el-form-item>
+        </div>
     </el-form>
 </template>
 
 <style scoped>
+    .field {
+        margin-bottom: 8px;
 
+    }
+
+    .field:last-child {
+        margin-bottom: 0;
+    }
+
+    .label {
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
 </style>
