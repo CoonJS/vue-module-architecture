@@ -77,6 +77,7 @@
             v-model="name"
             size="mini"
             @blur="saveTestName"
+            @click.native.stop
             @keydown.native.enter="saveTestName"
             @keydown.native.escape="disableEditMode"
         />
