@@ -6,10 +6,13 @@
     },
     mounted() {
       this.loadUsers();
+      this.loadRoles();
     },
     data () {
       return {
         users: [],
+        roles: [],
+        roleId: null,
         email: '',
         isUsersLoading: false,
         isShowModal: false,
@@ -63,16 +66,27 @@
         this.users = users;
         this.isUsersLoading = false;
       },
+      async loadRoles() {
+        const { data: roles } = await this.api.get('rolesUsingGET');
+        this.roles = roles.filter(role => role.editable);
+        this.selectDefaultRole();
+      },
       async inviteUser() {
         this.isInviting = true;
         try {
-          await this.api.post('createUserRegistrationRequestUsingPOST', {}, { email: this.email });
+          const email = this.email;
+          const roleId = this.roleId;
+          await this.api.post('createUserRegistrationRequestUsingPOST', {}, { email, roleId });
           this.closeInviteModal();
         } catch(e) {
           throw e;
         }
 
         this.isInviting = false;
+      },
+      selectDefaultRole() {
+        const roles = this.roles;
+        this.roleId = roles.length > 0 ? roles[0].id : null;
       },
       focusInput() {
         this.$nextTick(() => {
@@ -98,8 +112,21 @@
             <h3>Пользователи</h3>
             <el-button type="success" @click="showInviteModal">Пригласить</el-button>
         </div>
+
         <el-dialog :visible.sync="isShowModal" title="Пригласить пользователя" width="400px">
-            <div>
+            <div class="field">
+                <div class="title">Роль</div>
+                <el-select v-model="roleId">
+                    <el-option
+                        v-for="role in roles"
+                        :key="role.id"
+                        :label="role.name"
+                        :value="role.id">
+                    </el-option>
+                </el-select>
+            </div>
+            <div class="field">
+                <div class="title">Email</div>
                 <el-input
                     ref="emailInput"
                     v-model="email"
@@ -113,6 +140,7 @@
                 <el-button @click="closeInviteModal">Отмена</el-button>
             </div>
         </el-dialog>
+
         <div class="users">
             <el-table
                 border
@@ -120,7 +148,6 @@
                 style="width: 100%"
                 v-loading="isUsersLoading"
             >
-
                 <el-table-column
                     v-for="column in columns"
                     :key="column.key"
@@ -151,5 +178,22 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+    }
+
+    .field {
+        margin: 8px 0;
+    }
+
+    .field:first-child {
+        margin-top: 0;
+    }
+
+    .field .title {
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
+
+    .el-select {
+        width: 100%;
     }
 </style>
