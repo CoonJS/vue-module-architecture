@@ -14,9 +14,9 @@
             <router-link to="/users">
                 <el-dropdown-item divided>Пользователи</el-dropdown-item>
             </router-link>
-            <!--<router-link to="/settings">-->
-                <!--<el-dropdown-item divided>Настройки</el-dropdown-item>-->
-            <!--</router-link>-->
+            <router-link to="/roles">
+                <el-dropdown-item divided>Роли</el-dropdown-item>
+            </router-link>
             <el-dropdown-item divided @click.native="logout">Выйти</el-dropdown-item>
         </el-dropdown-menu>
     </el-dropdown>

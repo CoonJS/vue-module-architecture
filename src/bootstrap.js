@@ -3,6 +3,7 @@ const modules = [
   require('./modules/reports/index'),
   require('./modules/marketplace/index'),
   require('./modules/profile/index'),
+  require('./modules/roles/index'),
   require('./modules/registerAccount/index'),
   require('./modules/registerUser/index'),
   require('./modules/settings/index'),
