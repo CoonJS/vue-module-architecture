@@ -12,7 +12,7 @@
                 <el-dropdown-item>Профиль</el-dropdown-item>
             </router-link>
             <router-link to="/users">
-                <el-dropdown-item divided>Пользователи</el-dropdown-item>
+                <el-dropdown-item>Пользователи</el-dropdown-item>
             </router-link>
             <router-link to="/roles">
                 <el-dropdown-item divided>Роли</el-dropdown-item>
