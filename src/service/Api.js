@@ -135,7 +135,7 @@ export default class Api {
         return response
       },
       (error) => {
-        if (error.response.status === 401) {
+        if (error.response.status === 401 || error.response.status === 403) {
           this.event.emit('logout');
         }
       }
