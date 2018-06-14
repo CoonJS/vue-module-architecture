@@ -1,26 +1,30 @@
 <script>
   export default {
-    created() {
+    beforeCreate() {
       /** @type {Api}*/
       this.api = this.$locator.Api;
     },
-    mounted() {
-      this.loadUser();
-      this.$locator.Api.onLogout(() => {
+    async mounted() {
+      await this.api.loadUser();
+      const user = this.api.getCurrentUser();
+
+      if (user === null) {
+        this.redirectToLoginPage();
+      }
+
+      this.api.onLogout(() => {
         this.isShowMenu = false;
         this.redirectToLoginPage();
       });
 
-      this.$locator.Api.onLogin(() => {
-        this.loadUser();
+      this.api.onLogin(() => {
         this.isShowMenu = true;
         this.redirectToHomePage();
       });
     },
     data() {
       return {
-        user: null,
-        isUserLoaded: false,
+        user: this.api.getCurrentUser(),
         isShowMenu: true,
         isShowSidebar: false,
         menuItems: [
@@ -56,12 +60,6 @@
       }
     },
     methods: {
-      async loadUser() {
-        this.isUserLoaded = false;
-        const response = await this.api.get('currentUserUsingGET');
-        this.user = response ? response.data : null;
-        this.isUserLoaded = true;
-      },
       redirectToLoginPage() {
         const isAuthPage = this.$route.name === 'AuthPage';
         const isRegisterAccountPage = this.$route.name === 'AccountRegistration';
@@ -106,7 +104,7 @@
                 </div>
             </menu-item-dropdown>
         </nav-layout>
-        <root-container v-if="isUserLoaded">
+        <root-container>
             <router-view></router-view>
         </root-container>
     </page-layout>

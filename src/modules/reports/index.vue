@@ -12,7 +12,7 @@
       SaleVolumeDashboard
     },
     mounted() {
-      this.loadDashboardData();
+      // this.loadDashboardData();
     },
     data () {
       return {

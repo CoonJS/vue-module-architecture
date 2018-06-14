@@ -1,15 +1,18 @@
 <script>
   export default {
-    created() {
+    beforeCreate() {
       /** @type {Api}*/
       this.api = this.$locator.Api;
     },
     mounted() {
       this.loadUsers();
+      this.loadRoles();
     },
     data () {
       return {
         users: [],
+        roles: [],
+        roleId: null,
         email: '',
         isUsersLoading: false,
         isShowModal: false,
@@ -41,12 +44,13 @@
             key: 'email',
             name: 'Почта',
             width: 180
+          },
+          {
+            key: 'roleId',
+            name: 'Роль',
+            width: 180
           }
-        ],
-        rolesMap: {
-          'ROLE_ADMIN': 'Admin',
-          'ROLE_USER': 'User',
-        }
+        ]
       }
     },
     watch: {
@@ -63,16 +67,31 @@
         this.users = users;
         this.isUsersLoading = false;
       },
+      async loadRoles() {
+        const { data: roles } = await this.api.get('rolesUsingGET');
+        this.roles = roles.filter(role => role.editable);
+        this.selectDefaultRole();
+      },
       async inviteUser() {
         this.isInviting = true;
         try {
-          await this.api.post('createUserRegistrationRequestUsingPOST', {}, { email: this.email });
+          const email = this.email;
+          const roleId = this.roleId;
+          await this.api.post('createUserRegistrationRequestUsingPOST', {}, { email, roleId });
           this.closeInviteModal();
         } catch(e) {
           throw e;
         }
 
         this.isInviting = false;
+      },
+      async deleteUserById(id) {
+        await this.api.delete('deleteUserUsingDELETE', { id });
+        this.loadUsers();
+      },
+      selectDefaultRole() {
+        const roles = this.roles;
+        this.roleId = roles.length > 0 ? roles[0].id : null;
       },
       focusInput() {
         this.$nextTick(() => {
@@ -84,9 +103,6 @@
       },
       closeInviteModal() {
         this.isShowModal = false;
-      },
-      isAdmin(row) {
-        return row.role === 'ROLE_ADMIN'
       }
     }
   }
@@ -98,8 +114,21 @@
             <h3>Пользователи</h3>
             <el-button type="success" @click="showInviteModal">Пригласить</el-button>
         </div>
+
         <el-dialog :visible.sync="isShowModal" title="Пригласить пользователя" width="400px">
-            <div>
+            <div class="field">
+                <div class="title">Роль</div>
+                <el-select v-model="roleId">
+                    <el-option
+                        v-for="role in roles"
+                        :key="role.id"
+                        :label="role.name"
+                        :value="role.id">
+                    </el-option>
+                </el-select>
+            </div>
+            <div class="field">
+                <div class="title">Email</div>
                 <el-input
                     ref="emailInput"
                     v-model="email"
@@ -113,6 +142,7 @@
                 <el-button @click="closeInviteModal">Отмена</el-button>
             </div>
         </el-dialog>
+
         <div class="users">
             <el-table
                 border
@@ -120,7 +150,6 @@
                 style="width: 100%"
                 v-loading="isUsersLoading"
             >
-
                 <el-table-column
                     v-for="column in columns"
                     :key="column.key"
@@ -129,15 +158,9 @@
                     :width="column.width"
                     :align="column.align"
                 />
-                <el-table-column prop="role" label="Роль" width="180">
-                    <template slot-scope="scope">
-                        <el-tag v-if="isAdmin(scope.row)" type="danger">{{rolesMap[scope.row.role]}}</el-tag>
-                        <el-tag v-else >{{rolesMap[scope.row.role]}}</el-tag>
-                    </template>
-                </el-table-column>
                 <el-table-column label="Действия">
                     <template slot-scope="scope">
-                        <el-button v-if="!isAdmin(scope.row)" size="mini" type="danger">Удалить</el-button>
+                        <el-button size="mini" type="danger" @click="deleteUserById(scope.row.id)">Удалить</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -151,5 +174,22 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+    }
+
+    .field {
+        margin: 8px 0;
+    }
+
+    .field:first-child {
+        margin-top: 0;
+    }
+
+    .field .title {
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
+
+    .el-select {
+        width: 100%;
     }
 </style>

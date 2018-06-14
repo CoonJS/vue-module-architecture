@@ -5,6 +5,10 @@
     components: {
       RemindPasswordForm
     },
+    beforeCreate() {
+      /** @type {Api}*/
+      this.api = this.$locator.Api;
+    },
     mounted() {
       this.focusLoginInput();
     },
@@ -20,7 +24,7 @@
       async login() {
         this.isLoading = true;
         try {
-          await this.$locator.Api.auth(this.userName, this.password);
+          await this.api.auth(this.userName, this.password);
         } catch(e) {
           this.showLoginError();
           this.isLoading = false;

@@ -16,9 +16,50 @@ export default class Api {
         'X-Requested-With': 'XMLHttpRequest'
       }
     });
+
     this.event = new EventEmitter();
 
     this.configureAxios();
+
+    this.user = null;
+  }
+
+  hasAccess(authority) {
+    if (this.user === null) {
+      return false;
+    }
+
+    return this.user.authorities.includes(authority);
+  }
+
+  getCurrentUser() {
+    return this.user;
+  }
+
+  async auth(userName, password) {
+    await axios.create({
+      auth: {
+        username: userName,
+        password: password
+      },
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    }).get(`/api/users/me`);
+
+    this.event.emit('login');
+  }
+
+  async loadUser() {
+    try {
+      const response = await this.get('currentUserUsingGET');
+      this.user = response ? response.data : null;
+    } catch(e) {
+      this.user = null;
+      throw e;
+    }
+
+    return this.user;
   }
 
   async get(id, templateParams, queryParams) {
@@ -51,18 +92,10 @@ export default class Api {
     return await this.axios.delete(path, body);
   }
 
-  async auth(userName, password) {
-    await axios.create({
-      auth: {
-        username: userName,
-        password: password
-      },
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest'
-      }
-    }).get(`/api/users/me`);
-
-    this.event.emit('login');
+  async logout() {
+    const response = await this.get('logoutUsingGET');
+    await this.get('currentUserUsingGET');
+    return response && response.data;
   }
 
   async changePassword(token, newPassword) {
@@ -109,16 +142,12 @@ export default class Api {
         }
       );
 
+      await this.loadUser();
+
       this.event.emit('login');
     } catch (e) {
       throw e;
     }
-  }
-
-  async logout() {
-    const response = await this.get('logoutUsingGET');
-    await this.get('currentUserUsingGET');
-    return response && response.data;
   }
 
   onLogin(cb) {
@@ -137,6 +166,7 @@ export default class Api {
       (error) => {
         if (error.response.status === 401 || error.response.status === 403) {
           this.event.emit('logout');
+          this.user = null;
         }
       }
     );

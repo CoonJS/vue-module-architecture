@@ -5,11 +5,11 @@ export default class ArrayUtils {
     this.name = 'ArrayUtils';
   }
 
-  indexBy( array = [], cb) {
+  indexBy(array = [], cb) {
     return _.indexBy(array, cb);
   }
 
-  groupBy( array = [], cb) {
+  groupBy(array = [], cb) {
     return _.groupBy(array, cb);
   }
 }
