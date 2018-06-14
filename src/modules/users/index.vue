@@ -17,6 +17,11 @@
         isUsersLoading: false,
         isShowModal: false,
         isInviting: false,
+
+        access: {
+          canInviteUsers: this.api.hasAccess('INVITE_USERS')
+        },
+
         columns: [
           {
             key: 'id',
@@ -112,7 +117,7 @@
     <page-container>
         <div slot="header" class="header">
             <h3>Пользователи</h3>
-            <el-button type="success" @click="showInviteModal">Пригласить</el-button>
+            <el-button v-if="access.canInviteUsers" type="success" @click="showInviteModal">Пригласить</el-button>
         </div>
 
         <el-dialog :visible.sync="isShowModal" title="Пригласить пользователя" width="400px">

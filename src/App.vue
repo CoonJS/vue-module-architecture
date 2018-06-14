@@ -5,12 +5,7 @@
       this.api = this.$locator.Api;
     },
     async mounted() {
-      await this.api.loadUser();
-      const user = this.api.getCurrentUser();
-
-      if (user === null) {
-        this.redirectToLoginPage();
-      }
+      this.loadUser();
 
       this.api.onLogout(() => {
         this.isShowMenu = false;
@@ -18,15 +13,17 @@
       });
 
       this.api.onLogin(() => {
+        this.loadUser();
         this.isShowMenu = true;
         this.redirectToHomePage();
       });
     },
     data() {
       return {
-        user: this.api.getCurrentUser(),
+        user: null,
         isShowMenu: true,
         isShowSidebar: false,
+        isUserLoading: false,
         menuItems: [
           {
             key:'reports',
@@ -60,6 +57,11 @@
       }
     },
     methods: {
+      async loadUser() {
+        this.isUserLoading = true;
+        this.user = await this.api.loadUser();
+        this.isUserLoading = false;
+      },
       redirectToLoginPage() {
         const isAuthPage = this.$route.name === 'AuthPage';
         const isRegisterAccountPage = this.$route.name === 'AccountRegistration';
