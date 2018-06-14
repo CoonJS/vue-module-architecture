@@ -1,6 +1,5 @@
-const auth = require('./modules/auth/index');
-
 const modules = [
+  require('./modules/auth/index'),
   require('./modules/reports/index'),
   require('./modules/marketplace/index'),
   require('./modules/profile/index'),
@@ -14,8 +13,6 @@ const modules = [
 ];
 
 export async function run (locator) {
-  await auth.default(locator);
-
   const startModules = modules.map(module => {
     return module.default(locator);
   });

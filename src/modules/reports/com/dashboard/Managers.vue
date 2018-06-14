@@ -1,13 +1,16 @@
 <script>
   export default {
-    mounted() {
-      // this.loadManagers();
+    props: {
+      items: {
+        type: Array,
+        default() {
+          return [];
+        }
+      }
     },
     data() {
       return {
-        isDataLoading: false,
-        searchQuery: '',
-        managers: [],
+        managers: this.items,
         columns: [
           {
             key: 'id',
@@ -16,39 +19,22 @@
             align: 'center'
           },
           {
-            key: 'firstName',
+            key: 'name',
             name: 'Имя',
-            width: 180
-          },
-          {
-            key: 'lastName',
-            name: 'Фамилия',
             width: 180
           }
         ]
-      }
+      };
     },
-    computed: {
-      filteredManagers() {
-        return this.managers.filter(manager => {
-          const preparedFirstName = typeof manager.firstName === 'string' ? manager.firstName.toLowerCase() : '';
-          const preparedLastName = typeof manager.lastName === 'string' ? manager.lastName.toLowerCase() : '';
-          const searchString = `${preparedFirstName} ${preparedLastName}`;
-
-          return searchString.indexOf(this.preparedSearchQuery) !== -1;
-        });
-      },
-      preparedSearchQuery() {
-        return this.searchQuery.trim().toLowerCase();
+    watch: {
+      items: {
+        deep: true,
+        handler(items) {
+          this.managers = items;
+        }
       }
     },
     methods: {
-      async loadManagers() {
-        this.isDataLoading = true;
-        const { data: managers } = await this.$locator.Api.get('managersUsingGET');
-        this.managers = managers;
-        this.isDataLoading = false;
-      },
       goToManagerPage(managerID) {
         this.$router.push({ path: `/managers/${managerID}` });
       }
@@ -60,9 +46,8 @@
     <page-container>
         <el-table
             border
-            :data="filteredManagers"
+            :data="managers"
             style="width: 100%"
-            v-loading="isDataLoading"
         >
             <el-table-column
                 v-for="column in columns"
@@ -73,17 +58,20 @@
                 :align="column.align"
             />
             <el-table-column
-                label="Сделки"
-                width="100"
+                label="Процент закрытых сделок"
+                :width="220"
                 align="center"
             >
                 <template slot-scope="scope">
-                    {{scope.row.deals.length}}
+                    <el-progress
+                        type="circle"
+                        :width="40"
+                        :color="scope.row.closedPercent > 50 ? '#67c23a' : '#f56c6c'"
+                        :percentage="scope.row.closedPercent"
+                    />
                 </template>
             </el-table-column>
-            <el-table-column
-                label="Действия"
-            >
+            <el-table-column label="Действия">
                 <template slot-scope="scope">
                     <el-button size="mini" type="primary" @click="goToManagerPage(scope.row.id)">Перейти</el-button>
                 </template>

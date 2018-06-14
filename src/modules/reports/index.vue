@@ -12,7 +12,7 @@
       SaleVolumeDashboard
     },
     mounted() {
-      // this.loadDashboardData();
+      this.loadDashboardData();
     },
     data () {
       return {
@@ -20,6 +20,7 @@
         isDataLoading: false,
         funnelItems: [],
         chartData: [],
+        managerData: [],
         period: {
           dateFrom: null,
           dateTo: new Date()
@@ -67,6 +68,7 @@
 
         this.funnelItems = data[0].data;
         this.chartData = data[1].data;
+        this.managerData = data[2].data;
 
         this.isDataLoaded = true;
         this.isDataLoading = false;
@@ -160,8 +162,8 @@
                 </el-card>
             </div>
             <div class="row">
-                <el-card class="box-card fluid">
-                    <managers-table/>
+                <el-card class="box-card fluid full-height">
+                    <managers-table :items="managerData"/>
                 </el-card>
             </div>
         </div>
@@ -184,6 +186,9 @@
 
     .box-card.fluid {
         width: 100%;
+    }
+    .box-card.full-height {
+        height: 100%;
     }
 
     .box-card:last-child {
