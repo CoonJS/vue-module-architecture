@@ -24,6 +24,7 @@
         isShowMenu: true,
         isShowSidebar: false,
         isUserLoading: false,
+        isUserLoaded: false,
         menuItems: [
           {
             key:'reports',
@@ -58,9 +59,11 @@
     },
     methods: {
       async loadUser() {
+        this.isUserLoaded = false;
         this.isUserLoading = true;
         this.user = await this.api.loadUser();
         this.isUserLoading = false;
+        this.isUserLoaded = true;
       },
       redirectToLoginPage() {
         const isAuthPage = this.$route.name === 'AuthPage';
@@ -86,7 +89,7 @@
 </script>
 
 <template>
-    <page-layout>
+    <page-layout v-if="isUserLoaded">
         <nav-layout v-if="hasUser && isShowMenu">
             <menu-item-logo slot="left"/>
             <menu-item-link
