@@ -33,7 +33,7 @@
           },
           {
             key:'wiki',
-            title: 'Wiki',
+            title: 'Регламент',
             link: '/wiki'
           },
           {
