@@ -11,11 +11,18 @@
       NoDataDashboard,
       SaleVolumeDashboard
     },
+    beforeCreate() {
+      /** @type {Api}*/
+      this.api = this.$locator.Api;
+    },
     mounted() {
       this.loadDashboardData();
     },
     data () {
       return {
+        access: {
+          canViewReport: this.api.hasAccess('VIEW_REPORTS')
+        },
         isDataLoaded: false,
         isDataLoading: false,
         funnelItems: [],
@@ -126,7 +133,7 @@
 </script>
 
 <template>
-    <page-container>
+    <page-container v-if="access.canViewReport">
         <div slot="header">
             <el-date-picker
                 v-model="period.dateFrom"
@@ -168,6 +175,7 @@
             </div>
         </div>
     </page-container>
+    <access-denied v-else/>
 </template>
 
 <style scoped>

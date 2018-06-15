@@ -9,6 +9,7 @@ export default class Component {
       container: [],
       menuItem: [],
       common: [],
+      error: []
     };
   }
 

@@ -16,11 +16,15 @@ import DropdownMenuItem from './com/Menu/Item/Dropdown.vue';
 import FeedbackMenuItem from './com/Menu/Item/Feedback.vue';
 
 /*===UI===*/
-
 import Link from './com/Link/Default.vue';
 import Sidebar from './com/Sidebar/Default.vue';
 import LineChart from './com/Chart/Line.vue';
 import DynamicForm from './com/Form/Dynamic.vue';
+
+
+/*===ERRORS===*/
+import AccessDenied from './com/ErrorPage/AccessDenied.vue';
+
 
 const layouts = [
   NavLayout,
@@ -48,6 +52,10 @@ const commonUiComponents = [
   DynamicForm
 ];
 
+const errors = [
+  AccessDenied
+];
+
 function registerLayouts(locator) {
   layouts.forEach(layout => {
     locator.Component.register(layout, 'layout');
@@ -72,9 +80,16 @@ function registerCommonUiComponents(locator) {
   });
 }
 
+function registerErrorBlocks(locator) {
+  errors.forEach(page => {
+    locator.Component.register(page, 'error');
+  });
+}
+
 export function registerGlobalComponents (locator) {
   registerLayouts(locator);
   registerContainers(locator);
   registerMenuItems(locator);
   registerCommonUiComponents(locator);
+  registerErrorBlocks(locator);
 }
