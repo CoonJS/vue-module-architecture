@@ -5,13 +5,18 @@
       this.api = this.$locator.Api;
     },
     mounted() {
-      this.loadUser();
+      if (this.access.canViewUsers) {
+        this.loadUser();
+      }
     },
     data () {
       return {
         user: null,
         isUserLoading: false,
         userId: this.$route.params.userId,
+        access: {
+          canViewUsers: this.api.hasAccess('VIEW_USERS')
+        },
         groups: [
           {
             id: 'common',
@@ -67,7 +72,7 @@
 </script>
 
 <template>
-    <page-container flexContent center v-loading.body="isUserLoading">
+    <page-container flexContent center v-loading.body="isUserLoading" v-if="access.canViewUsers">
         <div slot="header" class="header">
             <h3 v-if="hasUser">{{user.firstName + ' ' + user.lastName}}</h3>
         </div>
@@ -75,6 +80,7 @@
             <ui-model-view-card :model="user" :groups="groups" titleWidth="100px"/>
         </div>
     </page-container>
+    <access-denied v-else/>
 </template>
 
 <style scoped>

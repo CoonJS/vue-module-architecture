@@ -29,6 +29,10 @@ export default class Api {
       return false;
     }
 
+    if (this.user.owner === true) {
+      return true;
+    }
+
     return this.user.authorities.includes(authority);
   }
 
