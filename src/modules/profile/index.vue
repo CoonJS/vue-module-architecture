@@ -77,7 +77,7 @@
           lastName: this.user.lastName,
         };
 
-        return await this.api.put('updatedUserUsingPUT', {}, newUserData);
+        return await this.api.put('updatedCurrentUserUsingPUT', {}, newUserData);
       },
       showChangePasswordForm() {
         this.isShowChangePasswordForm = true;
