@@ -175,13 +175,13 @@ export default class Api {
       },
       (error) => {
         const errorStatus = error.response.status;
-        if (errorStatus === 401 || errorStatus === 403) {
+        if (errorStatus === 401) {
           this.event.emit('logout');
           this.user = null;
           return;
         }
 
-        if (errorStatus === 500 || errorStatus === 400 || errorStatus === 404) {
+        if (errorStatus === 500 || errorStatus === 400 || errorStatus === 404 || errorStatus === 403) {
           this.event.emit('error', error.response.data.message);
           return;
         }

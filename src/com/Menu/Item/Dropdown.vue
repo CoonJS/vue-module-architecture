@@ -1,3 +1,29 @@
+<script>
+  const profileIcon = require('../../../assets/img/user-profile.png');
+
+  export default {
+    name: "MenuItemDropdown",
+    beforeCreate() {
+      /** @type {Api}*/
+      this.api = this.$locator.Api;
+    },
+    data() {
+      return {
+        profileIconLink: profileIcon,
+        access: {
+          canViewUsers: this.api.hasAccess('VIEW_USERS'),
+          canViewRoles: this.api.hasAccess('VIEW_ROLES')
+        }
+      };
+    },
+    methods: {
+      async logout() {
+        await this.$locator.Api.logout();
+      }
+    }
+  }
+</script>
+
 <template>
     <el-dropdown trigger="click">
         <div class="menu-item">
@@ -11,34 +37,16 @@
             <router-link to="/profile">
                 <el-dropdown-item>Профиль</el-dropdown-item>
             </router-link>
-            <router-link to="/users">
+            <router-link to="/users" v-if="access.canViewUsers">
                 <el-dropdown-item>Пользователи</el-dropdown-item>
             </router-link>
-            <router-link to="/roles">
+            <router-link to="/roles" v-if="access.canViewRoles">
                 <el-dropdown-item>Роли</el-dropdown-item>
             </router-link>
             <el-dropdown-item divided @click.native="logout">Выйти</el-dropdown-item>
         </el-dropdown-menu>
     </el-dropdown>
 </template>
-
-<script>
-  const profileIcon = require('../../../assets/img/user-profile.png');
-
-  export default {
-    name: "MenuItemDropdown",
-    data() {
-      return {
-        profileIconLink: profileIcon
-      };
-    },
-    methods: {
-      async logout() {
-        await this.$locator.Api.logout();
-      }
-    }
-  }
-</script>
 
 <style scoped>
     .menu-item {

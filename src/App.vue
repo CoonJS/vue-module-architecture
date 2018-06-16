@@ -32,23 +32,7 @@
         isShowSidebar: false,
         isUserLoading: false,
         isUserLoaded: false,
-        menuItems: [
-          {
-            key:'reports',
-            title: 'Отчеты',
-            link: '/'
-          },
-          {
-            key:'wiki',
-            title: 'Регламент',
-            link: '/wiki'
-          },
-          {
-            key:'testing',
-            title: 'Тесты',
-            link: '/testing'
-          },
-        ]
+        menuItems: []
       };
     },
     computed: {
@@ -62,6 +46,9 @@
       userLogin() {
         const user = this.user || null;
         return user !== null ? `${user.username}` : '';
+      },
+      visibleMenuItems() {
+        return this.menuItems.filter(item => item.hasAccess);
       }
     },
     methods: {
@@ -71,6 +58,30 @@
         this.user = await this.api.loadUser();
         this.isUserLoading = false;
         this.isUserLoaded = true;
+
+        this.initMenuItems();
+      },
+      initMenuItems() {
+        this.menuItems = [
+          {
+            key:'reports',
+            title: 'Отчеты',
+            link: '/',
+            hasAccess: true
+          },
+          {
+            key:'wiki',
+            title: 'Регламент',
+            link: '/wiki',
+            hasAccess: this.api.hasAccess('VIEW_WIKI')
+          },
+          {
+            key:'testing',
+            title: 'Тесты',
+            link: '/testing',
+            hasAccess: this.api.hasAccess('VIEW_TESTS')
+          },
+        ];
       },
       redirectToLoginPage() {
         const isAuthPage = this.$route.name === 'AuthPage';
@@ -101,7 +112,7 @@
             <menu-item-logo slot="left"/>
             <menu-item-link
                 slot="left"
-                v-for="item in menuItems"
+                v-for="item in visibleMenuItems"
                 :key="item.key"
                 :link="item.link"
             >
