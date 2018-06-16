@@ -187,7 +187,7 @@
 
                 <el-table-column label="Роль">
                     <template slot-scope="scope">
-                        <el-select v-if="access.canEditUsers && scope.row.id !== currentUser.id" :value="scope.row.roleId" @change="handleSelectChange($event, scope.row)">
+                        <el-select v-if="scope.row.owner === false && access.canEditUsers && scope.row.id !== currentUser.id" :value="scope.row.roleId" @change="handleSelectChange($event, scope.row)">
                             <el-option
                                 v-for="role in roles"
                                 :key="role.id"
