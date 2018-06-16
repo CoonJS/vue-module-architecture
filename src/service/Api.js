@@ -150,6 +150,12 @@ export default class Api {
     }
   }
 
+  onError(cb) {
+    this.event.on('error', (msg) => {
+      return cb(msg);
+    });
+  }
+
   onLogin(cb) {
     this.event.on('login', cb);
   }
@@ -164,9 +170,20 @@ export default class Api {
         return response
       },
       (error) => {
-        if (error.response.status === 401 || error.response.status === 403) {
+        const errorStatus = error.response.status;
+        if (errorStatus === 401 || errorStatus === 403) {
           this.event.emit('logout');
           this.user = null;
+          return;
+        }
+
+        if (errorStatus === 500 || errorStatus === 400 || errorStatus === 404) {
+          this.event.emit('error', error.response.data.message);
+          return;
+        }
+
+        if (errorStatus === 504) {
+          // this.event.emit('error', 'Проверьте свое соединение к сети');
         }
       }
     );

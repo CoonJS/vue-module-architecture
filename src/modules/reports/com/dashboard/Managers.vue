@@ -22,7 +22,13 @@
             key: 'name',
             name: 'Имя',
             width: 180
-          }
+          },
+          {
+            key: 'deals',
+            name: 'Количество сделок',
+            width: 180,
+            align: 'center'
+          },
         ]
       };
     },

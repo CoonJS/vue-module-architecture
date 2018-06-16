@@ -1,14 +1,3 @@
-<template>
-    <div class="page-container">
-        <div class="page-header" v-if="hasHeader">
-            <slot name="header"></slot>
-        </div>
-        <div class="page-content" :class="{ 'offset': hasHeader, 'flex': flexContent, 'fluid': fluid }">
-            <slot></slot>
-        </div>
-    </div>
-</template>
-
 <script>
   export default {
     name: "PageContainer",
@@ -24,6 +13,12 @@
         default() {
           return false;
         }
+      },
+      center: {
+        type: Boolean,
+        default() {
+          return false;
+        }
       }
     },
     data() {
@@ -33,6 +28,17 @@
     }
   }
 </script>
+
+<template>
+    <div class="page-container">
+        <div class="page-header" v-if="hasHeader">
+            <slot name="header"></slot>
+        </div>
+        <div class="page-content" :class="{ 'offset': hasHeader, 'flex': flexContent, 'fluid': fluid, 'center': center }">
+            <slot></slot>
+        </div>
+    </div>
+</template>
 
 <style scoped>
     .page-container {
@@ -69,6 +75,11 @@
 
     .page-content.flex {
         display: flex;
+    }
+
+    .page-content.flex.center {
+        display: flex;
+        justify-content: center;
     }
 
     .page-content.fluid {

@@ -3,6 +3,7 @@ import Router from './service/Router';
 import DateTime from './service/DateTime';
 import Component from './service/Component';
 import ArrayUtils from './service/ArrayUtils';
+import ObjectUtils from './service/ObjectUtils';
 
 class Locator {
   constructor() {
@@ -25,6 +26,7 @@ class Locator {
 const locator = new Locator();
 
 locator.registerService(ArrayUtils);
+locator.registerService(ObjectUtils);
 locator.registerService(DateTime);
 locator.registerService(Api);
 locator.registerService(Router);

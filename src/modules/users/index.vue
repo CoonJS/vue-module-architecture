@@ -17,18 +17,11 @@
         isUsersLoading: false,
         isShowModal: false,
         isInviting: false,
-
+        currentUser: this.api.getCurrentUser(),
         access: {
           canInviteUsers: this.api.hasAccess('INVITE_USERS')
         },
-
         columns: [
-          {
-            key: 'id',
-            name: 'ID',
-            width: 50,
-            align: 'center'
-          },
           {
             key: 'username',
             name: 'Логин',
@@ -49,11 +42,6 @@
             key: 'email',
             name: 'Почта',
             width: 180
-          },
-          {
-            key: 'roleId',
-            name: 'Роль',
-            width: 180
           }
         ]
       }
@@ -68,8 +56,14 @@
     methods: {
       async loadUsers() {
         this.isUsersLoading = true;
-        const { data: users } = await this.api.get('accountUsersUsingGET');
-        this.users = users;
+        try {
+          const { data: users } = await this.api.get('accountUsersUsingGET');
+          this.users = users;
+        } catch(e) {
+          this.isUsersLoading = false;
+          throw e;
+        }
+
         this.isUsersLoading = false;
       },
       async loadRoles() {
@@ -108,6 +102,16 @@
       },
       closeInviteModal() {
         this.isShowModal = false;
+      },
+      async handleSelectChange(newRoleId, user) {
+        const userId = user.id;
+
+        await this.api.put('updatedUserUsingPUT', { id: userId }, { roleId: newRoleId });
+
+        this.loadUsers();
+      },
+      copy(obj) {
+        return { ...obj };
       }
     }
   }
@@ -156,6 +160,16 @@
                 v-loading="isUsersLoading"
             >
                 <el-table-column
+                    label="ID"
+                    :width="50"
+                    align="center"
+                >
+                    <template slot-scope="scope">
+                        <ui-link :to="`/users/${scope.row.id}`">{{scope.row.id}}</ui-link>
+                    </template>
+                </el-table-column>
+
+                <el-table-column
                     v-for="column in columns"
                     :key="column.key"
                     :prop="column.key"
@@ -163,8 +177,23 @@
                     :width="column.width"
                     :align="column.align"
                 />
+
+                <el-table-column label="Роль">
+                    <template slot-scope="scope" v-if="scope.row.id !== currentUser.id">
+                        <el-select v-if="scope.row.owner === false" :value="scope.row.roleId" @change="handleSelectChange($event, scope.row)">
+                            <el-option
+                                v-for="role in roles"
+                                :key="role.id"
+                                :label="role.name"
+                                :value="copy(role).id"
+                            >
+                            </el-option>
+                        </el-select>
+                        <el-tag type="danger" v-if="scope.row.owner === true">Владелец проекта</el-tag>
+                    </template>
+                </el-table-column>
                 <el-table-column label="Действия">
-                    <template slot-scope="scope">
+                    <template slot-scope="scope" v-if="scope.row.owner === false && scope.row.id !== currentUser.id">
                         <el-button size="mini" type="danger" @click="deleteUserById(scope.row.id)">Удалить</el-button>
                     </template>
                 </el-table-column>

@@ -20,6 +20,7 @@ import Link from './com/Link/Default.vue';
 import Sidebar from './com/Sidebar/Default.vue';
 import LineChart from './com/Chart/Line.vue';
 import DynamicForm from './com/Form/Dynamic.vue';
+import ModelViewCard from './com/Card/ModelView.vue';
 
 
 /*===ERRORS===*/
@@ -49,7 +50,8 @@ const commonUiComponents = [
   Link,
   Sidebar,
   LineChart,
-  DynamicForm
+  DynamicForm,
+  ModelViewCard
 ];
 
 const errors = [

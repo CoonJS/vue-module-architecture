@@ -12,6 +12,13 @@
         this.redirectToLoginPage();
       });
 
+      this.api.onError((msg) => {
+        this.$notify.error({
+          title: 'Ошибка',
+          message: msg
+        });
+      });
+
       this.api.onLogin(() => {
         this.loadUser();
         this.isShowMenu = true;

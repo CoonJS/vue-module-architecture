@@ -16,7 +16,7 @@
     methods: {
       async loadResults() {
         this.loading = true;
-        const { data: results } = await this.api.get('resultsUsingGET');
+        const { data: results } = await this.api.get('resultUsingGET');
         this.results = results;
         this.loading = false;
       }

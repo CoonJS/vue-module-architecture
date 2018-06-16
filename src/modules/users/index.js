@@ -1,4 +1,5 @@
 const UsersPage = () => import(/* webpackChunkName: "users" */'./index.vue');
+const UserCardPage = () => import(/* webpackChunkName: "userCard" */'./pages/userCard.vue');
 
 export default async function(locator) {
   const routerService = locator.Router;
@@ -8,6 +9,11 @@ export default async function(locator) {
       path: '/users',
       name: 'Users',
       component: UsersPage
+    },
+    {
+      path: '/users/:userId',
+      name: 'UserCardPage',
+      component: UserCardPage
     }
   ]);
 }
