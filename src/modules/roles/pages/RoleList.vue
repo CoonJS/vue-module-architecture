@@ -78,7 +78,7 @@
                 <el-table-column
                     prop="name"
                     label="Название"
-                    :width="250"
+                    :width="300"
                 >
                     <template slot-scope="scope">
                         <ui-link :to="`/roles/${scope.row.id}`">{{scope.row.name}}</ui-link>

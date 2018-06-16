@@ -132,6 +132,7 @@
 
     .user-card {
         padding: 16px;
+        overflow: auto;
         background-color: #fdfdfd;
         border: 1px solid rgba(0,0,0, .1);
         width: 900px;
