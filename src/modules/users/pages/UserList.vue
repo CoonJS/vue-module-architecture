@@ -24,10 +24,10 @@
         },
         columns: [
           {
-            key: 'username',
-            name: 'Логин',
-            width: 250,
-            align: 'left'
+            key: 'id',
+            name: 'ID',
+            width: 50,
+            align: 'center'
           },
           {
             key: 'firstName',
@@ -73,6 +73,10 @@
         this.roles = roles.filter(role => role.editable);
         this.selectDefaultRole();
       },
+      async deleteUserById(id) {
+        await this.api.delete('deleteUserUsingDELETE', { id });
+        this.loadUsers();
+      },
       async inviteUser() {
         this.isInviting = true;
         try {
@@ -86,16 +90,22 @@
 
         this.isInviting = false;
       },
-      async deleteUserById(id) {
-        await this.api.delete('deleteUserUsingDELETE', { id });
-        this.loadUsers();
-      },
       async handleSelectChange(newRoleId, user) {
         const userId = user.id;
 
         await this.api.put('updatedUserUsingPUT', { id: userId }, { roleId: newRoleId });
 
         this.loadUsers();
+      },
+      showConfirmModal(user) {
+        this.$confirm(`Вы действительно хотите удалить пользователя ${user.firstName} ${user.lastName}?`, {
+          title: 'Удаление пользователя',
+          confirmButtonText: 'Удалить',
+          cancelButtonText: 'Отмена',
+          type: 'error'
+        }).then(() => {
+          this.deleteUserById(user.id);
+        });
       },
       getRoleTitleById(roleId) {
         const role = this.roles.find(role => role.id === roleId);
@@ -167,16 +177,6 @@
                 v-loading="isUsersLoading"
             >
                 <el-table-column
-                    label="ID"
-                    :width="50"
-                    align="center"
-                >
-                    <template slot-scope="scope">
-                        <ui-link :to="`/users/${scope.row.id}`">{{scope.row.id}}</ui-link>
-                    </template>
-                </el-table-column>
-
-                <el-table-column
                     v-for="column in columns"
                     :key="column.key"
                     :prop="column.key"
@@ -184,6 +184,16 @@
                     :width="column.width"
                     :align="column.align"
                 />
+
+                <el-table-column
+                        label="Логин"
+                        :width="250"
+                        align="left"
+                >
+                    <template slot-scope="scope">
+                        <ui-link :to="`/users/${scope.row.id}`">{{scope.row.username}}</ui-link>
+                    </template>
+                </el-table-column>
 
                 <el-table-column label="Роль">
                     <template slot-scope="scope">
@@ -203,7 +213,7 @@
 
                 <el-table-column label="Действия">
                     <template v-if="scope.row.owner === false && scope.row.id !== currentUser.id" slot-scope="scope">
-                        <el-button v-if="access.canRemoveUsers" size="mini" type="danger" @click="deleteUserById(scope.row.id)">Удалить</el-button>
+                        <el-button v-if="access.canRemoveUsers" size="mini" type="danger" @click="showConfirmModal(scope.row)">Удалить</el-button>
                     </template>
                 </el-table-column>
             </el-table>

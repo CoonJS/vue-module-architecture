@@ -10,12 +10,6 @@ export default class Role {
         name: 'ID',
         width: 50,
         align: 'center'
-      },
-      {
-        key: 'name',
-        name: 'Название',
-        width: 250,
-        align: 'left'
       }
     ];
   }

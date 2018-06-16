@@ -1,9 +1,9 @@
 <script>
-  import UsersList from './pages/usersList.vue';
+  import UserList from './pages/UserList.vue';
 
   export default {
     components: {
-      UsersList
+      UserList
     },
     beforeCreate() {
       /** @type {Api}*/
@@ -20,7 +20,7 @@
 </script>
 
 <template>
-    <users-list v-if="access.canViewUsers"/>
+    <user-list v-if="access.canViewUsers"/>
     <access-denied v-else/>
 </template>
 

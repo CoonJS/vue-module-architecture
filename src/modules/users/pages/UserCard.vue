@@ -12,10 +12,12 @@
     data () {
       return {
         user: null,
-        isUserLoading: false,
+        isRemoving: false,
+        isLoading: false,
         userId: this.$route.params.userId,
         access: {
-          canViewUsers: this.api.hasAccess('VIEW_USERS')
+          canViewUsers: this.api.hasAccess('VIEW_USERS'),
+          canRemoveUsers: this.api.hasAccess('REMOVE_USERS')
         },
         groups: [
           {
@@ -56,25 +58,62 @@
     },
     methods: {
       async loadUser() {
-        this.isUserLoading = true;
+        this.isLoading = true;
         try {
           const { data: user } = await this.api.get('userUsingGET', { id: this.userId });
           const { data: role } = await this.api.get('roleUsingGET', { id: user.roleId });
           this.user = {...user, role };
         } catch(e) {
-          this.isUserLoading = false;
+          this.isLoading = false;
           throw e;
         }
-        this.isUserLoading = false;
+        this.isLoading = false;
       },
+      async deleteUser() {
+        this.isRemoving = true;
+
+        try {
+          await this.api.delete('deleteUserUsingDELETE', { id: this.userId });
+        } catch(e) {
+          this.isRemoving = false;
+        }
+
+        this.isRemoving = false;
+        this.redirectToUsersPage();
+      },
+      showConfirmModal() {
+        this.$confirm('Вы действительно хотите удалить пользователя?', {
+          title: 'Удаление пользователя',
+          confirmButtonText: 'Удалить',
+          cancelButtonText: 'Отмена',
+          type: 'error'
+        }).then(() => {
+          this.deleteUser();
+        });
+      },
+      redirectToUsersPage() {
+        this.$router.push('/users');
+      }
     }
   }
 </script>
 
 <template>
-    <page-container flexContent center v-loading.body="isUserLoading" v-if="access.canViewUsers">
+    <page-container flexContent center v-loading.body="isLoading" v-if="access.canViewUsers">
         <div slot="header" class="header">
-            <h3 v-if="hasUser">{{user.firstName + ' ' + user.lastName}}</h3>
+            <template v-if="hasUser">
+                <h3>{{user.firstName + ' ' + user.lastName}}</h3>
+                <el-button
+                    v-if="access.canRemoveUsers"
+                    size="medium"
+                    type="danger"
+                    icon="el-icon-delete"
+                    :loading="isRemoving"
+                    @click="showConfirmModal"
+                >
+                    Удалить
+                </el-button>
+            </template>
         </div>
         <div class="user-card" v-if="hasUser">
             <ui-model-view-card :model="user" :groups="groups" titleWidth="100px"/>
@@ -93,7 +132,7 @@
 
     .user-card {
         padding: 16px;
-        background-color: #eee;
+        background-color: #fdfdfd;
         border: 1px solid rgba(0,0,0, .1);
         width: 900px;
     }
