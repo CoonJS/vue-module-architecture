@@ -1,6 +1,6 @@
 const ReportsPage = () => import(/* webpackChunkName: "reports" */'./index.vue');
 const ManagersPage = () => import(/* webpackChunkName: "managers" */'./index.vue');
-const ManagerCard = () => import(/* webpackChunkName: "manager" */'./pages/Card.vue');
+const ManagerCard = () => import(/* webpackChunkName: "manager" */'./pages/ManagerCard.vue');
 
 export default async function(locator) {
   const routerService = locator.Router;

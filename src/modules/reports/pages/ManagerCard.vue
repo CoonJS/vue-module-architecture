@@ -82,7 +82,8 @@
     }
 
     .info {
-        width: 400px;
+        width: 500px;
+        min-width: 500px;
         border-right: 1px solid #cacaca;
     }
 
