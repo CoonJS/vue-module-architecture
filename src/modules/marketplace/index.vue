@@ -141,7 +141,7 @@
             <h3>Интеграции</h3>
         </div>
 
-        <el-card v-if="enabledIntegrations.length > 0" class="enabled-integrations">
+        <el-card v-if="enabledIntegrations.length > 0" class="enabled-integrations" shadow="never">
             <div slot="header" class="header">
                 <h4>Подключенные</h4>
                 <div>
@@ -166,7 +166,7 @@
             </div>
         </el-card>
 
-        <el-card>
+        <el-card shadow="never">
             <div slot="header" class="header">
                 <h4>Магазин</h4>
                 <div>

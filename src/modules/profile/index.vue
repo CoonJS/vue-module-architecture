@@ -121,7 +121,7 @@
             <h3>Профиль</h3>
         </div>
         <div class="form-wrapper">
-            <el-card class="user-info">
+            <el-card class="user-info" shadow="hover">
                 <div slot="header">
                     Персональные данные
                 </div>
@@ -144,7 +144,7 @@
                 </el-form>
             </el-card>
 
-            <el-card class="access">
+            <el-card class="access" shadow="hover">
                 <div slot="header" v-if="hasUserRole">
                     <span>Роль:</span>
                     <ui-link :to="`/roles/${user.roleId}`">{{ userRole.name }}</ui-link>
