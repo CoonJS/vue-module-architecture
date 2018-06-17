@@ -67,7 +67,7 @@
             key:'reports',
             title: 'Отчеты',
             link: '/',
-            hasAccess: true
+            hasAccess: this.api.hasAccess('VIEW_REPORTS')
           },
           {
             key:'wiki',
@@ -100,6 +100,7 @@
         if (isRootPage) {
           return;
         }
+
         this.$router.push('/');
       }
     }

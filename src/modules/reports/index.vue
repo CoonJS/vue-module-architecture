@@ -9,11 +9,21 @@
       /** @type {Api}*/
       this.api = this.$locator.Api;
     },
+    mounted() {
+      if (!this.access.canViewReports) {
+        this.redirectToProfile();
+      }
+    },
     data () {
       return {
         access: {
           canViewReports: this.api.hasAccess('VIEW_REPORTS')
         }
+      }
+    },
+    methods: {
+      redirectToProfile() {
+        this.$router.push('/profile');
       }
     }
   };
