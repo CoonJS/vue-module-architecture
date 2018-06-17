@@ -102,6 +102,9 @@
 
         return await this.api.put('updatedCurrentUserUsingPUT', {}, newUserData);
       },
+      isShowGroup(key) {
+        return this.groupedAuthorities[key].filter(authority =>authority.checked === true).length > 0;
+      },
       showChangePasswordForm() {
         this.isShowChangePasswordForm = true;
       },
@@ -146,10 +149,8 @@
                     <span>Роль:</span>
                     <ui-link :to="`/roles/${user.roleId}`">{{ userRole.name }}</ui-link>
                 </div>
-                <div class="group" v-for="key in groupKeys" :key="key">
-                    <h4 v-if="groupedAuthorities[key].filter(authority =>authority.checked === true).length > 0">
-                        {{authorityGroups[key].displayName}}
-                    </h4>
+                <div class="group" v-for="key in groupKeys" v-if="isShowGroup(key)" :key="key">
+                    <h4>{{authorityGroups[key].displayName}}</h4>
                     <div v-for="authority in groupedAuthorities[key]" :key="authority.name">
                         <el-tag v-if="authority.checked" type="info" size="mini">{{authority.displayName}}</el-tag>
                     </div>
