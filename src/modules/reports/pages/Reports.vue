@@ -133,7 +133,7 @@
 </script>
 
 <template>
-    <page-container v-if="access.canViewReport">
+    <page-container v-if="access.canViewReport" width="1440px">
         <div slot="header">
             <el-date-picker
                 v-model="period.dateFrom"

@@ -19,6 +19,12 @@
         default() {
           return false;
         }
+      },
+      width: {
+        type: String,
+        default() {
+          return '100%';
+        }
       }
     },
     data() {
@@ -30,11 +36,15 @@
 </script>
 
 <template>
-    <div class="page-container">
+    <div class="page-container" >
         <div class="page-header" v-if="hasHeader">
             <slot name="header"></slot>
         </div>
-        <div class="page-content" :class="{ 'offset': hasHeader, 'flex': flexContent, 'fluid': fluid, 'center': center }">
+        <div
+            class="page-content"
+            :style="{width}"
+            :class="{ 'offset': hasHeader, 'flex': flexContent, 'fluid': fluid, 'center': center }"
+        >
             <slot></slot>
         </div>
     </div>
