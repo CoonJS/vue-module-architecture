@@ -11,6 +11,10 @@
         }
       }
     },
+    beforeCreate() {
+      /**@type {NumberUtils}*/
+      this.number = this.$locator.NumberUtils;
+    },
     mounted() {
       this.renderLineChart();
     },
@@ -21,6 +25,7 @@
     },
     methods: {
       renderLineChart() {
+        const self = this;
 
         const series = this.items.map(item => {
           return {
@@ -55,7 +60,7 @@
             },
             labels: {
               formatter: function () {
-                return this.value / 1000 + ' Тыс. руб.';
+                return self.number.format(this.value, 2);
               }
             }
           },
