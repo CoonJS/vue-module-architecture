@@ -112,6 +112,9 @@
           const dayFrom = dateFrom.getDay(),
           diffFrom = dateFrom.getDate() - dayFrom + (dayFrom === 0 ? -6:1);
           dateFrom.setDate(diffFrom);
+          dateFrom.setHours(0);
+          dateFrom.setMinutes(0);
+          dateFrom.setSeconds(0);
 
           const lastDayOfWeek = new Date();
 
