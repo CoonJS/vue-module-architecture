@@ -8,6 +8,10 @@
         }
       }
     },
+    beforeCreate() {
+      /** @type {NumberUtils}*/
+      this.number = this.$locator.NumberUtils;
+    },
     data() {
       return {
         managers: this.items,
@@ -75,6 +79,15 @@
                         :color="scope.row.closedPercent > 50 ? '#67c23a' : '#f56c6c'"
                         :percentage="scope.row.closedPercent"
                     />
+                </template>
+            </el-table-column>
+            <el-table-column
+                label="Сумма закрытых сделок"
+                :width="220"
+                align="center"
+            >
+                <template slot-scope="scope">
+                    <span>{{number.format(scope.row.closedDealsSum, 2)}}</span>
                 </template>
             </el-table-column>
             <el-table-column label="Действия">

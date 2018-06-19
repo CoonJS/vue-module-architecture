@@ -82,6 +82,7 @@
       },
       setPeriod(preset) {
         if (preset === 'ALL') {
+
             this.period = {
               dateFrom: null,
               dateTo: new Date()
@@ -99,10 +100,8 @@
 
         if (preset === 'MONTH') {
           const date = new Date();
-
           const dateFrom = new Date(date.getFullYear(), date.getMonth(), date.getDay() - 1);
           const dateTo = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-          console.log(dateTo);
 
           this.period = { dateFrom, dateTo };
         }
