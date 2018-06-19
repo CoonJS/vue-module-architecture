@@ -1,9 +1,11 @@
 <script>
   import CreateRoleModal from '../src/com/Modal/CreateRole.vue';
+  import RemoveRoleModal from '../src/com/Modal/RemoveRole.vue';
 
   export default {
     components: {
-      CreateRoleModal
+      CreateRoleModal,
+      RemoveRoleModal
     },
     beforeCreate() {
       /** @type {Api}*/
@@ -17,7 +19,9 @@
     data () {
       return {
         roles: [],
+        removingRoleId: null,
         isShowCreateRoleModal: false,
+        isShowRemoveRoleModal: false,
         isRolesLoading: false,
         columns: this.roleService.getTableColumns(),
         access: {
@@ -33,16 +37,18 @@
         this.roles = roles;
         this.isRolesLoading = false;
       },
-      removeRole(id) {
-        this.$confirm('Вы действительно хотите удалить роль?', {
-          title: 'Удаление роли',
-          confirmButtonText: 'Удалить',
-          cancelButtonText: 'Отмена',
-          type: 'error'
-        }).then(async () => {
-          await this.api.delete('deleteRoleUsingDELETE', { id });
-          this.roles = this.roles.filter(role => role.id !== id);
-        });
+      handleRemoveRole(roleId) {
+        this.removingRoleId = null;
+        this.roles = this.roles.filter(role => role.id !== roleId);
+        this.closeRemoveRoleModal();
+      },
+      showRemoveRoleModal(roleId) {
+        this.removingRoleId = roleId;
+        this.isShowRemoveRoleModal = true;
+      },
+      closeRemoveRoleModal() {
+        this.removingRoleId = null;
+        this.isShowRemoveRoleModal = false;
       },
       showCreateRoleModal() {
         this.isShowCreateRoleModal = true;
@@ -86,12 +92,21 @@
                 </el-table-column>
                 <el-table-column label="Действия">
                     <template slot-scope="scope">
-                        <el-button v-if="scope.row.editable && access.canRemoveRole" size="mini" type="danger" @click="removeRole(scope.row.id)">Удалить</el-button>
+                        <el-button v-if="scope.row.editable && access.canRemoveRole" size="mini" type="danger" @click="showRemoveRoleModal(scope.row.id)">Удалить</el-button>
                     </template>
                 </el-table-column>
             </el-table>
         </div>
-        <create-role-modal v-model="isShowCreateRoleModal" @save="loadRoles"/>
+        <create-role-modal
+            v-model="isShowCreateRoleModal"
+            @save="loadRoles"
+        />
+        <remove-role-modal
+            v-model="isShowRemoveRoleModal"
+            :roleId="removingRoleId"
+            :roles="roles"
+            @remove="handleRemoveRole"
+        />
     </page-container>
 </template>
 

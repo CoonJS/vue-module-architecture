@@ -91,8 +91,13 @@ export default class Api {
     return await this.axios.patch(path, body);
   }
 
-  async delete(id, params, body) {
-    const path = this._buildUrlById(id, params, 'delete');
+  async delete(id, params, body, queryParams) {
+    const hasQueryParams = queryParams !== undefined;
+    const urlPath = this._buildUrlById(id, params, 'delete');
+    const path = !hasQueryParams
+      ? urlPath
+      : urlPath + '?' + stringify(queryParams);
+
     return await this.axios.delete(path, body);
   }
 
