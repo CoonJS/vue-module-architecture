@@ -89,42 +89,62 @@
         }
 
         if (preset === 'YEAR') {
-          const yearAgo = new Date();
-          yearAgo.setTime(yearAgo.getTime() - 3600 * 1000 * 24 * 365);
+          const firstDayOfYear = new Date(new Date().getFullYear(), 0, 1);
 
           this.period = {
-            dateFrom: yearAgo,
-            dateTo: new Date()
+            dateFrom: firstDayOfYear,
+            dateTo: new Date(new Date().getFullYear(), 11, 31)
           };
         }
 
         if (preset === 'MONTH') {
-          const monthAgo = new Date();
-          monthAgo.setTime(monthAgo.getTime() - 3600 * 1000 * 24 * 30);
+          const date = new Date();
 
-          this.period = {
-            dateFrom: monthAgo,
-            dateTo: new Date()
-          };
+          const dateFrom = new Date(date.getFullYear(), date.getMonth(), date.getDay() - 1);
+          const dateTo = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+          console.log(dateTo);
+
+          this.period = { dateFrom, dateTo };
         }
 
         if (preset === 'WEEK') {
-          const weekAgo = new Date();
-          weekAgo.setTime(weekAgo.getTime() - 3600 * 1000 * 24 * 7);
+          const dateFrom = new Date();
+          const dayFrom = dateFrom.getDay(),
+          diffFrom = dateFrom.getDate() - dayFrom + (dayFrom === 0 ? -6:1);
+          dateFrom.setDate(diffFrom);
+
+          const lastDayOfWeek = new Date();
+
+          const last = dateFrom.getDate() + 6;
+
+          lastDayOfWeek.setDate(last);
+          lastDayOfWeek.setHours(23);
+          lastDayOfWeek.setMinutes(59);
+          lastDayOfWeek.setSeconds(59);
+
+          const dateTo = new Date(lastDayOfWeek);
 
           this.period = {
-            dateFrom: weekAgo,
-            dateTo: new Date()
+            dateFrom,
+            dateTo
           };
         }
 
         if (preset === 'DAY') {
-          const today = new Date();
-          today.setTime(today.getTime() - 3600 * 1000 * 24);
+          const dateFrom = new Date();
+          dateFrom.setHours(0);
+          dateFrom.setMinutes(0);
+          dateFrom.setSeconds(0);
+
+          const dateTo = new Date();
+          dateTo.setHours(23);
+          dateTo.setMinutes(59);
+          dateTo.setSeconds(59);
+
 
           this.period = {
-            dateFrom: today,
-            dateTo: new Date()
+            dateFrom,
+            dateTo
           };
         }
       }
