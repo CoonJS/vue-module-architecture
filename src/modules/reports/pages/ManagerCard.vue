@@ -71,16 +71,15 @@
       },
       async loadDeals() {
         this.loading = true;
-        const { data: dealsResponse } = await this.api.get('dealsUsingGET', { id: this.id }, { size: 100, page: this.salesPage });
+        const { data: dealsResponse } = await this.api.get('dealsUsingGET', { id: this.id }, { size: 50, page: this.salesPage });
         this.sales = [ ...this.sales, ...dealsResponse.content ];
         this.totalSize = dealsResponse.totalElements;
         this.loading = false;
       },
-      async handlePaginationClick() {
-        this.dealsLoading = true;
+
+      handlePaginationClick() {
         this.salesPage = this.salesPage + 1;
-        await this.loadDeals();
-        this.dealsLoading = false;
+        this.loadDeals();
       }
     }
   }
@@ -156,6 +155,7 @@
     }
 
     .info {
+        overflow: auto;
         width: 500px;
         min-width: 500px;
         border-right: 1px solid #cacaca;

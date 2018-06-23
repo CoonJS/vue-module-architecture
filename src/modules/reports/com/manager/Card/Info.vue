@@ -1,11 +1,39 @@
 <script>
+  import FunnelDashboard from '../dashboard/Funnel.vue';
+  import SaleVolumeDashboard from '../dashboard/SaleVolume.vue';
+
   export default {
+    components: {
+      FunnelDashboard,
+      SaleVolumeDashboard
+    },
     props: {
       manager: {
         type: Object,
         default() {
           return {};
         }
+      }
+    },
+    beforeCreate() {
+      /**@type {Api}*/
+      this.api = this.$locator.Api;
+    },
+    mounted() {
+      this.loadReports();
+    },
+    data() {
+      return {
+        activeName: 'reports',
+        funnelData: [],
+        saleVolume: []
+      };
+    },
+    methods: {
+      async loadReports() {
+        const { data: reports } = await this.api.get('managerReportUsingGET', { id: this.manager.id });
+        this.funnelData = reports[0].data;
+        this.saleVolume = reports[1].data;
       }
     }
   }
@@ -32,9 +60,19 @@
             </div>
         </div>
         <div class="content">
-            <!--<div class="progress">-->
-                <!--<el-progress :percentage="70" status="success" :text-inside="true" :stroke-width="24"/>-->
-            <!--</div>-->
+            <el-tabs v-model="activeName" type="card">
+                <el-tab-pane label="Отчеты" name="reports">
+                    <el-card shadow="hover">
+                        <funnel-dashboard :items="funnelData"/>
+                    </el-card>
+                    <el-card shadow="hover" style="margin-top: 16px">
+                        <sale-volume-dashboard :items="saleVolume"/>
+                    </el-card>
+                </el-tab-pane>
+                <el-tab-pane label="Активность" name="activity">
+                    Activity
+                </el-tab-pane>
+            </el-tabs>
         </div>
     </div>
 </template>
