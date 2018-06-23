@@ -100,7 +100,7 @@
 
         if (preset === 'MONTH') {
           const date = new Date();
-          const dateFrom = new Date(date.getFullYear(), date.getMonth(), date.getDay() - 1);
+          const dateFrom = new Date(date.getFullYear(), date.getMonth(), 1);
           const dateTo = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
           this.period = { dateFrom, dateTo };
