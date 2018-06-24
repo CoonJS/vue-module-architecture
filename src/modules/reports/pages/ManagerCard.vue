@@ -71,7 +71,11 @@
       },
       async loadDeals() {
         this.loading = true;
-        const { data: dealsResponse } = await this.api.get('dealsUsingGET', { id: this.id }, { size: 50, page: this.salesPage });
+        const { data: dealsResponse } = await this.api.get('dealsUsingGET',
+          { id: this.id },
+          { size: 50, page: this.salesPage, sort: 'createdMoment,desc' }
+        );
+
         this.sales = [ ...this.sales, ...dealsResponse.content ];
         this.totalSize = dealsResponse.totalElements;
         this.loading = false;

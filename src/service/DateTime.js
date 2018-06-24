@@ -5,7 +5,7 @@ export default class DateTime {
     this.name = 'DateTime';
   }
 
-  format(date = Date.now(), format = 'dd.mm.yyyy H:M') {
+  format(date = Date.now(), format = 'dd.mm.yyyy HH:MM') {
     return dateformat(date, format);
   }
 }
