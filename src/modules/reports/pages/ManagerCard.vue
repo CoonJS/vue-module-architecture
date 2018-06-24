@@ -107,7 +107,7 @@
                         v-for="status in statuses"
                         :label="status"
                     >
-                        {{`${status} (${groupedStatuses[status].length})`}}
+                        {{status}}
                     </el-checkbox-button>
                 </el-checkbox-group>
             </div>
