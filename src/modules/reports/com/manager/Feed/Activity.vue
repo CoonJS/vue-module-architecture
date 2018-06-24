@@ -74,7 +74,9 @@
 
 <style scoped>
     .activity-wrapper {
+        background-color: #eee;
         padding: 16px;
+        border: 1px solid rgba(0,0,0, .2);
     }
 
     .time-label {

@@ -18,7 +18,7 @@
         const today = new Date().toDateString();
         const date = new Date(this.date).toDateString();
         const isToday = today === date;
-        const format = isToday ? `H:M`: 'dd.mm.yyyy H:M';
+        const format = isToday ? `H:MM`: 'dd.mm.yyyy H:MM';
         const formattedDate = this.dateTime.format(this.date, format);
 
         return isToday ? `Сегодня ${formattedDate}` : formattedDate;
@@ -36,7 +36,7 @@
 
 <style scoped>
     .event {
-        font-size: 13px;
+        font-size: 12px;
         color: #979797;
     }
 </style>

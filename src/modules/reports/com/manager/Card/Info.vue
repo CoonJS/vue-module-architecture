@@ -1,9 +1,11 @@
 <script>
+  import FeedActivity from '../Feed/Activity.vue';
   import FunnelDashboard from '../dashboard/Funnel.vue';
   import SaleVolumeDashboard from '../dashboard/SaleVolume.vue';
 
   export default {
     components: {
+      FeedActivity,
       FunnelDashboard,
       SaleVolumeDashboard
     },
@@ -18,22 +20,51 @@
     beforeCreate() {
       /**@type {Api}*/
       this.api = this.$locator.Api;
-    },
-    mounted() {
-      this.loadReports();
+      /**@type {NumberUtils}*/
+      this.number = this.$locator.NumberUtils;
     },
     data() {
       return {
         activeName: 'reports',
         funnelData: [],
-        saleVolume: []
+        saleVolume: [],
+        managerData: null,
+        events: []
       };
+    },
+    computed: {
+      hasManagerData() {
+        return this.managerData !== null;
+      }
+    },
+    watch: {
+      activeName: {
+        immediate: true,
+        handler(name) {
+          if (name === 'reports') {
+            this.loadReports();
+          }
+
+          if (name === 'activity') {
+            this.loadActivity();
+          }
+        }
+      }
     },
     methods: {
       async loadReports() {
+        this.loading = true;
         const { data: reports } = await this.api.get('managerReportUsingGET', { id: this.manager.id });
         this.funnelData = reports[0].data;
         this.saleVolume = reports[1].data;
+        this.managerData = reports[2].data[0];
+        this.loading = false;
+      },
+      async loadActivity() {
+        this.loading = true;
+        const { data: events } = await this.api.get('managerEventsUsingGET', { id: this.manager.id }, {size: 100, sort: 'createdMoment,desc'});
+        this.events = events.content;
+        this.loading = false;
       }
     }
   }
@@ -41,22 +72,22 @@
 
 <template>
     <div>
-        <div class="common">
+        <div class="common" v-if="hasManagerData">
             <div class="field">
                 <span class="title">Имя:</span>
-                <span>{{manager.firstName}}</span>
+                <span>{{managerData.name}}</span>
             </div>
             <div class="field">
-                <span class="title">Фамилия:</span>
-                <span>{{manager.lastName}}</span>
+                <span class="title">Количество сделок:</span>
+                <span>{{managerData.deals}}</span>
             </div>
             <div class="field">
-                <span class="title">Телефон:</span>
-                <span>+7 (984) 434 43 43</span>
+                <span class="title">Сумма закрытых сделок:</span>
+                <span>{{number.format(managerData.closedDealsSum)}}</span>
             </div>
             <div class="field">
-                <span class="title">Email:</span>
-                <span>user@email.com</span>
+                <span class="title">Процент закрытых сделок:</span>
+                <span>{{managerData.closedPercent}}%</span>
             </div>
         </div>
         <div class="content">
@@ -70,7 +101,7 @@
                     </el-card>
                 </el-tab-pane>
                 <el-tab-pane label="Активность" name="activity">
-                    Activity
+                    <feed-activity :events="events"/>
                 </el-tab-pane>
             </el-tabs>
         </div>
@@ -94,7 +125,7 @@
         padding: 12px;
     }
 
-    .progress {
-        padding: 8px 0;
+    .el-card__body {
+        padding: 0;
     }
 </style>

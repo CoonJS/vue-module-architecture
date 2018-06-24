@@ -71,7 +71,7 @@
                 border
                 :data="roles"
                 style="width: 100%"
-                v-loading="isRolesLoading"
+                v-loading.body="isRolesLoading"
             >
                 <el-table-column
                     v-for="column in columns"

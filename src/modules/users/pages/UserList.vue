@@ -174,7 +174,7 @@
                 border
                 :data="users"
                 style="width: 100%"
-                v-loading="isUsersLoading"
+                v-loading.body="isUsersLoading"
             >
                 <el-table-column
                     v-for="column in columns"
