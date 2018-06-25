@@ -34,7 +34,7 @@
     },
     data() {
       return {
-        activeName: 'activity',
+        activeName: 'reports',
         funnelData: [],
         saleVolume: [],
         managerData: null,
