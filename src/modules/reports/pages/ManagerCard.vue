@@ -23,6 +23,10 @@
     },
     data() {
       return {
+        period: {
+          dateFrom: null,
+          dateTo: new Date()
+        },
         //manages
         id: this.$router.currentRoute.params.id,
         isDataLoading: false,
@@ -51,6 +55,14 @@
       isShowPaginationButton() {
         const sales = this.sales;
         return (sales.length > 0) && (sales.length !== this.totalSize);
+      },
+      fromMoment() {
+        const { dateFrom } = this.period;
+        return dateFrom && dateFrom.toISOString();
+      },
+      toMoment() {
+        const { dateTo } = this.period;
+        return dateTo === null ? '' : dateTo.toISOString();
       }
     },
     watch: {
@@ -60,6 +72,14 @@
         });
 
         this.selectedStatuses = Object.keys(this.groupedStatuses);
+      },
+      fromMoment() {
+        this.sales = [];
+        this.loadDeals();
+      },
+      toMoment() {
+        this.sales = [];
+        this.loadDeals();
       }
     },
     methods: {
@@ -71,9 +91,11 @@
       },
       async loadDeals() {
         this.loading = true;
+        const { fromMoment, toMoment } = this;
+
         const { data: dealsResponse } = await this.api.get('dealsUsingGET',
           { id: this.id },
-          { size: 50, page: this.salesPage, sort: 'createdMoment,desc' }
+          { size: 50, page: this.salesPage, sort: 'createdMoment,desc', fromMoment, toMoment }
         );
 
         this.sales = [ ...this.sales, ...dealsResponse.content ];
@@ -92,15 +114,30 @@
 <template>
     <page-container v-loading.body="isDataLoading" flex-content fluid>
         <div slot="header" class="header">
-            <el-breadcrumb separator-class="el-icon-arrow-right" v-if="hasManager">
-                <el-breadcrumb-item :to="{ path: '/' }">Отчеты</el-breadcrumb-item>
-                <el-breadcrumb-item>{{`${manager.firstName} ${manager.lastName || ''}`}}</el-breadcrumb-item>
-            </el-breadcrumb>
+            <div class="left-filters">
+                <el-breadcrumb separator-class="el-icon-arrow-right" v-if="hasManager">
+                    <el-breadcrumb-item :to="{ path: '/' }">Отчеты</el-breadcrumb-item>
+                    <el-breadcrumb-item>{{`${manager.firstName} ${manager.lastName || ''}`}}</el-breadcrumb-item>
+                </el-breadcrumb>
+                <el-date-picker
+                    v-model="period.dateFrom"
+                    size="mini"
+                    type="datetime"
+                    placeholder="От"
+                    format="dd:MM:yyyy HH:mm:ss"
+                    style="margin-left: 16px; width: 180px"
+                />
+                <el-date-picker
+                    v-model="period.dateTo"
+                    size="mini"
+                    type="datetime"
+                    placeholder="До"
+                    format="dd:MM:yyyy HH:mm:ss"
+                    style="margin-left: 8px; width: 180px"
+                />
+            </div>
 
             <div class="right-filters">
-                <el-tag type="info" size="mini">
-                    Всего сделок: <strong>{{totalSize}}</strong>
-                </el-tag>
                 <el-checkbox-group v-model="selectedStatuses" size="mini">
                     <el-checkbox-button
                         :key="status"
@@ -114,7 +151,12 @@
         </div>
         <div class="manager-card">
             <div class="info">
-                <manager-info-card v-if="hasManager" :manager="manager"/>
+                <manager-info-card
+                    v-if="hasManager"
+                    :manager="manager"
+                    :date-from="fromMoment"
+                    :date-to="toMoment"
+                />
             </div>
             <div class="feed">
                 <div class="feed-wrapper">
@@ -147,6 +189,11 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+    }
+
+    .left-filters {
+        display: flex;
+        align-items: center;
     }
 
     .right-filters {

@@ -15,6 +15,15 @@
         default() {
           return {};
         }
+      },
+      dateFrom: {
+        type: [ Date, String ],
+      },
+      dateTo: {
+        type: [ Date, String ],
+        default() {
+          return new Date();
+        }
       }
     },
     beforeCreate() {
@@ -40,21 +49,26 @@
     watch: {
       activeName: {
         immediate: true,
-        handler(name) {
-          if (name === 'reports') {
-            this.loadReports();
-          }
-
-          if (name === 'activity') {
-            this.loadActivity();
-          }
+        handler() {
+          this.loadData();
         }
+      },
+      dateFrom() {
+        this.loadData();
+      },
+      dateTo() {
+        this.loadData();
       }
     },
     methods: {
       async loadReports() {
         this.loading = true;
-        const { data: reports } = await this.api.get('managerReportUsingGET', { id: this.manager.id });
+        const { dateFrom, dateTo } = this;
+        const { data: reports } = await this.api.get('managerReportUsingGET',
+          { id: this.manager.id },
+          { fromMoment: dateFrom, toMoment: dateTo }
+        );
+
         this.funnelData = reports[0].data;
         this.saleVolume = reports[1].data;
         this.managerData = reports[2].data[0];
@@ -62,9 +76,21 @@
       },
       async loadActivity() {
         this.loading = true;
-        const { data: events } = await this.api.get('managerEventsUsingGET', { id: this.manager.id }, {size: 100, sort: 'createdMoment,desc'});
+        const { data: events } = await this.api.get('managerEventsUsingGET',
+          { id: this.manager.id },
+          { size: 100, sort: 'createdMoment,desc', fromMoment: this.dateFrom, toMoment: this.dateTo }
+        );
         this.events = events.content;
         this.loading = false;
+      },
+      loadData() {
+        if (this.activeName === 'reports') {
+          this.loadReports();
+        }
+
+        if (this.activeName === 'activity') {
+          this.loadActivity();
+        }
       }
     }
   }
