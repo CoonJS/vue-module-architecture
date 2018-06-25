@@ -165,9 +165,10 @@
                     </div>
                     <div class="pagination-action" v-if="isShowPaginationButton">
                         <el-button
-                                :loading="loading"
-                                :disabled="loading"
-                                @click="handlePaginationClick"
+                            type="info"
+                            :loading="loading"
+                            :disabled="loading"
+                            @click="handlePaginationClick"
                         >
                             {{ loading ? 'Загрузка...' : 'Загрузить еще' }}
                         </el-button>

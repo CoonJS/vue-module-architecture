@@ -37,20 +37,12 @@
         <div class="time-label" v-if="todayEvents.length > 0">
             <div class="label">Сегодня</div>
         </div>
-        <div class="events-wrap">
+        <div class="events-wrap" v-if="todayEvents.length > 0">
             <event-card
                 v-for="event in todayEvents"
                 :key="event.id"
-                :date="event.createdMoment"
-            >
-                <span class="event-type">
-                    Смена статуса:
-                </span>
-                <span class="status">{{event.newStatus}}</span>
-                <span>на</span>
-                <span class="status">{{event.oldStatus}}</span>
-
-            </event-card>
+                :event="event"
+            />
         </div>
         <div class="time-label" v-if="anotherEvents.length > 0 && todayEvents.length > 0">
             <div class="label">Остальные</div>
@@ -59,15 +51,8 @@
             <event-card
                 v-for="event in anotherEvents"
                 :key="event.id"
-                :date="event.createdMoment"
-            >
-                <span class="event-type">
-                    Смена статуса:
-                </span>
-                <span class="status">{{event.newStatus}}</span>
-                <span>на</span>
-                <span class="status">{{event.oldStatus}}</span>
-            </event-card>
+                :event="event"
+            />
         </div>
     </div>
 </template>
@@ -99,6 +84,8 @@
     }
 
     .events-wrap {
+        overflow: auto;
+        padding: 8px;
         margin-top: 24px;
     }
 
