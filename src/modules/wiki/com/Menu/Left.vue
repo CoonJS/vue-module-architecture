@@ -1,44 +1,98 @@
 <script>
+  import Tree from './Tree.vue';
+  import CreateCategoryPopup from './Popup/CreateCategory.vue';
+
   export default {
+    components: {
+      Tree,
+      CreateCategoryPopup
+    },
+    beforeCreate() {
+      /** @type {Api}*/
+      this.api = this.$locator.Api;
+      /** @type {ArrayUtils}*/
+      this.array = this.$locator.ArrayUtils;
+    },
+    mounted() {
+      this.loadMenuItems();
+    },
     data () {
       return {
-
+        tree: null,
+        loading: false,
+        isShowModal: false
+      };
+    },
+    methods: {
+      async loadMenuItems() {
+        this.loading = true;
+        const { data: items } = await this.api.get('articlesUsingGET');
+        this.tree = this.array.createTree(items);
+        this.loading = false;
+      },
+      handleSaveCategory() {
+        this.loadMenuItems();
+      },
+      showCreateCategoryModal() {
+        this.isShowModal = true;
       }
     }
   }
 </script>
-
 <template>
-    <!--@open="handleOpen"-->
-    <!--@close="handleClose"-->
-    <el-menu
-        class="menu"
-        background-color="#545c64"
-        text-color="#fff"
-        active-text-color="#ffd04b"
-    >
-        <el-submenu index="1">
-            <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>Раздел 1</span>
-            </template>
-            <el-menu-item-group title="Группа 1">
-                <el-menu-item index="1-1">Статья 1-1-1</el-menu-item>
-                <el-menu-item index="1-2">Статья 1-1-2</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="Группа 2">
-                <el-menu-item index="1-3">Статья 1-2-1</el-menu-item>
-            </el-menu-item-group>
-        </el-submenu>
-        <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
-            <span>Раздел 2</span>
-        </el-menu-item>
-    </el-menu>
+    <div class="menu-wrapper">
+        <div class="menu-container">
+            <el-menu
+                class="menu"
+                background-color="#545c64"
+                text-color="#fff"
+                active-text-color="#ffd04b"
+            >
+                <div v-show="loading" class="loader">
+                    <i class="el-icon-loading"></i>
+                </div>
+                <tree v-show="!loading" :tree-data="tree"/>
+            </el-menu>
+        </div>
+        <div class="create-category">
+            <el-button @click="showCreateCategoryModal" type="success" size="mini">Создать категорию</el-button>
+        </div>
+
+        <create-category-popup v-model="isShowModal" @save="handleSaveCategory"/>
+    </div>
 </template>
 
 <style scoped>
+    .menu-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .menu-container {
+        flex: 1;
+        overflow: auto;
+    }
+
     .menu {
+        flex: 1;
+        height: 100%;
         width: 320px;
+    }
+
+    .loader {
+        display: flex;
+        justify-content: center;
+        padding: 64px 0;
+        color: #fff;
+        font-size: 32px;
+    }
+
+    .create-category {
+        padding: 16px 0;
+        border-top: 1px solid #eee;
+        border-right: solid 1px #e6e6e6;
+        background-color: #545c64;
+        display: flex;
+        justify-content: center;
     }
 </style>
