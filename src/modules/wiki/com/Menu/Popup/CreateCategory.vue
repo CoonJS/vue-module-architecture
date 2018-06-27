@@ -16,7 +16,9 @@
       return {
         isShow: this.value,
         categoryName: '',
-        saving: false
+        parentId: null,
+        saving: false,
+        categories: []
       };
     },
     computed: {
@@ -27,6 +29,10 @@
     watch: {
       value(isShow) {
         this.isShow = isShow;
+
+        if (this.isShow === true) {
+          this.loadCategories();
+        }
       }
     },
     methods: {
@@ -35,7 +41,7 @@
 
         try {
           await this.api.post('createdArticleUsingPOST', {}, {
-            parentId: null,
+            parentId: this.parentId,
             title: this.categoryName,
             type: 'CATEGORY'
           });
@@ -45,8 +51,18 @@
         }
 
         this.saving = false;
+
+        this.parentId = null;
+        this.categoryName = '';
+
         this.$emit('save');
         this.close();
+      },
+      async loadCategories() {
+        const { data: items } = await this.api.get('articlesUsingGET');
+        const emptyCategory = { id: null, title: 'Нет родительской категории' };
+
+        this.categories = [ emptyCategory, ...items.filter(item => item.type === 'CATEGORY')];
       },
       close() {
         this.$emit('input', false)
@@ -62,6 +78,21 @@
         :visible.sync="isShow"
         @close="close"
     >
+        <div class="field">
+            <div class="title">Родительская категория</div>
+            <el-select
+                v-model="parentId"
+                size="medium"
+                placeholder="Родительская категория"
+            >
+                <el-option
+                    v-for="category in categories"
+                    :key="category.id"
+                    :label="category.title"
+                    :value="category.id"
+                />
+            </el-select>
+        </div>
         <div class="title">Название</div>
         <el-input
             v-model="categoryName"
@@ -93,5 +124,17 @@
     .title {
         font-size: 12px;
         margin-bottom: 8px;
+    }
+
+    .el-select {
+        width: 100%;
+    }
+
+    .field {
+        margin-bottom: 16px;
+    }
+
+    .field:last-child {
+        margin-bottom: 0;
     }
 </style>

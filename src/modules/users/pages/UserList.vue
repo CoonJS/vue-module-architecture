@@ -149,7 +149,8 @@
                         v-for="role in roles"
                         :key="role.id"
                         :label="role.name"
-                        :value="role.id">
+                        :value="role.id"
+                    >
                     </el-option>
                 </el-select>
             </div>

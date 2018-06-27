@@ -7,16 +7,17 @@
     },
     components: {
       NodeTree
+    },
+    methods: {
+      handleCreate() {
+
+      }
     }
   };
 </script>
 
 <template>
     <div class="tree">
-        <node-tree v-for="node in treeData" :node="node" :key="node.id"/>
+        <node-tree v-for="node in treeData" :node="node" :key="node.id" @create="handleCreate"/>
     </div>
 </template>
-
-<style scoped>
-
-</style>

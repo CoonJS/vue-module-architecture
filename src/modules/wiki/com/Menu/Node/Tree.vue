@@ -3,30 +3,56 @@
     name: 'node',
     props: {
       node: Object
+    },
+    methods: {
+      handlePlusIconClick() {
+        this.$emit('create');
+      }
     }
   };
 </script>
 
 <template>
     <el-submenu v-if="node.children && node.children.length" :index="String(node.id)">
-        <template slot="title">{{node.title}}</template>
-        <node v-for="child in node.children" :node="child" :key="child.id"/>
+        <div slot="title" class="submenu-content">
+            <span>{{node.title}}</span>
+            <i class="el-icon-plus" @click.prevent.stop="handlePlusIconClick"></i>
+        </div>
+        <node v-for="child in node.children" :node="child" :key="child.id" @create="handlePlusIconClick"/>
     </el-submenu>
     <el-menu-item v-else-if="node.type === 'ARTICLE'" :index="String(node.id)">
-        <span>{{ node.title }}</span>
+        <span class="menu-item">{{ node.title }}</span>
         <i class="el-icon-tickets"></i>
     </el-menu-item>
     <el-submenu v-else :index="String(node.id)">
-        <template slot="title">{{ node.title }}</template>
+        <div slot="title" class="submenu-content">
+            <span>{{node.title}}</span>
+            <i class="el-icon-plus" @click.prevent.stop="handlePlusIconClick"></i>
+        </div>
     </el-submenu>
 </template>
 
 <style scoped>
+
     i.el-icon-tickets {
         font-size: 12px;
     }
 
-    span {
+    i.el-icon-plus {
+        margin-bottom: 3px;
+        color: #909399;
+        font-size: 12px;
+        margin-right: 16px;
+    }
+
+    .submenu-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+
+    .menu-item {
         font-style: italic;
         font-size: 12px;
     }
