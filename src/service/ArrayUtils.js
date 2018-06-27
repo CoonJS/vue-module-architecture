@@ -31,7 +31,11 @@ export default class ArrayUtils {
         mappedElem = mappedArr[id];
         // If the element is not at the root level, add it to its parent array of children.
         if (mappedElem.parentId !== null) {
-          mappedArr[mappedElem['parentId']]['children'].push(mappedElem);
+          const parentIdEl = mappedArr[mappedElem['parentId']];
+
+          if (parentIdEl !== undefined) {
+            parentIdEl['children'].push(mappedElem);
+          }
         }
         // If the element is at the root level, add it to first level elements array.
         else {

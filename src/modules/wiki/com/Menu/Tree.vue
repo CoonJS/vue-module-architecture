@@ -8,9 +8,15 @@
     components: {
       NodeTree
     },
+    beforeCreate() {
+
+    },
     methods: {
       handleCreate() {
 
+      },
+      handleRemove(id) {
+        this.$emit('remove', id);
       }
     }
   };
@@ -18,6 +24,6 @@
 
 <template>
     <div class="tree">
-        <node-tree v-for="node in treeData" :node="node" :key="node.id" @create="handleCreate"/>
+        <node-tree v-for="node in treeData" :node="node" :key="node.id" @create="handleCreate" @remove="handleRemove"/>
     </div>
 </template>

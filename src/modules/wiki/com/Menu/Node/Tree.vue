@@ -7,6 +7,12 @@
     methods: {
       handlePlusIconClick() {
         this.$emit('create');
+      },
+      handleRemove(id) {
+        this.remove(id);
+      },
+      remove(id) {
+        this.$emit('remove', id);
       }
     }
   };
@@ -16,9 +22,24 @@
     <el-submenu v-if="node.children && node.children.length" :index="String(node.id)">
         <div slot="title" class="submenu-content">
             <span>{{node.title}}</span>
-            <i class="el-icon-plus" @click.prevent.stop="handlePlusIconClick"></i>
+            <div>
+                <el-tooltip class="item" effect="dark" content="Удалить" placement="top">
+                    <i class="el-icon-delete" @click.prevent.stop="remove(node.id)"></i>
+                </el-tooltip>
+                <el-tooltip class="item" effect="dark" content="Создать" placement="top">
+                    <i class="el-icon-plus" @click.prevent.stop="handlePlusIconClick"></i>
+                </el-tooltip>
+            </div>
         </div>
-        <node v-for="child in node.children" :node="child" :key="child.id" @create="handlePlusIconClick"/>
+
+        <node
+            v-for="child in node.children"
+            :node="child"
+            :key="child.id"
+            @remove="handleRemove"
+            @create="handlePlusIconClick"
+        />
+
     </el-submenu>
     <el-menu-item v-else-if="node.type === 'ARTICLE'" :index="String(node.id)">
         <span class="menu-item">{{ node.title }}</span>
@@ -27,7 +48,14 @@
     <el-submenu v-else :index="String(node.id)">
         <div slot="title" class="submenu-content">
             <span>{{node.title}}</span>
-            <i class="el-icon-plus" @click.prevent.stop="handlePlusIconClick"></i>
+            <div>
+                <el-tooltip class="item" effect="dark" content="Удалить" placement="top">
+                    <i class="el-icon-delete" @click.prevent.stop="remove(node.id)"></i>
+                </el-tooltip>
+                <el-tooltip class="item" effect="dark" content="Создать" placement="top">
+                    <i class="el-icon-plus" @click.prevent.stop="handlePlusIconClick"></i>
+                </el-tooltip>
+            </div>
         </div>
     </el-submenu>
 </template>
@@ -38,11 +66,15 @@
         font-size: 12px;
     }
 
-    i.el-icon-plus {
-        margin-bottom: 3px;
+    i.el-icon-plus, i.el-icon-delete {
+        margin-bottom: 4px;
         color: #909399;
         font-size: 12px;
-        margin-right: 16px;
+        margin-right: 22px;
+    }
+
+    i.el-icon-delete {
+        margin-right: 0;
     }
 
     .submenu-content {

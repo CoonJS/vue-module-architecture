@@ -30,6 +30,29 @@
         this.tree = this.array.createTree(items);
         this.loading = false;
       },
+      async removeItem(id) {
+        try {
+          await this.api.delete('deleteArticleUsingDELETE', { id }, {});
+        } catch (e) {
+          throw new Error(e);
+        }
+
+        this.loadMenuItems();
+      },
+      handleRemoveItem(id) {
+        this.showConfirmMessage().then(() => {
+          this.removeItem(id);
+        })
+      },
+      showConfirmMessage() {
+        return this.$confirm('Вы действительно хотите удалить элемент?',
+          'Подтверждение удаления',
+          {
+            confirmButtonText: 'Удалить',
+            cancelButtonText: 'Отмена',
+            type: 'Danger'
+          });
+      },
       handleSaveCategory() {
         this.loadMenuItems();
       },
@@ -51,7 +74,7 @@
                 <div v-show="loading" class="loader">
                     <i class="el-icon-loading"></i>
                 </div>
-                <tree v-show="!loading" :tree-data="tree"/>
+                <tree v-show="!loading" :tree-data="tree" @remove="handleRemoveItem"/>
             </el-menu>
         </div>
         <div class="create-category">
