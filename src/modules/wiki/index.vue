@@ -121,7 +121,9 @@
                         <vue-editor v-if="isEditMode" v-model="model"/>
                         <div v-else v-html="article.text"></div>
                         <div v-if="isShowScrollButton" class="scroll-to-top">
-                            <el-button type="primary" icon="el-icon-arrow-up" circle @click="scrollToTop"/>
+                            <el-tooltip effect="dark" content="В начало" placement="top">
+                                <el-button type="primary" icon="el-icon-arrow-up" circle @click="scrollToTop"/>
+                            </el-tooltip>
                         </div>
                     </div>
                 </div>

@@ -57,7 +57,7 @@
         this.isShowModal = true;
       },
       showConfirmMessage() {
-        return this.$confirm('Вы действительно хотите удалить элемент?',
+        return this.$confirm('Вы действительно хотите удалить категорию?',
           'Подтверждение удаления',
           {
             confirmButtonText: 'Удалить',
@@ -73,7 +73,7 @@
         <div class="menu-container">
             <el-menu
                 class="menu"
-                background-color="#545c64"
+                background-color="#2a3a4d"
                 text-color="#fff"
                 active-text-color="#ffd04b"
                 @select="handleSelect"
@@ -130,7 +130,7 @@
         padding: 16px 0;
         border-top: 1px solid #eee;
         border-right: solid 1px #e6e6e6;
-        background-color: #545c64;
+        background-color: #2a3a4d;
         display: flex;
         justify-content: center;
     }
