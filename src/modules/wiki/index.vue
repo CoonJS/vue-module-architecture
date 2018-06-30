@@ -18,7 +18,8 @@
         article: null,
         isLoading: false,
         isEditMode: false,
-        isArticleLoading: false
+        isArticleLoading: false,
+        isShowScrollButton: false
       }
     },
     computed: {
@@ -87,6 +88,12 @@
             cancelButtonText: 'Отмена',
             type: 'Danger'
           });
+      },
+      scrollToTop() {
+        document.querySelector('#content').scrollTo(0, 0);
+      },
+      handleScroll(event) {
+        this.isShowScrollButton = event.target.scrollTop > 500;
       }
     }
   }
@@ -98,7 +105,7 @@
             <div class="left">
                 <left-menu @select="handleSelect"/>
             </div>
-            <div class="content" v-loading.body="isArticleLoading">
+            <div id="content" class="content" v-loading.body="isArticleLoading" @scroll="handleScroll">
                 <div v-if="hasArticle">
                     <div class="header">
                         <h3>{{article.title}}</h3>
@@ -112,8 +119,10 @@
 
                     <div class="article-content">
                         <vue-editor v-if="isEditMode" v-model="model"/>
-
                         <div v-else v-html="article.text"></div>
+                        <div v-if="isShowScrollButton" class="scroll-to-top">
+                            <el-button type="primary" icon="el-icon-arrow-up" circle @click="scrollToTop"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -138,6 +147,7 @@
     }
 
     .article-content {
+        position: relative;
         margin-left: 16px;
         padding: 16px;
     }
@@ -151,6 +161,12 @@
         margin-bottom: 16px;
         border-bottom: 1px solid #eee;
 
+    }
+
+    .scroll-to-top {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
     }
 
     .quillWrapper {
