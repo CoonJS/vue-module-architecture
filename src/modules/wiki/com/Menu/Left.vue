@@ -1,11 +1,11 @@
 <script>
   import Tree from './Tree.vue';
-  import CreateCategoryPopup from './Popup/CreateCategory.vue';
+  import CreateItemPopup from './Popup/CreateItem.vue';
 
   export default {
     components: {
       Tree,
-      CreateCategoryPopup
+      CreateItemPopup
     },
     beforeCreate() {
       /** @type {Api}*/
@@ -44,6 +44,18 @@
           this.removeItem(id);
         })
       },
+      handleCreate(id) {
+
+      },
+      handleSave() {
+        this.loadMenuItems();
+      },
+      handleSelect(id) {
+        this.$emit('select', id);
+      },
+      showCreateCategoryModal() {
+        this.isShowModal = true;
+      },
       showConfirmMessage() {
         return this.$confirm('Вы действительно хотите удалить элемент?',
           'Подтверждение удаления',
@@ -52,12 +64,6 @@
             cancelButtonText: 'Отмена',
             type: 'Danger'
           });
-      },
-      handleSaveCategory() {
-        this.loadMenuItems();
-      },
-      showCreateCategoryModal() {
-        this.isShowModal = true;
       }
     }
   }
@@ -70,18 +76,28 @@
                 background-color="#545c64"
                 text-color="#fff"
                 active-text-color="#ffd04b"
+                @select="handleSelect"
             >
                 <div v-show="loading" class="loader">
                     <i class="el-icon-loading"></i>
                 </div>
-                <tree v-show="!loading" :tree-data="tree" @remove="handleRemoveItem"/>
+
+                <tree
+                    v-show="!loading"
+                    :tree-data="tree"
+                    @remove="handleRemoveItem"
+                    @create="handleCreate"
+                />
             </el-menu>
         </div>
         <div class="create-category">
-            <el-button @click="showCreateCategoryModal" type="success" size="mini">Создать категорию</el-button>
+            <el-button @click="showCreateCategoryModal" type="success" size="mini">Создать</el-button>
         </div>
 
-        <create-category-popup v-model="isShowModal" @save="handleSaveCategory"/>
+        <create-item-popup
+            v-model="isShowModal"
+            @save="handleSave"
+        />
     </div>
 </template>
 

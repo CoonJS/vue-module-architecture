@@ -6,6 +6,15 @@
         default() {
           return false;
         }
+      },
+      parentCategoryId: {
+        type: Number
+      },
+      itemType: {
+        type: String,
+        default() {
+          return 'CATEGORY'
+        }
       }
     },
     beforeCreate() {
@@ -16,14 +25,29 @@
       return {
         isShow: this.value,
         categoryName: '',
-        parentId: null,
+        type: this.itemType,
+        parentId: this.parentCategoryId || null,
         saving: false,
-        categories: []
+        loading: false,
+        categories: [],
+        types: [
+          {
+            title: 'Статья',
+            key: 'ARTICLE'
+          },
+          {
+            title: 'Категория',
+            key: 'CATEGORY'
+          }
+        ]
       };
     },
     computed: {
       isEmptyName() {
         return this.categoryName.trim() === '';
+      },
+      modalTitle() {
+        return this.type === 'ARTICLE' ? 'Создание статьи' : 'Создание категории';
       }
     },
     watch: {
@@ -31,8 +55,15 @@
         this.isShow = isShow;
 
         if (this.isShow === true) {
+          this.focus();
           this.loadCategories();
         }
+      },
+      parentCategoryId(id) {
+        this.parentId = id;
+      },
+      itemType(val) {
+        this.type = val;
       }
     },
     methods: {
@@ -43,7 +74,7 @@
           await this.api.post('createdArticleUsingPOST', {}, {
             parentId: this.parentId,
             title: this.categoryName,
-            type: 'CATEGORY'
+            type: this.type
           });
         } catch (e) {
           this.saving = false;
@@ -59,10 +90,18 @@
         this.close();
       },
       async loadCategories() {
+        this.loading = true;
         const { data: items } = await this.api.get('articlesUsingGET');
         const emptyCategory = { id: null, title: 'Нет родительской категории' };
 
         this.categories = [ emptyCategory, ...items.filter(item => item.type === 'CATEGORY')];
+
+        this.loading = false;
+      },
+      focus() {
+        this.$nextTick(() => {
+          this.$refs.input.$el.querySelector('input').focus();
+        });
       },
       close() {
         this.$emit('input', false)
@@ -74,14 +113,30 @@
 <template>
     <el-dialog
         width="400px"
-        title="Создание категории"
+        :title="modalTitle"
         :visible.sync="isShow"
         @close="close"
     >
         <div class="field">
+            <div class="title">Тип</div>
+            <el-select
+                v-model="type"
+                size="medium"
+                placeholder="Тип"
+            >
+                <el-option
+                    v-for="type in types"
+                    :key="type.key"
+                    :label="type.title"
+                    :value="type.key"
+                />
+            </el-select>
+        </div>
+        <div class="field">
             <div class="title">Родительская категория</div>
             <el-select
                 v-model="parentId"
+                :loading="loading"
                 size="medium"
                 placeholder="Родительская категория"
             >
@@ -95,6 +150,7 @@
         </div>
         <div class="title">Название</div>
         <el-input
+            ref="input"
             v-model="categoryName"
             size="medium"
             placeholder="Название"

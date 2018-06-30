@@ -11,8 +11,14 @@
       handleRemove(id) {
         this.remove(id);
       },
+      handleCreate(id) {
+        this.create(id);
+      },
       remove(id) {
         this.$emit('remove', id);
+      },
+      create(id) {
+        this.$emit('create', id);
       }
     }
   };
@@ -22,12 +28,15 @@
     <el-submenu v-if="node.children && node.children.length" :index="String(node.id)">
         <div slot="title" class="submenu-content">
             <span>{{node.title}}</span>
-            <div>
-                <el-tooltip class="item" effect="dark" content="Удалить" placement="top">
-                    <i class="el-icon-delete" @click.prevent.stop="remove(node.id)"></i>
+            <div class="actions">
+                <el-tooltip effect="dark" content="Создать" placement="top">
+                    <i class="icon el-icon-plus" @click.prevent.stop="create(node.id)"></i>
                 </el-tooltip>
-                <el-tooltip class="item" effect="dark" content="Создать" placement="top">
-                    <i class="el-icon-plus" @click.prevent.stop="handlePlusIconClick"></i>
+                <el-tooltip effect="dark" content="Редактировать" placement="top">
+                    <i class="icon el-icon-edit" @click.prevent.stop></i>
+                </el-tooltip>
+                <el-tooltip effect="dark" content="Удалить" placement="top">
+                    <i class="icon el-icon-delete" @click.prevent.stop="remove(node.id)"></i>
                 </el-tooltip>
             </div>
         </div>
@@ -37,7 +46,7 @@
             :node="child"
             :key="child.id"
             @remove="handleRemove"
-            @create="handlePlusIconClick"
+            @create="handleCreate"
         />
 
     </el-submenu>
@@ -49,11 +58,14 @@
         <div slot="title" class="submenu-content">
             <span>{{node.title}}</span>
             <div>
-                <el-tooltip class="item" effect="dark" content="Удалить" placement="top">
-                    <i class="el-icon-delete" @click.prevent.stop="remove(node.id)"></i>
+                <el-tooltip effect="dark" content="Создать" placement="top">
+                    <i class="icon el-icon-plus" @click.prevent.stop="handlePlusIconClick"></i>
                 </el-tooltip>
-                <el-tooltip class="item" effect="dark" content="Создать" placement="top">
-                    <i class="el-icon-plus" @click.prevent.stop="handlePlusIconClick"></i>
+                <el-tooltip effect="dark" content="Редактировать" placement="top">
+                    <i class="icon el-icon-edit" @click.prevent.stop></i>
+                </el-tooltip>
+                <el-tooltip effect="dark" content="Удалить" placement="top">
+                    <i class="icon el-icon-delete" @click.prevent.stop="remove(node.id)"></i>
                 </el-tooltip>
             </div>
         </div>
@@ -62,22 +74,24 @@
 
 <style scoped>
 
-    i.el-icon-tickets {
-        font-size: 12px;
-    }
-
-    i.el-icon-plus, i.el-icon-delete {
-        margin-bottom: 4px;
+    i {
         color: #909399;
         font-size: 12px;
-        margin-right: 22px;
+        margin-right: 8px;
+        margin-bottom: 3px;
     }
 
-    i.el-icon-delete {
-        margin-right: 0;
+    i:last-child {
+        margin-right: 24px;
+    }
+
+    .actions {
+
     }
 
     .submenu-content {
+        font-size: 12px;
+        font-weight: bold;
         display: flex;
         align-items: center;
         justify-content: space-between;
