@@ -1,5 +1,8 @@
 <script>
-  import RemindPasswordForm from './com/Form/RemindPassword.vue'
+  import bgImageSrc from './src/img/bg.jpg';
+  console.log(bgImageSrc);
+
+  import RemindPasswordForm from './src/com/Form/RemindPassword.vue'
 
   export default {
     components: {
@@ -17,7 +20,8 @@
         userName: '',
         password: '',
         isLoading: false,
-        isShowRemindPasswordForm: false
+        isShowRemindPasswordForm: false,
+        bgImageSrc: bgImageSrc
       }
     },
     methods: {
@@ -54,72 +58,89 @@
 </script>
 
 <template>
-    <page-container style="display: flex; margin-top: 150px;">
-        <div class="form-wrapper">
-            <div class="auth-form">
-                <div class="title"><h1>Вход</h1></div>
-                <div class="field">
-                    <el-input
-                        ref="loginInput"
-                        type="text"
-                        placeholder="Логин"
-                        :disabled="isLoading"
-                        v-model="userName"
-                        @keydown.native.enter="login"
-                    />
-                </div>
-                <div class="field">
-                    <el-input
-                        type="password"
-                        placeholder="Пароль"
-                        :disabled="isLoading"
-                        v-model="password"
-                        @keydown.native.enter="login"
-                    />
-                </div>
-                <div class="actions">
-                    <el-button
-                        type="success"
-                        :loading="isLoading"
-                        @click="login"
-                    >
-                        Войти
-                    </el-button>
-                    <el-button
-                        type="warning"
-                        plain
-                        @click="showRemindPasswordForm"
-                    >
-                        Забыли пароль?
-                    </el-button>
-                </div>
+    <div class="form-wrapper" :style="{'background': `url(${bgImageSrc})`}">
+        <h1 class="logo">Salestat</h1>
+        <div class="auth-form">
+            <div class="title">
+                <h1>Вход</h1>
             </div>
-            <div>
-                <el-dialog
-                    title="Восстановление пароля"
-                    :visible.sync="isShowRemindPasswordForm"
-                    width="560px"
+            <div class="field">
+                <el-input
+                    ref="loginInput"
+                    type="text"
+                    placeholder="Логин"
+                    :disabled="isLoading"
+                    v-model="userName"
+                    @keydown.native.enter="login"
+                />
+            </div>
+            <div class="field">
+                <el-input
+                    type="password"
+                    placeholder="Пароль"
+                    :disabled="isLoading"
+                    v-model="password"
+                    @keydown.native.enter="login"
+                />
+            </div>
+            <div class="actions">
+                <el-button
+                    type="success"
+                    :loading="isLoading"
+                    @click="login"
                 >
-                    <remind-password-form @send="closeRemindPasswordForm"/>
-                </el-dialog>
+                    Войти
+                </el-button>
+                <el-button
+                    plain
+                    @click="showRemindPasswordForm"
+                >
+                    Забыли пароль?
+                </el-button>
             </div>
         </div>
-    </page-container>
+        <div>
+            <el-dialog
+                title="Восстановление пароля"
+                :visible.sync="isShowRemindPasswordForm"
+                width="560px"
+            >
+                <remind-password-form @send="closeRemindPasswordForm"/>
+            </el-dialog>
+        </div>
+    </div>
 </template>
 
 <style scoped>
+
+    .logo {
+        color: #00222e;
+        margin-top: 80px;
+        font-size: 80px;
+        font-weight: normal;
+    }
+
     .title {
         display: flex;
         justify-content: center;
     }
 
     .form-wrapper {
+        background-color: #f1f1f1;
+        width: 100%;
         display: flex;
-        justify-content: center;
+        margin-top: -46px;
+        flex-direction: column;
+        align-items: center;
     }
 
     .auth-form {
+        padding: 24px;
+        border-radius: 4px;
+        background-color: #fff;
+        margin-top: 80px;
         width: 280px;
+        border: 2px solid #dedede;
     }
 
     .field {
