@@ -14,6 +14,9 @@
       },
       handleRemove(id) {
         this.$emit('remove', id);
+      },
+      handleEdit(id) {
+        this.$emit('edit', id);
       }
     }
   };
@@ -26,6 +29,7 @@
             :node="node"
             :key="node.id"
             @create="handleCreate"
+            @edit="handleEdit"
             @remove="handleRemove"
         />
     </div>

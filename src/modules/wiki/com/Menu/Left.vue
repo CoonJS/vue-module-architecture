@@ -19,14 +19,26 @@
     data () {
       return {
         tree: null,
+        items: [],
         loading: false,
+        currentItem: null,
+        isEditMode: false,
         isShowModal: false
       };
+    },
+    watch: {
+      isShowModal(val) {
+        if (val === false) {
+          this.currentItem = null;
+          this.isEditMode = false;
+        }
+      }
     },
     methods: {
       async loadMenuItems() {
         this.loading = true;
         const { data: items } = await this.api.get('articlesUsingGET');
+        this.items = items;
         this.tree = this.array.createTree(items);
         this.loading = false;
       },
@@ -39,13 +51,18 @@
 
         this.loadMenuItems();
       },
+      handleCreate(id) {
+
+      },
+      handleEdit(id) {
+        this.currentItem = this.items.find(item => item.id === id);
+        this.isEditMode = true;
+        this.showCreateCategoryModal();
+      },
       handleRemoveItem(id) {
         this.showConfirmMessage().then(() => {
           this.removeItem(id);
         })
-      },
-      handleCreate(id) {
-
       },
       handleSave() {
         this.loadMenuItems();
@@ -85,8 +102,9 @@
                 <tree
                     v-show="!loading"
                     :tree-data="tree"
-                    @remove="handleRemoveItem"
                     @create="handleCreate"
+                    @edit="handleEdit"
+                    @remove="handleRemoveItem"
                 />
             </el-menu>
         </div>
@@ -96,6 +114,8 @@
 
         <create-item-popup
             v-model="isShowModal"
+            :item="currentItem"
+            :edit-mode="isEditMode"
             @save="handleSave"
         />
     </div>

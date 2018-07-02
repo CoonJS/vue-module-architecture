@@ -5,20 +5,23 @@
       node: Object
     },
     methods: {
-      handlePlusIconClick() {
-        this.$emit('create');
+      handleCreate(id) {
+        this.create(id);
+      },
+      handleEdit(id) {
+        this.edit(id);
       },
       handleRemove(id) {
         this.remove(id);
       },
-      handleCreate(id) {
-        this.create(id);
+      create(id) {
+        this.$emit('create', id);
+      },
+      edit(id) {
+        this.$emit('edit', id);
       },
       remove(id) {
         this.$emit('remove', id);
-      },
-      create(id) {
-        this.$emit('create', id);
       }
     }
   };
@@ -33,7 +36,7 @@
                     <i class="icon el-icon-plus" @click.prevent.stop="create(node.id)"></i>
                 </el-tooltip>
                 <el-tooltip effect="dark" content="Редактировать" placement="top">
-                    <i class="icon el-icon-edit" @click.prevent.stop></i>
+                    <i class="icon el-icon-edit" @click.prevent.stop="edit(node.id)"></i>
                 </el-tooltip>
                 <el-tooltip effect="dark" content="Удалить" placement="top">
                     <i class="icon el-icon-delete" @click.prevent.stop="remove(node.id)"></i>
@@ -45,6 +48,7 @@
             v-for="child in node.children"
             :node="child"
             :key="child.id"
+            @edit="handleEdit"
             @remove="handleRemove"
             @create="handleCreate"
         />
@@ -59,10 +63,10 @@
             <span>{{node.title}}</span>
             <div>
                 <el-tooltip effect="dark" content="Создать" placement="top">
-                    <i class="icon el-icon-plus" @click.prevent.stop="handlePlusIconClick"></i>
+                    <i class="icon el-icon-plus" @click.prevent.stop="create(node.id)"></i>
                 </el-tooltip>
                 <el-tooltip effect="dark" content="Редактировать" placement="top">
-                    <i class="icon el-icon-edit" @click.prevent.stop></i>
+                    <i class="icon el-icon-edit" @click.prevent.stop="edit(node.id)"></i>
                 </el-tooltip>
                 <el-tooltip effect="dark" content="Удалить" placement="top">
                     <i class="icon el-icon-delete" @click.prevent.stop="remove(node.id)"></i>

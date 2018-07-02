@@ -7,13 +7,19 @@
           return false;
         }
       },
-      parentCategoryId: {
-        type: Number
+      item: {
+        type: Object
       },
       itemType: {
         type: String,
         default() {
           return 'CATEGORY'
+        }
+      },
+      editMode: {
+        type: Boolean,
+        default() {
+          return false;
         }
       }
     },
@@ -24,9 +30,9 @@
     data() {
       return {
         isShow: this.value,
-        categoryName: '',
+        itemName: '',
         type: this.itemType,
-        parentId: this.parentCategoryId || null,
+        parentId: this.item ? this.item.parentId : null,
         saving: false,
         loading: false,
         categories: [],
@@ -44,9 +50,13 @@
     },
     computed: {
       isEmptyName() {
-        return this.categoryName.trim() === '';
+        return this.itemName.trim() === '';
       },
       modalTitle() {
+        if (this.editMode) {
+          return this.type === 'ARTICLE' ? 'Редактирование статьи' : 'Редактирование категории';
+        }
+
         return this.type === 'ARTICLE' ? 'Создание статьи' : 'Создание категории';
       }
     },
@@ -57,6 +67,11 @@
         if (this.isShow === true) {
           this.focus();
           this.loadCategories();
+          this.initData();
+        }
+
+        if (this.isShow === false) {
+          this.clearData();
         }
       },
       parentCategoryId(id) {
@@ -73,7 +88,7 @@
         try {
           await this.api.post('createdArticleUsingPOST', {}, {
             parentId: this.parentId,
-            title: this.categoryName,
+            title: this.itemName,
             type: this.type
           });
         } catch (e) {
@@ -84,7 +99,31 @@
         this.saving = false;
 
         this.parentId = null;
-        this.categoryName = '';
+        this.itemName = '';
+
+        this.$emit('save');
+        this.close();
+      },
+
+      async editCategory() {
+        const id = this.item.id;
+        this.saving = true;
+
+        try {
+          await this.api.put('updatedArticleUsingPUT', { id }, {
+            type: this.type,
+            title: this.itemName,
+            parentId: this.parentId
+          });
+        } catch (e) {
+          this.saving = false;
+          throw new Error(e);
+        }
+
+        this.saving = false;
+
+        this.parentId = null;
+        this.itemName = '';
 
         this.$emit('save');
         this.close();
@@ -97,6 +136,22 @@
         this.categories = [ emptyCategory, ...items.filter(item => item.type === 'CATEGORY')];
 
         this.loading = false;
+      },
+      clearData() {
+        this.parentId = null;
+        this.itemName = '';
+      },
+      initData() {
+        const item = this.item;
+        const hasItem = !!item;
+
+        if (!hasItem) {
+          return;
+        }
+
+        this.parentId = item.parentId;
+        this.itemName = item.title;
+        this.type = item.type;
       },
       focus() {
         this.$nextTick(() => {
@@ -123,6 +178,7 @@
                 v-model="type"
                 size="medium"
                 placeholder="Тип"
+                :disabled="editMode"
             >
                 <el-option
                     v-for="type in types"
@@ -151,7 +207,7 @@
         <div class="title">Название</div>
         <el-input
             ref="input"
-            v-model="categoryName"
+            v-model="itemName"
             size="medium"
             placeholder="Название"
             @keydown.native.enter="saveCategory"
@@ -164,13 +220,24 @@
                 Отмена
             </el-button>
             <el-button
+                v-if="editMode"
+                type="success"
+                size="mini"
+                :disabled="isEmptyName"
+                :loading="saving"
+                @click="editCategory"
+            >
+                Редактировать
+            </el-button>
+            <el-button
+                v-else
                 type="success"
                 size="mini"
                 :disabled="isEmptyName"
                 :loading="saving"
                 @click="saveCategory"
             >
-                Создать
+                Сохранить
             </el-button>
         </div>
     </el-dialog>
