@@ -1,4 +1,4 @@
-FROM node:9
+FROM node:alpine
 
 WORKDIR /Users/br/Projects/salestat
 
