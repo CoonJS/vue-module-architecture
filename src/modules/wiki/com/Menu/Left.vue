@@ -52,7 +52,8 @@
         this.loadMenuItems();
       },
       handleCreate(id) {
-
+        this.currentItem = this.items.find(item => item.id === id);
+        this.showCreateCategoryModal();
       },
       handleEdit(id) {
         this.currentItem = this.items.find(item => item.id === id);

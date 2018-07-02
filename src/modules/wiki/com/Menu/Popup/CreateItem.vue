@@ -149,8 +149,8 @@
           return;
         }
 
-        this.parentId = item.parentId;
-        this.itemName = item.title;
+        this.parentId = this.editMode ? item.parentId : item.id;
+        this.itemName = this.editMode ? item.title : '';
         this.type = item.type;
       },
       focus() {
