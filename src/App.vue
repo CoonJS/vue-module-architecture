@@ -3,7 +3,6 @@
     beforeCreate() {
       /** @type {Api}*/
       this.api = this.$locator.Api;
-      console.log('beforeCreate');
     },
     async mounted() {
       this.loadUser();
