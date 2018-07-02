@@ -47,7 +47,7 @@ module.exports = {
     port: '8080',
     proxy: {
       '*': {
-        target: 'https://uwared.ru',
+        target: 'https://dev.salestat.org',
         secure: false
       }
     },

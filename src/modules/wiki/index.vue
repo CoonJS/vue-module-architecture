@@ -50,6 +50,7 @@
         this.clearData();
         this.disableEditMode();
         this.loadArticle(id);
+        this.reloadMenu();
       },
       async deleteArticle() {
         const id = this.article.id;
@@ -61,6 +62,10 @@
         this.article = null;
 
         this.clearData();
+        this.reloadMenu();
+      },
+      reloadMenu() {
+        this.$refs.menu.loadMenuItems();
       },
       handleSelect(id) {
         this.disableEditMode();
@@ -103,17 +108,57 @@
     <page-container fluid flex-content>
         <div class="wiki-page">
             <div class="left">
-                <left-menu @select="handleSelect"/>
+                <left-menu @select="handleSelect" ref="menu"/>
             </div>
             <div id="content" class="content" v-loading.body="isArticleLoading" @scroll="handleScroll">
                 <div v-if="hasArticle">
                     <div class="header">
-                        <h3>{{article.title}}</h3>
+                        <el-input
+                            v-if="isEditMode"
+                            size="mini"
+                            v-model="article.title"
+                            @keydown.native.enter="saveArticle"
+                        />
+                        <h3 v-else>{{article.title}}</h3>
                         <div>
-                            <el-button v-if="isEditMode" :loading="isLoading" type="success" size="mini" @click="saveArticle">Сохранить</el-button>
-                            <el-button v-if="isEditMode" size="mini" @click="disableEditMode">Отмена</el-button>
-                            <el-button v-else type="primary" size="mini" icon="el-icon-edit" circle @click="enableEditMode"/>
-                            <el-button v-if="!isEditMode" size="mini" :loading="isLoading" circle type="danger" icon="el-icon-delete" @click="handleDelete"/>
+                            <template v-if="isEditMode">
+                                <el-button
+                                    :loading="isLoading"
+                                    type="success"
+                                    size="mini"
+                                    @click="saveArticle"
+                                >
+                                    Сохранить
+                                </el-button>
+                                <el-button
+                                    size="mini"
+                                    @click="disableEditMode"
+                                >
+                                    Отмена
+                                </el-button>
+                            </template>
+
+                            <template v-else>
+                                <el-tooltip effect="dark" content="Редактировать" placement="left">
+                                    <el-button
+                                        circle
+                                        type="primary"
+                                        size="mini"
+                                        icon="el-icon-edit"
+                                        @click="enableEditMode"
+                                    />
+                                </el-tooltip>
+                                <el-tooltip effect="dark" content="Удалить" placement="left">
+                                    <el-button
+                                        circle
+                                        size="mini"
+                                        :loading="isLoading"
+                                        type="danger"
+                                        icon="el-icon-delete"
+                                        @click="handleDelete"
+                                    />
+                                </el-tooltip>
+                            </template>
                         </div>
                     </div>
 
@@ -121,7 +166,7 @@
                         <vue-editor v-if="isEditMode" v-model="model"/>
                         <div v-else v-html="article.text"></div>
                         <div v-if="isShowScrollButton" class="scroll-to-top">
-                            <el-tooltip effect="dark" content="В начало" placement="top">
+                            <el-tooltip effect="dark" content="Наверх" placement="top">
                                 <el-button type="primary" icon="el-icon-arrow-up" circle @click="scrollToTop"/>
                             </el-tooltip>
                         </div>
@@ -169,6 +214,10 @@
         position: fixed;
         right: 20px;
         bottom: 20px;
+    }
+
+    .el-input {
+        width: 320px;
     }
 
     .quillWrapper {

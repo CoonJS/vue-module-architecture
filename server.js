@@ -9,9 +9,7 @@ app.use(express.static('dist'));
 
 app.get('/', (req, res) => {
   const indexFilePath = path.resolve(__dirname, 'dist', 'index.html');
-  console.log(indexFilePath);
   res.sendfile(indexFilePath)
 });
 
 app.listen(PORT, HOST);
-console.log(`Running on http://${HOST}:${PORT}`);
