@@ -112,9 +112,8 @@
                 />
             </el-menu>
         </div>
-        <div class="create-category">
+        <div v-if="access.canCreate" class="create-category">
             <el-button
-                v-if="access.canCreate"
                 size="mini"
                 type="success"
                 @click="showCreateCategoryModal"
