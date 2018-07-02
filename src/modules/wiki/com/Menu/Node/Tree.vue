@@ -4,6 +4,19 @@
     props: {
       node: Object
     },
+    beforeCreate() {
+      /** @type {Api}*/
+      this.api = this.$locator.Api;
+    },
+    data() {
+      return {
+        access: {
+          canCreate: this.api.hasAccess('ADD_WIKI'),
+          canEdit: this.api.hasAccess('EDIT_WIKI'),
+          canRemove: this.api.hasAccess('REMOVE_WIKI')
+        }
+      };
+    },
     methods: {
       handleCreate(id) {
         this.create(id);
@@ -32,13 +45,13 @@
         <div slot="title" class="submenu-content">
             <span>{{node.title}}</span>
             <div class="actions">
-                <el-tooltip effect="dark" content="Создать" placement="top">
+                <el-tooltip v-if="access.canCreate" effect="dark" content="Создать" placement="top">
                     <i class="icon el-icon-plus" @click.prevent.stop="create(node.id)"></i>
                 </el-tooltip>
-                <el-tooltip effect="dark" content="Редактировать" placement="top">
+                <el-tooltip v-if="access.canEdit" effect="dark" content="Редактировать" placement="top">
                     <i class="icon el-icon-edit" @click.prevent.stop="edit(node.id)"></i>
                 </el-tooltip>
-                <el-tooltip effect="dark" content="Удалить" placement="top">
+                <el-tooltip v-if="access.canRemove" effect="dark" content="Удалить" placement="top">
                     <i class="icon el-icon-delete" @click.prevent.stop="remove(node.id)"></i>
                 </el-tooltip>
             </div>
@@ -62,13 +75,13 @@
         <div slot="title" class="submenu-content">
             <span>{{node.title}}</span>
             <div>
-                <el-tooltip effect="dark" content="Создать" placement="top">
+                <el-tooltip v-if="access.canCreate" effect="dark" content="Создать" placement="top">
                     <i class="icon el-icon-plus" @click.prevent.stop="create(node.id)"></i>
                 </el-tooltip>
-                <el-tooltip effect="dark" content="Редактировать" placement="top">
+                <el-tooltip v-if="access.canEdit" effect="dark" content="Редактировать" placement="top">
                     <i class="icon el-icon-edit" @click.prevent.stop="edit(node.id)"></i>
                 </el-tooltip>
-                <el-tooltip effect="dark" content="Удалить" placement="top">
+                <el-tooltip v-if="access.canRemove" effect="dark" content="Удалить" placement="top">
                     <i class="icon el-icon-delete" @click.prevent.stop="remove(node.id)"></i>
                 </el-tooltip>
             </div>

@@ -104,7 +104,6 @@
         this.$emit('save');
         this.close();
       },
-
       async editCategory() {
         const id = this.item.id;
         this.saving = true;
@@ -136,6 +135,9 @@
         this.categories = [ emptyCategory, ...items.filter(item => item.type === 'CATEGORY')];
 
         this.loading = false;
+      },
+      handleKeydownEnter() {
+        this.editMode ? this.editCategory() : this.saveCategory();
       },
       clearData() {
         this.parentId = null;
@@ -210,7 +212,7 @@
             v-model="itemName"
             size="medium"
             placeholder="Название"
-            @keydown.native.enter="saveCategory"
+            @keydown.native.enter="handleKeydownEnter"
         />
         <div slot="footer">
             <el-button

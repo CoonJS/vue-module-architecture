@@ -23,7 +23,10 @@
         loading: false,
         currentItem: null,
         isEditMode: false,
-        isShowModal: false
+        isShowModal: false,
+        access: {
+          canCreate: this.api.hasAccess('ADD_WIKI')
+        }
       };
     },
     watch: {
@@ -110,7 +113,14 @@
             </el-menu>
         </div>
         <div class="create-category">
-            <el-button @click="showCreateCategoryModal" type="success" size="mini">Создать</el-button>
+            <el-button
+                v-if="access.canCreate"
+                size="mini"
+                type="success"
+                @click="showCreateCategoryModal"
+            >
+                Создать
+            </el-button>
         </div>
 
         <create-item-popup

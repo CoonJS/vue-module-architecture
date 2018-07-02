@@ -71,7 +71,7 @@
           },
           {
             key:'wiki',
-            title: 'Регламент',
+            title: 'База знаний',
             link: '/wiki',
             hasAccess: this.api.hasAccess('VIEW_WIKI')
           },
