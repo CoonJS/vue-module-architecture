@@ -92,6 +92,7 @@
                     Войти
                 </el-button>
                 <el-button
+                    class="remind-btn"
                     plain
                     @click="showRemindPasswordForm"
                 >
@@ -140,7 +141,7 @@
         background-color: #fff;
         margin-top: 80px;
         width: 280px;
-        border: 2px solid #dedede;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
 
     .field {
@@ -155,5 +156,9 @@
     .actions button {
         margin: 8px 0;
         width: 100%;
+    }
+
+    .remind-btn {
+        border: none;
     }
 </style>
