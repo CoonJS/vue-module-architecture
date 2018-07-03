@@ -1,13 +1,3 @@
-FROM node:alpine
+FROM nginx:alpine
 
-WORKDIR /Users/br/Projects/salestat
-
-COPY package*.json ./
-
-RUN npm install
-
-COPY . .
-
-EXPOSE 8080
-
-CMD [ "npm", "run", "bootstrap" ]
+COPY dist /usr/share/nginx/html
