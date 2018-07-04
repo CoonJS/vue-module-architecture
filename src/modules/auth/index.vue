@@ -1,6 +1,5 @@
 <script>
-  // import bgImageSrc from './src/img/bg.jpg';
-  import bgImageSrc from './src/img/background-boardwalk-clouds-808465.jpg';
+  import bgImage from './src/img/bg.jpg';
 
   import RemindPasswordForm from './src/com/Form/RemindPassword.vue'
 
@@ -17,11 +16,11 @@
     },
     data () {
       return {
+        bgImage,
         userName: '',
         password: '',
         isLoading: false,
-        isShowRemindPasswordForm: false,
-        bgImageSrc: bgImageSrc
+        isShowRemindPasswordForm: false
       }
     },
     methods: {
@@ -58,7 +57,7 @@
 </script>
 
 <template>
-    <div class="form-wrapper" :style="{backgroundImage: `url(${bgImageSrc})`, backgroundSize: 'cover'}">
+    <div class="form-wrapper" :style="{backgroundImage: `url(${bgImage})`, backgroundSize: 'cover'}">
         <div class="logo">Salestat</div>
         <div class="auth-form">
             <div class="title">

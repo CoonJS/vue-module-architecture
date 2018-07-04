@@ -157,7 +157,7 @@
                     :title="integration.displayName"
                     :key="integration.displayName"
                     :img="integration.imageUrl"
-                    :status="integration.active ? 'ACTIVE' : 'DISABLED'"
+                    :status="integration.status"
                     @click.native="showEnabledIntegrationSettings(integration)"
                 />
                 <div v-show="searchEnabledIntegrations.length === 0 && searchEnabledIntegrationsQuery.trim() !== ''" class="empty-search-message">
@@ -182,7 +182,6 @@
                     :title="integration.displayName"
                     :key="integration.type"
                     :img="integration.imageUrl"
-                    status="NEW"
                     @click.native="showSettings(integration)"
                 />
                 <div v-show="searchIntegrations.length === 0 && searchIntegrationsQuery.trim() !== ''" class="empty-search-message">

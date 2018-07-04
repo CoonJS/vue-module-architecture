@@ -1,11 +1,17 @@
 <script>
+  import bgImage from '../src/img/bg.jpg';
+
   export default {
     created() {
       /** @type {Api}*/
       this.api = this.$locator.Api;
     },
+    mounted() {
+      this.focusInput();
+    },
     data () {
       return {
+        bgImage,
         loading: false,
         newPassword: '',
         newPasswordConfirm: '',
@@ -49,42 +55,69 @@
           message: 'Пароли не совпадают',
           type: 'error'
         });
+      },
+      focusInput() {
+        this.$nextTick(() => {
+          this.$refs.input.$el.querySelector('input').focus();
+        });
       }
     }
   }
 </script>
 
 <template>
-    <page-container style="display: flex; margin-top: 150px;">
-        <div class="form-wrapper">
-            <div class="form">
-                <h3>Смена пароля</h3>
-                <div class="form-fields">
-                    <div class="hint">Введите новый пароль</div>
-                    <el-input v-model="newPassword" type="password"/>
-                    <div class="hint">Подтвердите новый пароль</div>
-                    <el-input v-model="newPasswordConfirm" type="password" />
-                    <el-button
-                        type="success"
-                        :loading="loading"
-                        @click="changePassword"
-                    >
-                        Сменить пароль
-                    </el-button>
-                </div>
+    <div class="form-wrapper" :style="{backgroundImage: `url(${bgImage})`}">
+        <div class="form">
+            <h3>Смена пароля</h3>
+            <div class="form-fields">
+
+                <div class="hint">Введите новый пароль</div>
+                <el-input
+                    ref="input"
+                    type="password"
+                    v-model="newPassword"
+                    :disabled="loading"
+                    @keydown.native.enter="changePassword"
+                />
+
+                <div class="hint">Подтвердите новый пароль</div>
+                <el-input
+                    type="password"
+                    v-model="newPasswordConfirm"
+                    :disabled="loading"
+                    @keydown.native.enter="changePassword"
+                />
+
+                <el-button
+                    type="success"
+                    :loading="loading"
+                    @click="changePassword"
+                >
+                    Сменить пароль
+                </el-button>
             </div>
         </div>
-    </page-container>
+    </div>
 </template>
 
 <style scoped>
     .form-wrapper {
+        background-size: cover;
+        background-color: #f1f1f1;
+        width: 100%;
         display: flex;
-        justify-content: center;
+        margin-top: -46px;
+        flex-direction: column;
+        align-items: center;
     }
 
     .form {
-        width: 300px;
+        padding: 24px;
+        border-radius: 4px;
+        background-color: #f3f3f3;
+        margin-top: 80px;
+        width: 280px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
 
     .form-fields {

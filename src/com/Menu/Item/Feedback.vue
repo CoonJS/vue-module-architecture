@@ -106,6 +106,7 @@
     }
 
     .text-hint {
+        margin-bottom: 8px;
         font-size: 12px;
     }
 

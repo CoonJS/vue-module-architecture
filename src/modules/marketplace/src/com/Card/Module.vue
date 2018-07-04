@@ -17,12 +17,14 @@
         }
       },
       status: {
-        type: String,
-        default() {
-          return 'NEW';
-        }
+        type: String
       }
     },
+    computed: {
+      hasStatus() {
+        return this.status !== undefined;
+      }
+    }
 
   }
 </script>
@@ -37,9 +39,9 @@
                 <h5>{{title}}</h5>
             </div>
             <div>
-                <el-button v-if="status === 'ACTIVE'" type="success" icon="el-icon-check" circle/>
-                <el-button v-if="status === 'DISABLED'" type="danger" icon="el-icon-minus" circle/>
-                <el-button v-if="status === 'NEW'" icon="el-icon-zoom-in" circle/>
+                <el-button v-if="status === 'FAILED'" type="danger" icon="el-icon-warning" circle/>
+                <el-button v-if="status === 'SYNCING'" type="primary" icon="el-icon-loading" circle/>
+                <el-button v-if="!hasStatus" icon="el-icon-zoom-in" circle/>
             </div>
         </div>
     </div>
