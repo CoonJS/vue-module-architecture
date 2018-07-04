@@ -1,6 +1,6 @@
 <script>
-  import bgImageSrc from './src/img/bg.jpg';
-  console.log(bgImageSrc);
+  // import bgImageSrc from './src/img/bg.jpg';
+  import bgImageSrc from './src/img/background-boardwalk-clouds-808465.jpg';
 
   import RemindPasswordForm from './src/com/Form/RemindPassword.vue'
 
@@ -58,8 +58,8 @@
 </script>
 
 <template>
-    <div class="form-wrapper" :style="{'background': `url(${bgImageSrc})`}">
-        <h1 class="logo">Salestat</h1>
+    <div class="form-wrapper" :style="{backgroundImage: `url(${bgImageSrc})`, backgroundSize: 'cover'}">
+        <div class="logo">Salestat</div>
         <div class="auth-form">
             <div class="title">
                 <h1>Вход</h1>
@@ -115,7 +115,7 @@
 <style scoped>
 
     .logo {
-        color: #00222e;
+        color: #f3f3f3;
         margin-top: 80px;
         font-size: 80px;
         font-weight: normal;
@@ -127,6 +127,7 @@
     }
 
     .form-wrapper {
+        background-size: cover;
         background-color: #f1f1f1;
         width: 100%;
         display: flex;
@@ -138,7 +139,7 @@
     .auth-form {
         padding: 24px;
         border-radius: 4px;
-        background-color: #fff;
+        background-color: #f3f3f3;
         margin-top: 80px;
         width: 280px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
