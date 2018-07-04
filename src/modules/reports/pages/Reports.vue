@@ -30,7 +30,7 @@
         managerData: [],
         period: {
           dateFrom: null,
-          dateTo: new Date()
+          dateTo: null
         },
         preset: 'ALL'
       }
@@ -85,7 +85,7 @@
 
             this.period = {
               dateFrom: null,
-              dateTo: new Date()
+              dateTo: null
             };
         }
 

@@ -40,7 +40,7 @@
     .sidebar {
         display: flex;
         z-index: 1000;
-        width: 400px;
+        width: 420px;
         height: 100%;
         position: absolute;
         background-color: #fff;

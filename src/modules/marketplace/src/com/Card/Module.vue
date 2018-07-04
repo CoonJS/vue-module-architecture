@@ -18,6 +18,12 @@
       },
       status: {
         type: String
+      },
+      active: {
+        type: Boolean,
+        default() {
+          return false;
+        }
       }
     },
     computed: {
@@ -39,9 +45,32 @@
                 <h5>{{title}}</h5>
             </div>
             <div>
-                <el-button v-if="status === 'FAILED'" type="danger" icon="el-icon-warning" circle/>
-                <el-button v-if="status === 'SYNCING'" type="primary" icon="el-icon-loading" circle/>
-                <el-button v-if="!hasStatus" icon="el-icon-zoom-in" circle/>
+                <el-button
+                    v-if="status === 'FAILED'"
+                    circle
+                    type="danger"
+                    icon="el-icon-warning"
+                    :disabled="!active"
+                />
+                <el-button
+                    v-if="status === 'SYNCING'"
+                    circle
+                    type="primary"
+                    icon="el-icon-loading"
+                    :disabled="!active"
+                />
+                <el-button
+                    v-if="status === 'SYNCED'"
+                    circle
+                    type="success"
+                    icon="el-icon-success"
+                    :disabled="!active"
+                />
+                <el-button
+                    v-if="!hasStatus"
+                    circle
+                    icon="el-icon-zoom-in"
+                />
             </div>
         </div>
     </div>

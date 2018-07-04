@@ -13,6 +13,12 @@
         default() {
           return {};
         }
+      },
+      disabled: {
+        type: Boolean,
+        default() {
+          return false;
+        }
       }
     },
     data() {
@@ -30,7 +36,7 @@
 </script>
 
 <template>
-    <el-form :model="form" size="medium">
+    <el-form :model="form" size="medium" :disabled="disabled">
         <div class="field" v-for="field in fields">
             <div class="label">{{field.displayName}}</div>
             <el-form-item

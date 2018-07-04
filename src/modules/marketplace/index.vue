@@ -41,6 +41,18 @@
           const preparedSearchQuery = this.searchEnabledIntegrationsQuery.trim().toLowerCase();
           return preparedDisplayName.indexOf(preparedSearchQuery) !== -1;
         });
+      },
+      isAddedIntegration() {
+        return this.selectedIntegration.id !== undefined;
+      },
+      isSyncing() {
+        return this.isAddedIntegration && this.selectedIntegration.status === 'SYNCING';
+      },
+      isActive() {
+        return this.isAddedIntegration && this.selectedIntegration.status === 'SYNCED';
+      },
+      isError() {
+        return this.isAddedIntegration && this.selectedIntegration.status === 'FAILED';
       }
     },
     methods: {
@@ -103,6 +115,12 @@
         await this.loadIntegrations();
         this.closeSideBar();
       },
+      async syncIntegration() {
+        const id = this.selectedIntegration.id;
+        await this.api.put('syncIntegrationUsingPUT', { id });
+        this.loadIntegrations();
+        this.closeSideBar();
+      },
       deleteIntegration() {
         const integration = this.selectedIntegration;
         this.showConfirmMessage().then(async () => {
@@ -158,6 +176,7 @@
                     :key="integration.displayName"
                     :img="integration.imageUrl"
                     :status="integration.status"
+                    :active="integration.active"
                     @click.native="showEnabledIntegrationSettings(integration)"
                 />
                 <div v-show="searchEnabledIntegrations.length === 0 && searchEnabledIntegrationsQuery.trim() !== ''" class="empty-search-message">
@@ -194,18 +213,45 @@
             <div class="settings-header" slot="header">
                 <div class="left-side">
                     <el-button round size="mini" icon="el-icon-arrow-right" @click="closeSideBar"/>
-                    <h3 class="settings-title">{{selectedIntegration.displayName}}</h3>
+                    <div class="settings-title">
+                        <h3>{{selectedIntegration.displayName}}</h3>
+                        <div class="status-wrapper">
+                            <div v-if="isSyncing" class="text-status">Идет синхронизация</div>
+                            <div v-if="isActive" class="text-status">Подключена</div>
+                            <div v-if="isError" class="text-status">Ошибка</div>
+                            <i v-if="isSyncing" class="el-icon-loading status syncing"/>
+                            <i v-if="isActive" class="el-icon-success status active"/>
+                            <i v-if="isError" class="el-icon-error status error"/>
+                        </div>
+                    </div>
                 </div>
                 <template v-if="selectedIntegration.id !== undefined">
                     <div class="integration-actions">
-                        <el-button
-                            v-if="isEnabledSelectedModule"
-                            size="mini"
-                            type="warning"
-                            @click="disableIntegration"
-                        >
-                            Выключить
-                        </el-button>
+                        <div v-if="isError">
+
+                        </div>
+
+                        <template v-if="isError">
+                            <el-button
+                                type="primary"
+                                size="mini"
+                                @click="syncIntegration"
+                            >
+                                Повторить
+                            </el-button>
+                        </template>
+
+                        <template v-else>
+                            <el-button
+                                v-if="isEnabledSelectedModule"
+                                size="mini"
+                                type="warning"
+                                @click="disableIntegration"
+                            >
+                                Выключить
+                            </el-button>
+                        </template>
+
                         <el-button
                             v-else
                             size="mini"
@@ -225,9 +271,9 @@
                 </template>
             </div>
 
-            <dynamic-form :fields="selectedIntegration.fields" v-model="selectedIntegration"/>
+            <dynamic-form v-model="selectedIntegration" :fields="selectedIntegration.fields" :disabled="isAddedIntegration"/>
 
-            <div slot="footer">
+            <div slot="footer" v-if="!isAddedIntegration">
                 <el-button type="success" @click="saveSettings">Сохранить</el-button>
             </div>
         </sidebar>
@@ -284,5 +330,31 @@
 
     .integration-actions {
         display: flex;
+    }
+
+    .status-wrapper {
+        display: flex;
+    }
+
+    .text-status {
+        font-size: 10px;
+        color: rgba(0,0,0, .4);
+    }
+
+    .status {
+        margin: 0 8px;
+        font-size: 10px;
+    }
+
+    .status.syncing {
+        color: rgba(0,0,0, .4);
+    }
+
+    .status.active {
+        color: #67c23a;
+    }
+
+    .status.error {
+        color: #f78989;
     }
 </style>
