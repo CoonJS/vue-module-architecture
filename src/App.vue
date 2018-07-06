@@ -120,6 +120,7 @@
                 {{item.title}}
             </menu-item-link>
             <menu-item-feedback slot="right"/>
+            <menu-item-notifications slot="right"/>
             <menu-item-icon icon="goods" slot="right" link="/marketplace"/>
             <menu-item-dropdown slot="right">
                 <div class="user-info">
@@ -127,6 +128,7 @@
                     <div class="login">{{userLogin}}</div>
                 </div>
             </menu-item-dropdown>
+
         </nav-layout>
         <root-container>
             <router-view></router-view>

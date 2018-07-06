@@ -16,3 +16,11 @@ body {
 .v-modal {
     z-index: 100 !important;
 }
+
+.el-badge__content.is-fixed {
+    border: none;
+    height: 13px;
+    font-size: 10px;
+    line-height: 14px;
+    padding: 0 4px;
+}

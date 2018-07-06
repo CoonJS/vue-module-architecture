@@ -3,6 +3,9 @@
         <div class="left">
             <slot name="left"></slot>
         </div>
+        <div class="center">
+            <slot name="center"></slot>
+        </div>
         <div class="right">
             <slot name="right"></slot>
         </div>
@@ -33,6 +36,11 @@
     .left {
         display: flex;
         justify-content: flex-start;
+    }
+
+    .center {
+        display: flex;
+        justify-content: center;
     }
 
     .right {

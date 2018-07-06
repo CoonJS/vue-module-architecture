@@ -14,6 +14,7 @@ import LogoMenuItem from './com/Menu/Item/Logo.vue';
 import ActionMenuItem from './com/Menu/Item/Action.vue';
 import DropdownMenuItem from './com/Menu/Item/Dropdown.vue';
 import FeedbackMenuItem from './com/Menu/Item/Feedback.vue';
+import NotificationsMenuItem from './com/Menu/Item/Notifications.vue';
 
 /*===UI===*/
 import Link from './com/Link/Default.vue';
@@ -43,7 +44,8 @@ const menuItems = [
   IconMenuItem,
   LinkMenuItem,
   LogoMenuItem,
-  FeedbackMenuItem
+  FeedbackMenuItem,
+  NotificationsMenuItem
 ];
 
 const commonUiComponents = [
