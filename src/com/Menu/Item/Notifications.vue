@@ -35,12 +35,12 @@
     watch: {
       '$route': {
         handler() {
-          this.checkNotification();
+          this.checkNotifications();
         }
       }
     },
     methods: {
-      async checkNotification() {
+      async checkNotifications() {
         const { data: notifications } = await this.api.get('notificationsUsingGET', {}, {
           size: 10,
           page: 0,
@@ -65,7 +65,7 @@
       },
       async readAll() {
         await this.api.put('readNotificationsUsingPUT');
-        this.loadNotifications();
+        this.checkNotifications();
       },
       async readNotification(notification) {
         if (notification.read === true) {
@@ -73,7 +73,7 @@
         }
 
         await this.api.put('readNotificationUsingPUT', { id: notification.id });
-        this.loadNotifications();
+        this.checkNotifications();
       },
       handleClick() {
         this.page = this.page + 1;
