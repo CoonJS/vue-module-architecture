@@ -16,13 +16,13 @@
     },
     methods: {
       handleClick() {
+        this.$emit('click');
+
         if (this.type === 'ADD_FIRST_INTEGRATION') {
           this.addFirstIntegrationHandler();
-          return;
         }
       },
       addFirstIntegrationHandler() {
-        this.$emit('click');
         this.$router.push('/marketplace');
       }
     }
