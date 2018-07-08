@@ -12,6 +12,9 @@
       },
       type: {
         type: String
+      },
+      entityId: {
+        type: Number
       }
     },
     methods: {
@@ -19,12 +22,17 @@
         this.$emit('click');
 
         if (this.type === 'ADD_FIRST_INTEGRATION') {
-          this.addFirstIntegrationHandler();
+          this.$router.push('/marketplace');
+        }
+
+        if (this.type === 'INTEGRATION_ADDED') {
+          this.$router.push('/');
+        }
+
+        if (this.type === 'USER_REGISTRATION') {
+          this.$router.push(`/users/${this.entityId}`);
         }
       },
-      addFirstIntegrationHandler() {
-        this.$router.push('/marketplace');
-      }
     }
   }
 </script>
