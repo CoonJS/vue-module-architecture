@@ -35,6 +35,7 @@
     watch: {
       '$route': {
         handler() {
+          this.page = 0;
           this.loadNotifications();
         }
       }
