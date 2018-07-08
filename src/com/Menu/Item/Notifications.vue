@@ -9,17 +9,71 @@
     created() {
       /** @type {Api}*/
       this.api = this.$locator.Api;
+      /** @type {DateTime}*/
+      this.dateTime = this.$locator.DateTime;
+    },
+    mounted() {
+      this.loadNotifications();
     },
     data() {
       return {
+        page: 0,
+        total: 0,
         show: false,
-        value: 18,
-        count: 18
+        loading: false,
+        notifications: []
       };
     },
+    computed: {
+      count() {
+        return this.notifications.filter(notification => notification.read === false).length;
+      },
+      isShowLoadButton() {
+        return this.notifications.length !== this.total;
+      }
+    },
+    watch: {
+      '$route': {
+        handler() {
+          this.loadNotifications();
+        }
+      }
+    },
     methods: {
+      async loadNotifications() {
+        this.loading = true;
+
+        const { data: notifications } = await this.api.get('notificationsUsingGET', {}, {
+          size: 10,
+          page: this.page,
+          sort: 'createdMoment,desc'
+        });
+        this.notifications = [ ...this.notifications, ...notifications.content ];
+        this.total = notifications.totalElements;
+
+        this.loading = false;
+      },
+      async readAll() {
+        await this.api.put('readNotificationsUsingPUT');
+        this.loadNotifications();
+      },
+      async handleClick(notification) {
+        if (notification.read === true) {
+          return;
+        }
+
+        await this.api.put('readNotificationUsingPUT', { id: notification.id });
+        this.loadNotifications();
+      },
+      handleClick() {
+        this.page = this.page + 1;
+        this.loadNotifications();
+      },
       handleVisibleChange(isVisible) {
         this.show = isVisible;
+      },
+      formatDate(date) {
+        return this.dateTime.format(date);
       }
     }
   }
@@ -28,20 +82,35 @@
 <template>
     <el-dropdown trigger="click" @visible-change="handleVisibleChange" placement="bottom-start">
         <div class="menu-item">
-            <el-badge :value="value" :max="99" :hidden="value === 0" class="item">
+            <el-badge :value="count" :max="99" :hidden="count === 0" class="item">
                 <i class="el-icon-bell" :class="{ active: show }"/>
             </el-badge>
         </div>
         <el-dropdown-menu slot="dropdown">
             <div class="header">
                 <span>Уведомления</span>
-                <el-button type="text">Прочитать все</el-button>
+                <el-button type="text" @click="readAll">Прочитать все</el-button>
             </div>
             <div class="body">
+                <notification
+                    v-for="notification in notifications"
+                    :key="notification.id"
+                    :active="!notification.read"
+                    :date="formatDate(notification.createdMoment)"
+                    @click="handleClick(notification)"
+                >
+                    {{notification.text}}
+                </notification>
 
-                    <notification v-for="i in count" :key="i" :active="i % 2 === 0">
-                        Майкл Джей Фокс больше не снимается в кино из-за болезни Паркинсона, но след в истории он уже оставил.
-                    </notification>
+                <div class="load-button" v-if="isShowLoadButton">
+                    <el-button
+                        type="text"
+                        :loading="loading"
+                        @click="handleClick"
+                    >
+                        Загрузить еще
+                    </el-button>
+                </div>
             </div>
         </el-dropdown-menu>
     </el-dropdown>
@@ -93,9 +162,12 @@
         overflow-y: auto;
     }
 
-
-
     .el-dropdown-menu {
         padding: 0;
+    }
+
+    .load-button {
+        display: flex;
+        justify-content: center;
     }
 </style>

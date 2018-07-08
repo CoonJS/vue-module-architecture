@@ -91,8 +91,7 @@
                     Войти
                 </el-button>
                 <el-button
-                    class="remind-btn"
-                    plain
+                    type="text"
                     @click="showRemindPasswordForm"
                 >
                     Забыли пароль?
@@ -156,9 +155,5 @@
     .actions button {
         margin: 8px 0;
         width: 100%;
-    }
-
-    .remind-btn {
-        border: none;
     }
 </style>
