@@ -35,17 +35,25 @@
     watch: {
       '$route': {
         handler() {
-          this.page = 0;
-          this.loadNotifications();
+          this.checkNotification();
         }
       }
     },
     methods: {
+      async checkNotification() {
+        const { data: notifications } = await this.api.get('notificationsUsingGET', {}, {
+          size: 10,
+          page: 0,
+          sort: 'createdMoment,desc'
+        });
+
+        this.notifications = notifications.content;
+      },
       async loadNotifications() {
         this.loading = true;
 
         const { data: notifications } = await this.api.get('notificationsUsingGET', {}, {
-          size: 10,
+          size: 25,
           page: this.page,
           sort: 'createdMoment,desc'
         });
