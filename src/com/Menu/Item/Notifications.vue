@@ -48,6 +48,7 @@
           page: this.page,
           sort: 'createdMoment,desc'
         });
+
         this.notifications = [ ...this.notifications, ...notifications.content ];
         this.total = notifications.totalElements;
 
@@ -57,7 +58,7 @@
         await this.api.put('readNotificationsUsingPUT');
         this.loadNotifications();
       },
-      async handleClick(notification) {
+      async readNotification(notification) {
         if (notification.read === true) {
           return;
         }
@@ -97,7 +98,7 @@
                     :key="notification.id"
                     :active="!notification.read"
                     :date="formatDate(notification.createdMoment)"
-                    @click="handleClick(notification)"
+                    @click="readNotification(notification)"
                 >
                     {{notification.text}}
                 </notification>
