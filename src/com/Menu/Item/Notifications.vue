@@ -97,6 +97,7 @@
                     v-for="notification in notifications"
                     :key="notification.id"
                     :active="!notification.read"
+                    :type="notification.type"
                     :date="formatDate(notification.createdMoment)"
                     @click="readNotification(notification)"
                 >

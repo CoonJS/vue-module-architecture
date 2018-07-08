@@ -9,13 +9,28 @@
       },
       date: {
         type: String
+      },
+      type: {
+        type: String
+      }
+    },
+    methods: {
+      handleClick() {
+        if (this.type === 'ADD_FIRST_INTEGRATION') {
+          this.addFirstIntegrationHandler();
+          return;
+        }
+      },
+      addFirstIntegrationHandler() {
+        this.$emit('click');
+        this.$router.push('/marketplace');
       }
     }
   }
 </script>
 
 <template>
-    <div class="notification" :class="{'active': active}" @click="$emit('click')">
+    <div class="notification" :class="{'active': active}" @click="handleClick">
         <div class="status">
             <div class="dot" :class="{'active': active}">
 
