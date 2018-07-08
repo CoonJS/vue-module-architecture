@@ -93,6 +93,7 @@
     <div class="menu-wrapper">
         <div class="menu-container">
             <el-menu
+                router
                 class="menu"
                 background-color="#2a3a4d"
                 text-color="#fff"

@@ -5,7 +5,7 @@ export default async function(locator) {
 
   routerService.registerModuleRoutes([
     {
-      path: '/wiki',
+      path: '/wiki/:id?',
       name: 'WikiPage',
       component: WikiPage
     }

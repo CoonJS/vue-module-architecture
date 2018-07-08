@@ -2,15 +2,20 @@
   import { VueEditor } from 'vue2-editor';
 
   import LeftMenu from '../com/Menu/Left.vue';
+  import MainPlaceholder from '../com/Placeholder/Main.vue';
 
   export default {
     components: {
       VueEditor,
-      LeftMenu
+      LeftMenu,
+      MainPlaceholder
     },
     beforeCreate() {
       /** @type {Api}*/
       this.api = this.$locator.Api;
+    },
+    mounted() {
+      this.loadArticle();
     },
     data () {
       return {
@@ -32,12 +37,40 @@
         return this.article !== null;
       }
     },
+    watch: {
+      '$route': {
+        handler() {
+          this.$nextTick(() => {
+            this.loadArticle();
+          });
+        }
+      }
+    },
     methods: {
-      async loadArticle(id) {
+      async loadArticle() {
+        const articleId = this.$route.params.id;
+        const hasArticleID = articleId !== undefined;
+
+        if (this.isArticleLoading === true) {
+          return;
+        }
+
+        if (!hasArticleID) {
+          this.article = null;
+          this.model = '';
+          return;
+        }
+
         this.isArticleLoading = true;
-        const { data: article } = await this.api.get('articleUsingGET', { id });
-        this.article = article;
-        this.model = article.text;
+        try {
+          const { data: article } = await this.api.get('articleUsingGET', { id: articleId });
+          this.article = article;
+          this.model = article.text;
+        } catch (e) {
+          this.isArticleLoading = false;
+          this.$router.push('/wiki');
+        }
+
         this.isArticleLoading = false;
       },
       async saveArticle() {
@@ -68,13 +101,13 @@
 
         this.clearData();
         this.reloadMenu();
+        this.$router.push('/wiki');
       },
       reloadMenu() {
         this.$refs.menu.loadMenuItems();
       },
-      handleSelect(id) {
+      handleSelect() {
         this.disableEditMode();
-        this.loadArticle(id);
       },
       handleDelete() {
         this.showConfirmMessage().then(() => {
@@ -177,6 +210,7 @@
                         </div>
                     </div>
                 </div>
+                <main-placeholder v-else/>
             </div>
         </div>
     </page-container>
@@ -194,6 +228,10 @@
     }
 
     .content {
+        display: flex;
+        flex: 1;
+        background-color: #fbfbfb;
+        flex-direction: column;
         width: 100%;
         overflow-y: auto;
     }

@@ -67,7 +67,7 @@
         />
 
     </el-submenu>
-    <el-menu-item v-else-if="node.type === 'ARTICLE'" :index="String(node.id)">
+    <el-menu-item v-else-if="node.type === 'ARTICLE'" :index="`/wiki/${String(node.id)}`">
         <span class="menu-item">{{ node.title }}</span>
         <i class="el-icon-tickets"></i>
     </el-menu-item>

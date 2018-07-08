@@ -86,11 +86,19 @@
         this.saving = true;
 
         try {
-          await this.api.post('createdArticleUsingPOST', {}, {
+          const { data: article } = await this.api.post('createdArticleUsingPOST', {}, {
             parentId: this.parentId,
             title: this.itemName,
             type: this.type
           });
+
+          const isArticle = article.type === 'ARTICLE';
+
+          if (isArticle) {
+            this.redirectToArticle(article.id);
+          }
+
+
         } catch (e) {
           this.saving = false;
           throw new Error(e);
@@ -103,6 +111,7 @@
 
         this.$emit('save');
         this.close();
+
       },
       async editCategory() {
         const id = this.item.id;
@@ -135,6 +144,9 @@
         this.categories = [ emptyCategory, ...items.filter(item => item.type === 'CATEGORY')];
 
         this.loading = false;
+      },
+      redirectToArticle(id) {
+        this.$router.push(`/wiki/${id}`);
       },
       handleKeydownEnter() {
         this.editMode ? this.editCategory() : this.saveCategory();
