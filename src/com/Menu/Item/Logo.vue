@@ -1,7 +1,7 @@
 <template>
     <router-link to="/">
         <div class="menu-item">
-            Salestat
+            Salestat<sup class="beta">&nbsp;&beta;</sup>
         </div>
     </router-link>
 </template>

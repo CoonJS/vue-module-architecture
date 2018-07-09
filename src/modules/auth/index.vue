@@ -35,7 +35,6 @@
       },
       showLoginError() {
         this.$message({
-          showClose: true,
           message: 'Неверный логин или пароль',
           type: 'error',
           duration: 2000
@@ -58,7 +57,7 @@
 
 <template>
     <div class="form-wrapper" :style="{backgroundImage: `url(${bgImage})`, backgroundSize: 'cover'}">
-        <div class="logo">Salestat</div>
+        <div class="logo">Salestat<sup class="beta">&beta;</sup></div>
         <div class="auth-form">
             <div class="title">
                 <h1>Вход</h1>
@@ -115,8 +114,20 @@
     .logo {
         color: #f3f3f3;
         margin-top: 80px;
+        position: relative;
         font-size: 80px;
         font-weight: normal;
+        text-transform: uppercase;
+        text-shadow: 1px 1px 2px black, 0 0 1em #8e8e8e;
+    }
+
+    .logo .beta {
+        top: -10px;
+        right: -20px;
+        text-transform: lowercase;
+        position: absolute;
+        font-size: 24px;
+        color: #ddd;
     }
 
     .title {
