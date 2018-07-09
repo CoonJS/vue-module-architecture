@@ -19,7 +19,6 @@ export default class ArrayUtils {
       arrElem,
       mappedElem;
 
-    // First map the nodes of the array to an object -> create a hash table.
     for(let i = 0, len = arr.length; i < len; i++) {
       arrElem = arr[i];
       mappedArr[arrElem.id] = arrElem;
@@ -29,7 +28,7 @@ export default class ArrayUtils {
     for (let id in mappedArr) {
       if (mappedArr.hasOwnProperty(id)) {
         mappedElem = mappedArr[id];
-        // If the element is not at the root level, add it to its parent array of children.
+
         if (mappedElem.parentId !== null) {
           const parentIdEl = mappedArr[mappedElem['parentId']];
 
@@ -37,12 +36,23 @@ export default class ArrayUtils {
             parentIdEl['children'].push(mappedElem);
           }
         }
-        // If the element is at the root level, add it to first level elements array.
+
         else {
           tree.push(mappedElem);
         }
       }
     }
     return tree;
+  }
+
+  treeSort(arr = [], cb) {
+    arr.sort(cb);
+    arr.forEach(node => {
+      if (node.children.length !== 0) {
+        this.treeSort(node.children, cb);
+      }
+    });
+
+    return JSON.parse(JSON.stringify(arr));
   }
 }

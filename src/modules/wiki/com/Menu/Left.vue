@@ -42,7 +42,10 @@
         this.loading = true;
         const { data: items } = await this.api.get('articlesUsingGET');
         this.items = items;
-        this.tree = this.array.createTree(items);
+
+        const tree = this.array.createTree(items);
+        this.tree = this.array.treeSort(tree, this.compareItems);
+        console.log(this.tree);
         this.loading = false;
       },
       async removeItem(id) {
@@ -53,6 +56,17 @@
         }
 
         this.loadMenuItems();
+      },
+      compareItems(a,b) {
+        if (a.type === 'CATEGORY' && b.type === 'ARTICLE') {
+          return -1;
+        }
+
+        if (a.type === 'ARTICLE' && b.type === 'CATEGORY') {
+          return 1;
+        }
+
+        return 0;
       },
       handleCreate(id) {
         this.currentItem = this.items.find(item => item.id === id);
