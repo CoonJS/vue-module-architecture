@@ -43,6 +43,10 @@
         const user = this.user || null;
         return user !== null ? `${user.firstName} ${user.lastName}` : '';
       },
+      userInitials() {
+        const user = this.user || null;
+        return user !== null ? `${user.firstName.charAt(0)}${user.lastName.charAt(0)}` : '';
+      },
       userLogin() {
         const user = this.user || null;
         return user !== null ? `${user.username}` : '';
@@ -122,7 +126,7 @@
             <menu-item-feedback slot="right"/>
             <menu-item-notifications slot="right"/>
             <menu-item-icon icon="goods" slot="right" link="/marketplace"/>
-            <menu-item-dropdown slot="right">
+            <menu-item-dropdown slot="right" :title="userInitials">
                 <div class="user-info">
                     <div>{{userInfo}}</div>
                     <div class="login">{{userLogin}}</div>

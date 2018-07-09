@@ -1,15 +1,17 @@
 <script>
-  const profileIcon = require('../../../assets/img/user-profile.png');
-
   export default {
     name: "MenuItemDropdown",
+    props: {
+      title: {
+        type: String
+      }
+    },
     beforeCreate() {
       /** @type {Api}*/
       this.api = this.$locator.Api;
     },
     data() {
       return {
-        profileIconLink: profileIcon,
         access: {
           canViewUsers: this.api.hasAccess('VIEW_USERS'),
           canViewRoles: this.api.hasAccess('VIEW_ROLES')
@@ -29,7 +31,7 @@
         <div class="menu-item">
             <div class="menu-item-content">
                 <slot></slot>
-                <img class="profile-icon" :src="profileIconLink" width="24px" height="24px" alt="profile">
+                <div class="avatar">{{title}}</div>
                 <i class="el-icon-arrow-down"/>
             </div>
         </div>
@@ -70,6 +72,17 @@
 
     .profile-icon {
         margin-left: 8px;
+    }
+
+    .avatar {
+        border-radius: 25px;
+        background-color: #a1a3a582;
+        margin-left: 8px;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     a {
