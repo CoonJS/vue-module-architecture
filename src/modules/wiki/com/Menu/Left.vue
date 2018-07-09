@@ -46,6 +46,7 @@
         const tree = this.array.createTree(items);
         this.tree = this.array.treeSort(tree, this.compareItems);
         this.loading = false;
+
       },
       async removeItem(id) {
         try {
