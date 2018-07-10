@@ -1,5 +1,5 @@
 const TestingPage = () => import(/* webpackChunkName: "testing"*/'./index.vue');
-const TestStatisticsPage = () => import(/* webpackChunkName: "test.statistics"*/'./pages/statistics.vue');
+const TestStatisticsPage = () => import(/* webpackChunkName: "test.statistics"*/'./pages/Statistics.vue');
 
 export default async function(locator) {
   /**@type {Router}*/
