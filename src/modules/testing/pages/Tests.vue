@@ -24,7 +24,7 @@
         tests: [],
         selectedTest: null,
         isShowTestPopup: false
-      }
+      };
     },
     computed: {
       hasSelectedTest() {

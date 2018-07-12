@@ -17,12 +17,6 @@
         managers: this.items,
         columns: [
           {
-            key: 'id',
-            name: 'ID',
-            width: 50,
-            align: 'center'
-          },
-          {
             key: 'name',
             name: 'Имя',
             width: 180
