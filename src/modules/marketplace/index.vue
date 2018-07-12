@@ -57,7 +57,7 @@
     },
     methods: {
       async loadIntegrations() {
-        this.isLoading = true;
+        // this.isLoading = true;
         const { data: integrations } = await this.$locator.Api.get('integrationsUsingGET');
         const { data: integrationSchemas} = await this.$locator.Api.get('schemaUsingGET');
         this.integrationSchemas = integrationSchemas;
@@ -73,7 +73,7 @@
               imageUrl: schema.imageUrl
             });
         });
-        this.isLoading = false;
+        // this.isLoading = false;
       },
       async saveSettings() {
         const integration = this.selectedIntegration;
@@ -96,7 +96,12 @@
         }, {});
         const preparedIntegrationData = Object.assign({}, integrationData, { type: integration.type });
 
+
         await this.$locator.Api.post('createdIntegrationUsingPOST', {}, preparedIntegrationData);
+
+        setTimeout(() => {
+          this.loadIntegrations();
+        }, 10000);
       },
       async updateIntegrationSettings(integration) {
         await this.api.put('updatedIntegrationUsingPUT', { id: integration.id }, integration);
