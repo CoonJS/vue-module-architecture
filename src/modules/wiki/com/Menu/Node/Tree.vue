@@ -104,7 +104,6 @@
 </template>
 
 <style scoped>
-
     i {
         color: #909399;
         font-size: 12px;
@@ -116,10 +115,6 @@
         margin-right: 24px;
     }
 
-    .actions {
-
-    }
-
     .submenu-content {
         font-size: 12px;
         font-weight: bold;
@@ -127,7 +122,6 @@
         align-items: center;
         justify-content: space-between;
     }
-
 
     .menu-item {
         font-style: italic;
@@ -137,6 +131,7 @@
     .folder-name {
         display: flex;
         align-items: center;
+        padding-left: 3px;
     }
 
     .folder-name span {

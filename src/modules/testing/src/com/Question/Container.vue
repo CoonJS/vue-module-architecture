@@ -121,7 +121,7 @@
           return {
             questionId: Number(questionId),
             answerIds: this.testAnswersMap[questionId]
-          }
+          };
         });
 
         await this.api.post('createdResultUsingPOST', { id: testId }, { answers });
@@ -206,6 +206,7 @@
 
             <div class="actions-block">
                 <el-button
+                    v-if="hasQuestions"
                     type="success"
                     size="medium"
                     icon="el-icon-circle-check-outline"
