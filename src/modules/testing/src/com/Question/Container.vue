@@ -180,7 +180,6 @@
         </div>
 
         <div class="questions-container">
-
             <div class="question-wrapper" v-for="question in questions" :key="question.id">
                 <question-card
                     :question="question"
@@ -211,7 +210,6 @@
                     Отправить ответы
                 </el-button>
             </div>
-
         </div>
 
         <el-dialog :visible.sync="isShowQuestionPopup" title="Новый вопрос" width="500px">

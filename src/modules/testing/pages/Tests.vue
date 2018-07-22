@@ -51,7 +51,7 @@
       },
       async saveTest() {
         this.saving = true;
-        await this.api.post('createdTestUsingPOST', {} ,{ name: this.testName });
+        await this.api.post('createdTestUsingPOST', {}, { name: this.testName });
         this.saving = false;
         this.closeCreateTestPopup();
         this.loadTests();

@@ -38,7 +38,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Salestat',
       template: path.resolve(__dirname, 'index.html'),
-      inject: 'body'
+      inject: 'body',
+      favicon: path.resolve(__dirname, 'favicon.ico')
     }),
   ],
 
