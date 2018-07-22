@@ -66,11 +66,11 @@
 
         try {
           await this.api.registerUser({ login, token, firstName, lastName, password });
-          this.redirectToRegisterPage();
         } catch(e) {
           throw e;
         }
 
+        this.redirectToRegisterPage();
         this.isLoading = false;
       },
       redirectToRegisterPage() {

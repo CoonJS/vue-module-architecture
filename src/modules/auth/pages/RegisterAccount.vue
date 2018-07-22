@@ -61,10 +61,11 @@
             adminFirstName,
             adminLastName
           });
-          this.redirectToRegisterPage();
         } catch(e) {
           throw e;
         }
+
+        this.redirectToRegisterPage();
 
         this.isLoading = false;
       },
