@@ -14,7 +14,7 @@
         }
       }
     },
-    created() {
+    beforeCreate() {
       /** @type {Api}*/
       this.api = this.$locator.Api;
     },
@@ -22,7 +22,10 @@
       return {
         loading: false,
         editMode: false,
-        name: this.test.name
+        name: this.test.name,
+        access: {
+          isAdmin: this.api.hasAccess('TESTS_ADMIN')
+        }
       };
     },
     methods: {
@@ -82,7 +85,7 @@
             @keydown.native.escape="disableEditMode"
         />
         <div v-else class="test-name">{{name}}</div>
-        <div class="actions">
+        <div class="actions" v-if="access.isAdmin">
             <el-tooltip effect="dark" content="Редактировать тест" placement="top-start">
                 <div v-if="!editMode" @click.prevent.stop="enableEditMode">
                     <i class="el-icon-edit"/>

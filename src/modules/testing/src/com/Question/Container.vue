@@ -36,7 +36,10 @@
         saving: false,
         questionsLoading: false,
         isEditModeQuestion: false,
-        isShowQuestionPopup: false
+        isShowQuestionPopup: false,
+        access: {
+          isAdmin: this.api.hasAccess('TESTS_ADMIN')
+        }
       };
     },
     computed: {
@@ -168,7 +171,7 @@
 <template>
     <div class="questions" v-loading.body="questionsLoading">
 
-        <div class="panel">
+        <div class="panel" v-if="access.isAdmin">
             <el-button
                 type="info"
                 size="mini"
@@ -192,6 +195,7 @@
             <div v-if="!hasQuestions" class="no-questions">
                 <div>Нет вопросов</div>
                 <el-button
+                    v-if="access.isAdmin"
                     size="mini"
                     type="info"
                     @click="showCreateQuestionPopup"

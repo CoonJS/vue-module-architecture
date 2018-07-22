@@ -8,13 +8,16 @@
         }
       }
     },
-    created() {
+    beforeCreate() {
       /** @type {Api}*/
       this.api = this.$locator.Api;
     },
     data () {
       return {
-        loading: false
+        loading: false,
+        access: {
+          isAdmin: this.api.hasAccess('TESTS_ADMIN')
+        }
       };
     },
     methods: {
@@ -51,7 +54,7 @@
                 </div>
             </div>
         </div>
-        <div class="actions">
+        <div class="actions" v-if="access.isAdmin">
             <div>
                 <el-tooltip effect="dark" content="Редактировать вопрос" placement="top-start">
                     <div @click="editQuestion">

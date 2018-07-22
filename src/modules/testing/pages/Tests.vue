@@ -23,7 +23,10 @@
         loading: false,
         tests: [],
         selectedTest: null,
-        isShowTestPopup: false
+        isShowTestPopup: false,
+        access: {
+          isAdmin: this.api.hasAccess('TESTS_ADMIN')
+        }
       };
     },
     computed: {
@@ -89,9 +92,10 @@
         <div slot="header" class="header">
             <div class="header-info">
                 <h3>Тестирование</h3>
-                <ui-link to="/testing/statistics">Статистика</ui-link>
+                <ui-link v-if="access.isAdmin" to="/testing/statistics">Статистика</ui-link>
             </div>
             <el-button
+                v-if="access.isAdmin"
                 type="success"
                 size="medium"
                 icon="el-icon-plus"

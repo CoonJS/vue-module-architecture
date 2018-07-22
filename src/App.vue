@@ -83,7 +83,7 @@
             key:'testing',
             title: 'Тесты',
             link: '/testing',
-            hasAccess: this.api.hasAccess('VIEW_TESTS')
+            hasAccess: this.api.hasAccess('TESTS_USER') || this.api.hasAccess('TESTS_ADMIN')
           },
         ];
       },
