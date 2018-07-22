@@ -132,11 +132,11 @@ export default class Api {
           password
         }
       );
-
-      this.event.emit('login');
     } catch (e) {
       throw e;
     }
+
+    this.event.emit('login');
   }
 
   async registerAccount({ name, token, adminFirstName, adminLastName, password }) {
@@ -152,11 +152,11 @@ export default class Api {
       );
 
       await this.loadUser();
-
-      this.event.emit('login');
     } catch (e) {
       throw e;
     }
+
+    this.event.emit('login');
   }
 
   onError(cb) {
