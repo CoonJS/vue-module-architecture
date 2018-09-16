@@ -7,7 +7,8 @@ const modules = [
   require('./modules/settings/index'),
   require('./modules/users/index'),
   require('./modules/wiki/index'),
-  require('./modules/testing/index')
+  require('./modules/testing/index'),
+  require('./modules/education/index')
 ];
 
 export async function run (locator) {

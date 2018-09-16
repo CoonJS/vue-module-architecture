@@ -116,8 +116,9 @@
         margin-top: 80px;
         position: relative;
         font-size: 80px;
-        font-weight: bold;
+        font-weight: normal;
         text-transform: uppercase;
+        text-shadow: 1px 1px 2px black, 0 0 1em #8e8e8e;
     }
 
     .logo .beta {
@@ -139,7 +140,7 @@
     }
 
     .form-wrapper {
-        background-color: #021932;
+        background-color: #292929;
         width: 100%;
         display: flex;
         margin-top: -46px;
@@ -150,7 +151,7 @@
     .auth-form {
         padding: 24px;
         border-radius: 4px;
-        background-color: #031e3f;
+        background-color: #3f3f3f;
         margin-top: 80px;
         width: 280px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);

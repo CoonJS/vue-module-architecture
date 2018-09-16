@@ -85,6 +85,12 @@
             link: '/testing',
             hasAccess: this.api.hasAccess('TESTS_USER') || this.api.hasAccess('TESTS_ADMIN')
           },
+          {
+            key:'education',
+            title: 'Обучение',
+            link: '/education',
+            hasAccess: true
+          }
         ];
       },
       redirectToLoginPage() {
