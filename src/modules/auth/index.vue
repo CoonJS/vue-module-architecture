@@ -63,7 +63,7 @@
              element-loading-background="#04171f69"
         >
             <div class="title">
-                <h1>Вход</h1>
+                <span>Вход</span>
             </div>
             <div class="field">
                 <el-input
@@ -86,7 +86,7 @@
             </div>
             <div class="actions">
                 <el-button
-                    type="primary"
+                    type="info"
                     @click="login"
                 >
                     Войти
@@ -115,7 +115,7 @@
 <style scoped>
 
     .logo {
-        color: #fffffffa;
+        color: #fff;
         margin-top: 80px;
         position: relative;
         font-size: 80px;
@@ -129,7 +129,7 @@
         text-transform: lowercase;
         position: absolute;
         font-size: 24px;
-        color: #ddd;
+        color: #fff;
     }
 
     .title {
@@ -142,7 +142,7 @@
     }
 
     .form-wrapper {
-        background-image: linear-gradient(90deg, #c79191, #409EFF);
+        background-image: linear-gradient(0deg, #000000, #4a84c2);
         width: 100%;
         display: flex;
         margin-top: -46px;
@@ -153,7 +153,7 @@
     .auth-form {
         padding: 24px;
         border-radius: 4px;
-        background-image: linear-gradient(270deg, #c79191ad, #409eff6e);
+        background-image: linear-gradient(0deg, #00000069, #4a84c2bf);
         margin-top: 80px;
         width: 280px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -168,6 +168,11 @@
         flex-direction: column;
     }
 
+
+    .el-button--info {
+        background-color: #3b6b9e;
+        border-color: #3b6b9e;
+    }
     .actions button {
         margin: 8px 0;
         width: 100%;

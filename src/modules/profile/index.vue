@@ -174,7 +174,11 @@
 <style scoped>
     .title {
         display: flex;
-        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 100;
+        text-transform: uppercase;
     }
 
     .form-wrapper {
