@@ -58,7 +58,10 @@
 <template>
     <div class="form-wrapper">
         <div class="logo">Platform<sup class="beta">&beta;</sup></div>
-        <div class="auth-form">
+        <div class="auth-form"
+             v-loading.body="isLoading"
+             element-loading-background="#04171f69"
+        >
             <div class="title">
                 <h1>Вход</h1>
             </div>
@@ -83,13 +86,13 @@
             </div>
             <div class="actions">
                 <el-button
-                    type="success"
-                    :loading="isLoading"
+                    type="primary"
                     @click="login"
                 >
                     Войти
                 </el-button>
                 <el-button
+                    style="color:#fff"
                     type="text"
                     @click="showRemindPasswordForm"
                 >
@@ -112,7 +115,7 @@
 <style scoped>
 
     .logo {
-        color: #f3f3f3;
+        color: #fffffffa;
         margin-top: 80px;
         position: relative;
         font-size: 80px;
@@ -139,7 +142,7 @@
     }
 
     .form-wrapper {
-        background-color: #021932;
+        background-image: linear-gradient(90deg, #c79191, #409EFF);
         width: 100%;
         display: flex;
         margin-top: -46px;
@@ -150,7 +153,7 @@
     .auth-form {
         padding: 24px;
         border-radius: 4px;
-        background-color: #031e3f;
+        background-image: linear-gradient(270deg, #c79191ad, #409eff6e);
         margin-top: 80px;
         width: 280px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
