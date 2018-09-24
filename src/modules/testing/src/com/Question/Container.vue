@@ -22,6 +22,12 @@
     props: {
       testId: {
         type: Number
+      },
+      results: {
+        type: Array,
+        default() {
+          return [];
+        }
       }
     },
     beforeCreate() {
@@ -124,7 +130,7 @@
           };
         });
 
-        await this.api.post('createdResultUsingPOST', { id: testId }, { answers });
+        await this.api.post('createdResultUsingPOST', { testId }, { answers });
         this.testAnswersMap = {};
         this.loading = false;
       },

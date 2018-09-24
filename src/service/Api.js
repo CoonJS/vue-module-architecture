@@ -76,22 +76,22 @@ export default class Api {
     return await this.axios.get(path);
   }
 
-  async post(id, params, body) {
+  async post(id, params, body = {}) {
     const path = this._buildUrlById(id, params, 'post');
     return await this.axios.post(path, body);
   }
 
-  async put(id, params, body) {
+  async put(id, params, body = {}) {
     const path = this._buildUrlById(id, params, 'put');
     return await this.axios.put(path, body);
   }
 
-  async patch(id, params, body) {
+  async patch(id, params, body = {}) {
     const path = this._buildUrlById(id, params, 'patch');
     return await this.axios.patch(path, body);
   }
 
-  async delete(id, params, body, queryParams) {
+  async delete(id, params, body = {}, queryParams) {
     const hasQueryParams = queryParams !== undefined;
     const urlPath = this._buildUrlById(id, params, 'delete');
     const path = !hasQueryParams

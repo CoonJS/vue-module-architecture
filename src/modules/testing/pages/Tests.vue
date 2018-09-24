@@ -24,6 +24,7 @@
         tests: [],
         selectedTest: null,
         isShowTestPopup: false,
+        currentTestResults: null,
         access: {
           isAdmin: this.api.hasAccess('TESTS_ADMIN')
         }
@@ -32,6 +33,15 @@
     computed: {
       hasSelectedTest() {
         return this.selectedTest != null;
+      },
+      hasCurrentTestResults() {
+        const results =this.currentTestResults;
+        return results !== null && Array.isArray(results) && results.length > 0;
+      }
+    },
+    watch: {
+      selectedTest() {
+        this.loadTestResults();
       }
     },
     methods: {
@@ -50,6 +60,18 @@
           this.selectTest(tests[0]);
         }
 
+        this.loading = false;
+      },
+      async loadTestResults() {
+        const testId = this.selectedTest.id;
+        const { data: results } = await this.api.get('currentUserResultsUsingGET', { testId });
+        this.currentTestResults = results;
+      },
+      async startCurrentTest() {
+        this.loading = true;
+        const testId = this.selectedTest.id;
+        await this.api.post('createdResultUsingPOST', { testId });
+        await this.loadTestResults();
         this.loading = false;
       },
       async saveTest() {
@@ -135,7 +157,22 @@
                 />
             </div>
 
-            <question-container v-if="tests.length > 0" :testId="selectedTest.id"/>
+            <question-container
+                v-if="tests.length > 0 && hasCurrentTestResults"
+                :testId="selectedTest.id"
+                :results="currentTestResults"
+            />
+
+            <div v-else class="start-test-button">
+                <el-button
+                    type="success"
+                    :disabled="loading"
+                    :loading="loading"
+                    @click="startCurrentTest"
+                >
+                    Начать тест
+                </el-button>
+            </div>
         </div>
     </page-container>
 </template>
@@ -166,5 +203,12 @@
         min-width: 300px;
         width: 300px;
         border-right: 1px solid #cacaca;
+    }
+
+    .start-test-button {
+        padding: 64px;
+        width: 100%;
+        text-align: center;
+        background-color: #eee;
     }
 </style>
