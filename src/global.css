@@ -24,3 +24,26 @@ body {
     line-height: 14px;
     padding: 0 4px;
 }
+
+
+/*Elements styles override*/
+
+button.el-button--primary {
+    color: #fff;
+    background-color: #549ce5;
+    border-color: #549ce5;
+}
+
+button.el-button--primary:focus, .el-button--primary:hover {
+    color: #fff;
+    background-color: #549ce5;
+    border-color: #549ce5;
+}
+
+button.el-button--success {
+    color: #fff;
+    background-color: #379907;
+    border-color: #3a970d;
+}
+
+

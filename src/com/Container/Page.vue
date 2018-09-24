@@ -68,7 +68,7 @@
         top: 0;
         left: 0;
         height: 64px;
-        background: #fbfbfb;
+        background: #4a84c217;
         width: 100%;
         box-shadow: 1px 0 1px #cecece;
     }
@@ -77,6 +77,7 @@
         width: 100%;
         overflow: auto;
         padding: 12px;
+        background: #ced2d517;
     }
 
     .page-content.offset {
