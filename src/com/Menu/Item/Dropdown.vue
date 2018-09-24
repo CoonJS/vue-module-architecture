@@ -62,7 +62,7 @@
     }
 
     .menu-item:hover {
-        background-color: #0eb0fd;
+        background-color: #214367a3;
     }
 
     .menu-item-content {

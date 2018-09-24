@@ -28,7 +28,7 @@
         width: 100%;
         padding: 0 12px;
         display: flex;
-        background-color: #2a3a4d;
+        background-image: linear-gradient(45deg, #274362, #4a84c2);
         justify-content: space-between;
         box-shadow: 0 0 1px rgba(0,0,0,0.25);
     }
