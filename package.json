@@ -1,7 +1,7 @@
 {
-  "name": "salestat",
+  "name": "platform",
   "version": "0.1.0",
-  "description": "Salestat solution for managers",
+  "description": "Platform solution for business",
   "engines": {
     "node": "8.9.1"
   },

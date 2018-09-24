@@ -1,24 +1,32 @@
+<script>
+  export default {
+    name: "MenuItemLogo",
+    data() {
+      return {
+        logoSrc: require('../../../../logo.png')
+      };
+    }
+  }
+</script>
+
 <template>
     <router-link to="/">
         <div class="menu-item">
-            Platform<sup class="beta">&nbsp;&beta;</sup>
+            <img :src="logoSrc" alt="Platform" height="16px" width="16px">
+            <span class="name">latform<sup class="beta">&nbsp;&beta;</sup></span>
         </div>
     </router-link>
 </template>
 
-<script>
-  export default {
-    name: "MenuItemLogo",
-  }
-</script>
-
 <style scoped>
     .menu-item {
-        cursor: pointer;
-        padding: 16px 16px 16px 0;
+        display: flex;
         align-items: center;
+        cursor: pointer;
+        padding: 14px 16px 14px 0;
         color: #fff;
-        font-size: 12px;
+        font-size: 10px;
+        text-transform: uppercase;
     }
 
     a {

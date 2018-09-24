@@ -36,7 +36,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin([path.resolve(__dirname, 'dist')]),
     new HtmlWebpackPlugin({
-      title: 'Salestat',
+      title: 'Platform',
       template: path.resolve(__dirname, 'index.html'),
       inject: 'body',
       favicon: path.resolve(__dirname, 'favicon.ico')

@@ -39,6 +39,9 @@
             <router-link to="/profile">
                 <el-dropdown-item>Профиль</el-dropdown-item>
             </router-link>
+            <router-link to="/organizations">
+                <el-dropdown-item>Организации</el-dropdown-item>
+            </router-link>
             <router-link to="/users" v-if="access.canViewUsers">
                 <el-dropdown-item>Пользователи</el-dropdown-item>
             </router-link>

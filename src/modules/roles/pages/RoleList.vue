@@ -10,8 +10,8 @@
     beforeCreate() {
       /** @type {Api}*/
       this.api = this.$locator.Api;
-      /** @type {Role}*/
-      this.roleService = this.$locator.Role;
+      /** @type {Organization}*/
+      this.roleService = this.$locator.Organization;
     },
     mounted() {
       this.loadRoles();
