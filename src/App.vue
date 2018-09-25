@@ -141,7 +141,9 @@
 
         </nav-layout>
         <root-container>
-            <router-view></router-view>
+            <transition name="page" mode="out-in">
+                <router-view></router-view>
+            </transition>
         </root-container>
     </page-layout>
 </template>
@@ -159,13 +161,15 @@
         color: rgba(255,255,255, .7);
     }
 
-    /*BGC ANIMATION*/
-    /*-webkit-animation: card-plug-loader 1.5s infinite;*/
-    /*animation: card-plug-loader 1.5s infinite;*/
-    /*-webkit-animation-timing-function: linear;*/
-    /*animation-timing-function: linear;*/
-    /*-webkit-animation-fill-mode: forwards;*/
-    /*animation-fill-mode: forwards;*/
-    /*background: -webkit-linear-gradient(left,#eaeaea 8%,#e4e3e3 18%,#eaeaea 33%);*/
-    /*background: linear-gradient(to right,#eaeaea 8%,#e4e3e3 18%,#eaeaea 33%);*/
+    .page-enter-active,
+    .page-leave-active {
+        transition: all .3s;
+    }
+
+    .page-enter,
+    .page-leave-to {
+        opacity: 0;
+        transform: scale(0);
+    }
+
 </style>
