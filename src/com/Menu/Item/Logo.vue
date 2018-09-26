@@ -1,19 +1,13 @@
 <script>
   export default {
-    name: "MenuItemLogo",
-    data() {
-      return {
-        logoSrc: require('../../../../logo.png')
-      };
-    }
+    name: "MenuItemLogo"
   }
 </script>
 
 <template>
     <router-link to="/">
         <div class="menu-item">
-            <img :src="logoSrc" alt="Platform" height="16px" width="16px">
-            <span class="name">latform<sup class="beta">&nbsp;&beta;</sup></span>
+            <span class="name">Platform<sup class="beta">&nbsp;beta</sup></span>
         </div>
     </router-link>
 </template>
