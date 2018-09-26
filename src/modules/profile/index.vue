@@ -175,7 +175,6 @@
     .title {
         display: flex;
         justify-content: center;
-        color: #ffffff;
         font-size: 14px;
         font-weight: 100;
         text-transform: uppercase;
