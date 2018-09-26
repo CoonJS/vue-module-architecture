@@ -16,7 +16,7 @@ module.exports = {
     rules: [
       {
         test: /\.(css|less)$/,
-        use: ['style-loader', 'vue-style-loader', 'css-loader', 'less-loader']
+        use: ['style-loader', 'css-loader', 'less-loader']
       },
       {
         test: /\.js$/,

@@ -141,9 +141,7 @@
 
         </nav-layout>
         <root-container>
-            <transition name="page" mode="out-in">
-                <router-view></router-view>
-            </transition>
+            <router-view></router-view>
         </root-container>
     </page-layout>
 </template>
@@ -160,16 +158,4 @@
         font-size: 10px;
         color: rgba(255,255,255, .7);
     }
-
-    .page-enter-active,
-    .page-leave-active {
-        transition: all .3s;
-    }
-
-    .page-enter,
-    .page-leave-to {
-        opacity: 0;
-        transform: scale(0);
-    }
-
 </style>
