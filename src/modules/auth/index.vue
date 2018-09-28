@@ -57,7 +57,7 @@
 
 <template>
     <div class="form-wrapper">
-        <div class="logo">Platform<sup class="beta">&beta;</sup></div>
+        <div class="logo">Platform<sup class="beta">BETA</sup></div>
         <div class="auth-form"
              v-loading.body="isLoading"
              element-loading-background="#04171f69"
@@ -124,9 +124,8 @@
     }
 
     .logo .beta {
+        text-transform: uppercase;
         top: -10px;
-        right: -20px;
-        text-transform: lowercase;
         position: absolute;
         font-size: 24px;
         color: #fff;
