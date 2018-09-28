@@ -9,6 +9,12 @@
         default() {
           return false;
         }
+      },
+      content: {
+        type: String,
+        default() {
+          return null;
+        }
       }
     },
     mounted() {
@@ -30,6 +36,7 @@
             </div>
         </el-tooltip>
         <div class="count">{{number}}</div>
+        <div v-html="content" class="content"/>
     </div>
 </template>
 
@@ -70,5 +77,12 @@
             left: -16px;
             color: rgba(0, 0, 0, 0.2);
         }
+    }
+
+    .content {
+        overflow: auto;
+        height: 100%;
+        width: 100%;
+        transform: scale(0.5);
     }
 </style>

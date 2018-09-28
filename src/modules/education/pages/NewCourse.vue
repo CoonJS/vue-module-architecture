@@ -14,21 +14,19 @@
     },
     data () {
       return {
-        steps: [0],
+        steps: [{ index: 0, content: null }],
         selectedStepIdx: 0
       }
     },
     methods: {
       addStep() {
-        this.steps = [...this.steps, this.steps.length + 1]
+        this.steps = [...this.steps, { index: this.steps.length, content: null }];
       },
       handleStepClick(idx) {
         this.selectedStepIdx = idx;
       },
       handleRemove(idx) {
-        console.log(idx);
         this.steps = this.steps.filter((step, index) => index !== idx);
-
       }
     }
   }
@@ -45,9 +43,10 @@
                 <transition-group name="list">
                     <step
                         v-for="(step, idx) in steps"
-                        :key="step"
+                        :content="step.content"
+                        :key="step.index"
                         :number="idx"
-                        :active="selectedStepIdx === idx"
+                        :active="step.index === selectedStepIdx"
                         @click="handleStepClick"
                         @remove="handleRemove"
                     />
@@ -59,7 +58,9 @@
                 </el-tooltip>
             </div>
             <div class="step-content">
-                <VueEditor></VueEditor>
+                <div class="editor-wrapper">
+                    <VueEditor v-model="steps[selectedStepIdx].content"/>
+                </div>
             </div>
         </div>
     </page-container>
@@ -79,7 +80,7 @@
     }
 
     .steps {
-        padding: 12px 40px 20px 40px;
+        padding: 12px 24px 20px 24px;
         overflow-x: auto;
         display: flex;
         align-items: center;
@@ -111,16 +112,20 @@
     }
 
     .step-content {
+        margin-left: -1px;
         width: 100%;
-        min-height: 600px;
-        background-color: #eee;
     }
 
     .list-enter-active, .list-leave-active {
         transition: all .2s;
         transform: scale(1);
     }
+
     .list-enter, .list-leave-to {
         transform: scale(0);
+    }
+
+    .quillWrapper {
+        height: 900px;
     }
 </style>
