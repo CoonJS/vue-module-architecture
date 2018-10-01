@@ -14,6 +14,7 @@
     },
     data () {
       return {
+        type: 'article',
         steps: [{ index: 0, content: null }],
         selectedStepIdx: 0
       }
@@ -26,7 +27,13 @@
         this.selectedStepIdx = idx;
       },
       handleRemove(idx) {
+        if (this.steps.length === 1) {
+          return;
+        }
+
+        this.selectedStepIdx = 0;
         this.steps = this.steps.filter((step, index) => index !== idx);
+
       }
     }
   }
@@ -46,7 +53,7 @@
                         :content="step.content"
                         :key="step.index"
                         :number="idx"
-                        :active="step.index === selectedStepIdx"
+                        :active="idx === selectedStepIdx"
                         @click="handleStepClick"
                         @remove="handleRemove"
                     />
@@ -58,6 +65,12 @@
                 </el-tooltip>
             </div>
             <div class="step-content">
+                <div class="step-type">
+                    <el-radio-group v-model="type">
+                        <el-radio label="article">Статья</el-radio>
+                        <el-radio label="test">Тест</el-radio>
+                    </el-radio-group>
+                </div>
                 <div class="editor-wrapper">
                     <VueEditor v-model="steps[selectedStepIdx].content"/>
                 </div>
@@ -109,6 +122,10 @@
                 font-size: 32px;
             }
         }
+    }
+
+    .step-type {
+        padding: 24px 16px;
     }
 
     .step-content {
