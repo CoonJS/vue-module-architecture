@@ -1,12 +1,17 @@
 <script>
 
   import { VueEditor } from 'vue2-editor';
+
   import Step from '../src/com/Step/Default.vue';
+  import TestWrapper from '../src/com/Test/Wrapper.vue';
+  import CreateCourseForm from '../src/com/Form/CreateCourse.vue';
 
   export default {
     components: {
       Step,
-      VueEditor
+      VueEditor,
+      TestWrapper,
+      CreateCourseForm
     },
     created() {
       /** @type {Api}*/
@@ -14,12 +19,31 @@
     },
     data () {
       return {
+        data: {},
         type: 'article',
         steps: [{ index: 0, content: null }],
-        selectedStepIdx: 0
+        selectedStepIdx: 0,
+        loading: false
       }
     },
     methods: {
+      async saveCourse() {
+        const { title, description, image } = this.data;
+
+        this.loading = true;
+        await this.api.post('createdCourseUsingPOST', {}, {
+          title,
+          description,
+          image
+        });
+        this.loading = false;
+
+        this.$router.push('/education');
+
+      },
+      handleCourseFormChange(data) {
+        this.data = data;
+      },
       addStep() {
         this.steps = [...this.steps, { index: this.steps.length, content: null }];
       },
@@ -43,7 +67,11 @@
     <page-container flex-content fluid>
         <div slot="header" class="header">
             <h3>Создание курса</h3>
-            <el-button type="success" size="mini">Сохранить</el-button>
+            <el-button
+                    type="success"
+                    size="mini"
+                    :loading="loading"
+                    @click="saveCourse">Сохранить</el-button>
         </div>
         <div class="body">
             <div class="steps">
@@ -64,16 +92,22 @@
                     </div>
                 </el-tooltip>
             </div>
-            <div class="step-content">
+            <div class="step-content" v-if="selectedStepIdx !== 0">
                 <div class="step-type">
                     <el-radio-group v-model="type">
                         <el-radio label="article">Статья</el-radio>
                         <el-radio label="test">Тест</el-radio>
                     </el-radio-group>
                 </div>
-                <div class="editor-wrapper">
+                <div class="editor-wrapper" v-if="type === 'article'">
                     <VueEditor v-model="steps[selectedStepIdx].content"/>
                 </div>
+                <div class="testing-wrapper" v-if="type === 'test'">
+                    <test-wrapper/>
+                </div>
+            </div>
+            <div class="course-settings" v-else>
+                <create-course-form @change="handleCourseFormChange"/>
             </div>
         </div>
     </page-container>
@@ -126,9 +160,12 @@
 
     .step-type {
         padding: 24px 16px;
+        border-bottom: 1px solid #cacaca;
     }
 
-    .step-content {
+    .step-content, .course-settings {
+        display: flex;
+        flex-direction: column;
         margin-left: -1px;
         width: 100%;
     }
@@ -143,6 +180,14 @@
     }
 
     .quillWrapper {
-        height: 900px;
+        margin-top: -1px;
+        height:596px;
+    }
+
+    .testing-wrapper {
+        display: flex;
+        flex: 1;
+        padding: 0 16px 16px;
+        flex-direction: column;
     }
 </style>

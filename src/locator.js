@@ -5,6 +5,7 @@ import Component from './service/Component';
 import ArrayUtils from './service/ArrayUtils';
 import ObjectUtils from './service/ObjectUtils';
 import NumberUtils from './service/Number';
+import FileUtils from './service/FileUtils';
 
 class Locator {
   constructor() {
@@ -33,5 +34,6 @@ locator.registerService(DateTime);
 locator.registerService(Api);
 locator.registerService(Router);
 locator.registerService(Component);
+locator.registerService(FileUtils);
 
 export default locator;
