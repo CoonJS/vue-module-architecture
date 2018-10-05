@@ -88,7 +88,7 @@
           {
             key:'education',
             title: 'Обучение',
-            link: '/education',
+            link: '/courses',
             hasAccess: true
           }
         ];

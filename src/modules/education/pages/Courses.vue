@@ -19,6 +19,9 @@
       filteredCourses() {
         const searchString = this.search.trim();
         return this.courses.filter(course => course.title.indexOf(searchString) !== -1);
+      },
+      hasNoSearchedCourses() {
+        return this.search.trim().length !== 0 && this.filteredCourses.length === 0;
       }
     },
     methods: {
@@ -29,14 +32,14 @@
         this.loading = false;
       },
       redirectToCreateCoursePage() {
-        this.$router.push('education/new');
+        this.$router.push('courses/new');
       },
     }
   }
 </script>
 
 <template>
-    <page-container v-loading.body="loading">
+    <page-container flexColumn>
         <div slot="header" class="header">
             <h3>Обучение</h3>
             <el-button
@@ -47,23 +50,28 @@
                 Создать курс
             </el-button>
         </div>
-        <h1 class="search-title">Поиск курсов</h1>
+        <h2 class="search-title">Поиск курсов</h2>
         <div class="search">
             <el-input v-model="search" size="medium" placeholder="Поиск курсов...">
                 <i slot="prefix" class="el-input__icon el-icon-search"></i>
             </el-input>
         </div>
-        <div class="courses">
+        <div class="courses" v-loading.body="loading">
+            <h3 v-if="hasNoSearchedCourses" class="search-title">{{`Курсы с названием "${search}" не найдены`}}</h3>
             <div v-for="course in filteredCourses" :key="course.id">
-                <div class="card">
-                    <img class="img" :src="course.image" :alt="course.title" width="180px" height="180px">
-                    <div class="title">
-                        <span>{{course.title}}</span>
+                <router-link :to="`/courses/${course.id}`">
+                    <div class="card">
+                        <div class="img-wrap">
+                            <img :src="course.image" :alt="course.title" width="180px" height="180px">
+                        </div>
+                        <div class="title">
+                            <span>{{course.title}}</span>
+                        </div>
+                        <div class="description">
+                            <span>{{course.description}}</span>
+                        </div>
                     </div>
-                    <div class="description">
-                        <span>{{course.description}}</span>
-                    </div>
-                </div>
+                </router-link>
             </div>
         </div>
     </page-container>
@@ -77,12 +85,23 @@
         align-items: center;
     }
 
+    a {
+        text-decoration: none;
+        color: #000;
+    }
+
     .courses {
+        overflow: auto;
+        margin-top: 32px;
         display: flex;
+        flex-wrap: wrap;
+        flex: 1;
+        border-top: 2px solid #eee;
     }
 
     .search-title {
-        padding: 24px;
+        width: 100%;
+        padding: 12px;
         font-weight: normal;
         text-align: center;
         color: rgba(0,0,0, .2);
@@ -92,7 +111,7 @@
     .search {
         display: flex;
         justify-content: center;
-        padding: 16px;
+        padding: 12px;
 
         .el-input {
             width: 900px;
@@ -105,14 +124,16 @@
         align-items: center;
         justify-content: center;
         margin: 16px;
-        padding: 4px 12px;
+        padding: 4px;
         cursor: pointer;
         width: 200px;
         background: #4a84c217;
         border: 1px solid #eee;
 
-        .img {
-            border: 1px dashed #eee;
+        .img-wrap {
+            border: 2px solid #eee;
+            padding: 4px;
+            background: #fff;
         }
 
         &:hover {

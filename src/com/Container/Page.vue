@@ -8,6 +8,12 @@
           return false;
         }
       },
+      flexColumn: {
+        type: Boolean,
+        default() {
+          return false;
+        }
+      },
       fluid: {
         type: Boolean,
         default() {
@@ -43,14 +49,14 @@
         <div
             class="page-content"
             :style="{width}"
-            :class="{ 'offset': hasHeader, 'flex': flexContent, 'fluid': fluid, 'center': center }"
+            :class="{ 'offset': hasHeader, 'flex': flexContent, 'fluid': fluid, 'center': center, 'flex-column': flexColumn }"
         >
             <slot></slot>
         </div>
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="less">
     .page-container {
         display: flex;
         flex: 1;
@@ -78,22 +84,28 @@
         overflow: auto;
         padding: 12px;
         background: #ced2d517;
+
+        &.offset {
+            margin-top: 64px;
+        }
+
+        &.flex {
+            display: flex;
+        }
+
+        &.flex.center {
+            display: flex;
+            justify-content: center;
+        }
+
+        &.fluid {
+            padding: 0;
+        }
+
+        &.flex-column {
+            display: flex;
+            flex-direction: column;
+        }
     }
 
-    .page-content.offset {
-        margin-top: 64px;
-    }
-
-    .page-content.flex {
-        display: flex;
-    }
-
-    .page-content.flex.center {
-        display: flex;
-        justify-content: center;
-    }
-
-    .page-content.fluid {
-        padding: 0;
-    }
 </style>

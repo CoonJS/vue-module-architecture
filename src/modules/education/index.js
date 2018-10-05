@@ -1,5 +1,6 @@
-const IndexPage = () => import(/* webpackChunkName: "educationIndex" */'./index.vue');
-const EducationNewCourse = () => import(/* webpackChunkName: "newCourse" */'./pages/NewCourse.vue');
+const Courses = () => import(/* webpackChunkName: "courses" */'./index.vue');
+const NewCourse = () => import(/* webpackChunkName: "newCourse" */'./pages/NewCourse.vue');
+const CourseView = () => import(/* webpackChunkName: "coursePage" */'./pages/CourseView.vue');
 
 export default async function(locator) {
   /** @type {Router}*/
@@ -7,14 +8,19 @@ export default async function(locator) {
 
   routerService.registerModuleRoutes([
     {
-      path: '/education',
-      name: 'EducationHomePage',
-      component: IndexPage
+      path: '/courses',
+      name: 'Courses',
+      component: Courses
     },
     {
-      path: '/education/new',
-      name: 'EducationNewCourse',
-      component: EducationNewCourse
-    }
+      path: '/courses/new',
+      name: 'NewCourse',
+      component: NewCourse
+    },
+    {
+      path: '/courses/:id',
+      name: 'CourseView',
+      component: CourseView
+    },
   ]);
 }

@@ -38,7 +38,7 @@
         });
         this.loading = false;
 
-        this.$router.push('/education');
+        this.$router.push('/courses');
 
       },
       handleCourseFormChange(data) {

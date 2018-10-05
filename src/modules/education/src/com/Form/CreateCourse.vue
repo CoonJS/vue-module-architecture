@@ -37,19 +37,6 @@
 
 <template>
     <div class="form">
-        <div class="field image">
-            <div class="title">Изображение курса</div>
-            <div class="container">
-                <div class="large-12 medium-12 small-12 cell">
-                    <input
-                        accept="image/*"
-                        type="file"
-                        @change="handleFileChange"
-                    />
-                    <img class="image-preview" v-if="data.image" :src="data.image" alt="file">
-                </div>
-            </div>
-        </div>
         <div class="field">
             <div class="title">Название курса</div>
             <el-input v-model="data.title"/>
@@ -57,6 +44,17 @@
         <div class="field">
             <div class="title">Описание курса</div>
             <el-input v-model="data.description" type="textarea" :rows="5"/>
+        </div>
+        <div class="field image">
+            <div class="title">Изображение курса</div>
+            <div class="container">
+                <input
+                    accept="image/*"
+                    type="file"
+                    @change="handleFileChange"
+                />
+                <img class="image-preview" v-if="data.image" :src="data.image" alt="file">
+            </div>
         </div>
     </div>
 </template>
