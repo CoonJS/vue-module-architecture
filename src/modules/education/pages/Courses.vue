@@ -18,7 +18,8 @@
     computed: {
       filteredCourses() {
         const searchString = this.search.trim();
-        return this.courses.filter(course => course.title.indexOf(searchString) !== -1);
+        const hasCourseMatch = course => course.title.toLowerCase().indexOf(searchString) !== -1;
+        return this.courses.filter(hasCourseMatch);
       },
       hasNoSearchedCourses() {
         return this.search.trim().length !== 0 && this.filteredCourses.length === 0;
@@ -62,10 +63,11 @@
                 <router-link :to="`/courses/${course.id}`">
                     <div class="card">
                         <div class="img-wrap">
-                            <img :src="course.image" :alt="course.title" width="180px" height="180px">
+                            <img :src="`api/files/${course.imageFileId}`" :alt="course.title" width="180px" height="180px">
                         </div>
                         <div class="title">
-                            <span>{{course.title}}</span>
+                            <span class="name">{{course.title}}</span>
+                            <el-tag v-if="course.status === 'DRAFT'" type="info" size="mini" color="#fff">Черновик</el-tag>
                         </div>
                         <div class="description">
                             <span>{{course.description}}</span>
@@ -141,6 +143,9 @@
         }
 
         .title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             width: 100%;
             font-size: 12px;
             padding: 10px 12px;
@@ -149,6 +154,11 @@
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
+
+            .name {
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
         }
 
         .description {
@@ -157,7 +167,7 @@
             padding: 16px;
             font-size: 12px;
             color: #948c8c;
-            overflow-y: auto;
+            overflow: hidden;
             height: 80px;
         }
     }

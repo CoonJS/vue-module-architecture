@@ -10,15 +10,18 @@
           return false;
         }
       },
+      title: {
+        type: String,
+        default() {
+          return '';
+        }
+      },
       content: {
         type: String,
         default() {
           return null;
         }
       }
-    },
-    mounted() {
-
     }
   }
 </script>
@@ -36,6 +39,9 @@
             </div>
         </el-tooltip>
         <div class="count">{{number}}</div>
+        <div v-html="title" class="title">
+            {{title}}
+        </div>
         <div v-html="content" class="content"/>
     </div>
 </template>
@@ -44,6 +50,7 @@
     .step {
         position: relative;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         cursor: pointer;
@@ -54,6 +61,10 @@
         height: 100px;
         margin: 8px 0;
         border: 2px solid rgba(0, 0, 0, 0.2);
+
+        .title {
+            font-size: 12px;
+        }
 
         &.active, &:hover {
             border: 2px solid #03A9F4;

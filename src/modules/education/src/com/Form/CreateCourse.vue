@@ -1,16 +1,24 @@
 <script>
   export default {
+    props: {
+      data: {
+        type: Object,
+        default() {
+          return {
+            title: '',
+            description: '',
+            image: null
+          };
+        }
+      }
+    },
     beforeCreate() {
       /** @type {Api}*/
       this.api = this.$locator.Api;
     },
     data() {
       return {
-        data: {
-          title: '',
-          description: '',
-          image: null
-        }
+        model: this.data
       };
     },
     watch: {
@@ -36,7 +44,7 @@
 </script>
 
 <template>
-    <div class="form">
+    <div class="form" v-if="data !== null">
         <div class="field">
             <div class="title">Название курса</div>
             <el-input v-model="data.title"/>
@@ -83,6 +91,8 @@
     }
 
     .image-preview {
+        width: 200px;
+        height: 200px;
         margin-top: 16px;
         border: 2px dashed #eee;
     }

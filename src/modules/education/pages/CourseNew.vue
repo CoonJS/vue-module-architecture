@@ -21,7 +21,9 @@
       return {
         data: {},
         type: 'article',
-        steps: [{ index: 0, content: null }],
+        steps: [
+          { index: 0, content: null, title: '' }
+        ],
         selectedStepIdx: 0,
         loading: false
       }
@@ -45,7 +47,7 @@
         this.data = data;
       },
       addStep() {
-        this.steps = [...this.steps, { index: this.steps.length, content: null }];
+        this.steps = [...this.steps, { index: this.steps.length, content: null, title: '' }];
       },
       handleStepClick(idx) {
         this.selectedStepIdx = idx;
@@ -57,7 +59,6 @@
 
         this.selectedStepIdx = 0;
         this.steps = this.steps.filter((step, index) => index !== idx);
-
       }
     }
   }
@@ -79,6 +80,7 @@
                     <step
                         v-for="(step, idx) in steps"
                         :content="step.content"
+                        :title="step.title"
                         :key="step.index"
                         :number="idx"
                         :active="idx === selectedStepIdx"
@@ -93,6 +95,12 @@
                 </el-tooltip>
             </div>
             <div class="step-content" v-if="selectedStepIdx !== 0">
+                <div class="step-title">
+                    <div>
+                        <span>Название:</span>
+                    </div>
+                    <el-input v-model="steps[selectedStepIdx].title" size="mini"/>
+                </div>
                 <div class="step-type">
                     <el-radio-group v-model="type">
                         <el-radio label="article">Статья</el-radio>
@@ -161,6 +169,17 @@
     .step-type {
         padding: 24px 16px;
         border-bottom: 1px solid #cacaca;
+    }
+
+    .step-title {
+        font-size: 12px;
+        padding: 12px 16px;
+        border-bottom: 1px solid #cacaca;
+
+        .el-input {
+            max-width: 300px;
+            margin-top: 8px;
+        }
     }
 
     .step-content, .course-settings {

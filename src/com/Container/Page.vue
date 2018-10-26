@@ -108,4 +108,10 @@
         }
     }
 
+    h3 {
+        font-weight: 300;
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+
 </style>

@@ -1,7 +1,3 @@
-const Courses = () => import(/* webpackChunkName: "courses" */'./index.vue');
-const NewCourse = () => import(/* webpackChunkName: "newCourse" */'./pages/NewCourse.vue');
-const CourseView = () => import(/* webpackChunkName: "coursePage" */'./pages/CourseView.vue');
-
 export default async function(locator) {
   /** @type {Router}*/
   const routerService = locator.Router;
@@ -10,17 +6,22 @@ export default async function(locator) {
     {
       path: '/courses',
       name: 'Courses',
-      component: Courses
+      component: () => import(/* webpackChunkName: "courses" */'./index.vue')
     },
     {
       path: '/courses/new',
-      name: 'NewCourse',
-      component: NewCourse
+      name: 'CourseNew',
+      component: () => import(/* webpackChunkName: "courseNew" */'./pages/CourseNew.vue')
+    },
+    {
+      path: '/courses/edit/:id',
+      name: 'CourseEdit',
+      component: () => import(/* webpackChunkName: "courseEdit" */'./pages/CourseEdit.vue')
     },
     {
       path: '/courses/:id',
       name: 'CourseView',
-      component: CourseView
-    },
+      component: () => import(/* webpackChunkName: "coursePage" */'./pages/CourseView.vue')
+    }
   ]);
 }
