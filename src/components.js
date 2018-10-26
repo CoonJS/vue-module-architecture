@@ -22,6 +22,7 @@ import Sidebar from './com/Sidebar/Default.vue';
 import LineChart from './com/Chart/Line.vue';
 import DynamicForm from './com/Form/Dynamic.vue';
 import ModelViewCard from './com/Card/ModelView.vue';
+import AvatarUploader from './com/Uploader/Avatar.vue';
 
 
 /*===ERRORS===*/
@@ -53,7 +54,8 @@ const commonUiComponents = [
   Sidebar,
   LineChart,
   DynamicForm,
-  ModelViewCard
+  ModelViewCard,
+  AvatarUploader
 ];
 
 const errors = [

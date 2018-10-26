@@ -7,7 +7,7 @@
           return {
             title: '',
             description: '',
-            image: null
+            imageFileId: null,
           };
         }
       }
@@ -22,7 +22,7 @@
       };
     },
     watch: {
-      data: {
+      model: {
         deep: true,
         handler(val) {
           this.$emit('change', val);
@@ -30,14 +30,8 @@
       }
     },
     methods: {
-      handleFileChange({ target }) {
-        const reader = new FileReader();
-
-        reader.onload = e => {
-          this.data.image = e.target.result;
-        };
-
-        reader.readAsDataURL(target.files[0]);
+      handleUpload({ id }) {
+        this.model = {...this.model, imageFileId: id };
       }
     }
   }
@@ -45,24 +39,17 @@
 
 <template>
     <div class="form" v-if="data !== null">
+        <div class="field image">
+            <div class="title">Изображение</div>
+            <avatar-uploader @upload="handleUpload"/>
+        </div>
         <div class="field">
             <div class="title">Название курса</div>
-            <el-input v-model="data.title"/>
+            <el-input v-model="model.title"/>
         </div>
         <div class="field">
             <div class="title">Описание курса</div>
-            <el-input v-model="data.description" type="textarea" :rows="5"/>
-        </div>
-        <div class="field image">
-            <div class="title">Изображение курса</div>
-            <div class="container">
-                <input
-                    accept="image/*"
-                    type="file"
-                    @change="handleFileChange"
-                />
-                <img class="image-preview" v-if="data.image" :src="data.image" alt="file">
-            </div>
+            <el-input v-model="model.description" type="textarea" :rows="5"/>
         </div>
     </div>
 </template>

@@ -12,6 +12,8 @@ module.exports = {
     filename: '[name].[chunkhash].bundle.js',
     chunkFilename: '[name].[chunkhash].bundle.js'
   },
+  devtool: 'source-map',
+  cache: true,
   module: {
     rules: [
       {

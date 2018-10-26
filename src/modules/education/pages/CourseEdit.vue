@@ -37,6 +37,9 @@
     computed: {
       hasCourse() {
         return this.course !== null;
+      },
+      hasData() {
+        return this.data !== null;
       }
     },
     methods: {
@@ -46,7 +49,7 @@
         this.data = {
           title: course.title,
           description: course.description,
-          image: course.image
+          imageFileId: course.imageFileId
         };
       },
       async saveCourse() {
@@ -172,7 +175,7 @@
                 </div>
             </div>
             <div class="course-settings" v-else>
-                <create-course-form :data="data" @change="handleCourseFormChange"/>
+                <create-course-form v-if="hasData" :data="data" @change="handleCourseFormChange"/>
             </div>
         </div>
     </page-container>

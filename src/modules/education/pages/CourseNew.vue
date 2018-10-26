@@ -30,13 +30,13 @@
     },
     methods: {
       async saveCourse() {
-        const { title, description, image } = this.data;
+        const { title, description, imageFileId } = this.data;
 
         this.loading = true;
         await this.api.post('createdCourseUsingPOST', {}, {
           title,
           description,
-          image
+          imageFileId
         });
         this.loading = false;
 
