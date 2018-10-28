@@ -85,7 +85,7 @@ export default {
           <div class="card">
             <div class="img-wrap">
               <img 
-                :src="`api/files/${course.imageFileId}`" 
+                :src="buildFileUrlById(course.imageFileId)"
                 :alt="course.title" 
                 width="180px" 
                 height="180px"

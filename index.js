@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import ElementUI from 'element-ui';
 import { run } from './src/bootstrap';
+import { initVuePrototype } from  './src/vuePrototype';
 import { registerGlobalComponents } from './src/components';
 
 import App from './src/App.vue';
@@ -19,6 +20,9 @@ Vue.use(ElementUI);
 Vue.use(VueRouter);
 
 Vue.prototype.$locator = locator;
+
+initVuePrototype(Vue);
+
 registerGlobalComponents(locator);
 
 run(locator).then(() => {

@@ -44,7 +44,10 @@ export default {
   >
     <div class="field image">
       <div class="title">Изображение</div>
-      <avatar-uploader @upload="handleUpload" />
+      <avatar-uploader
+        :file-id="model.imageFileId"
+        @upload="handleUpload"
+      />
     </div>
     <div class="field">
       <div class="title">Название курса</div>

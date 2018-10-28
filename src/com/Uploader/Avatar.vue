@@ -1,14 +1,39 @@
 <script>
 export default {
   name: 'AvatarUploader',
+  props: {
+    fileId: {
+      type: Number,
+      default () {
+        return null;
+      }
+    }
+  },
   data() {
     return {
+      id: null,
       imageUrl: ''
     };
   },
+  computed: {
+    hasFileId() {
+      return this.id !== null;
+    }
+  },
+  watch: {
+    fileId: {
+      immediate: true,
+      handler(newFileId) {
+        this.id = newFileId;
+        this.imageUrl = this.buildFileUrlById(newFileId);
+      }
+    }
+  },
   methods: {
     handleAvatarSuccess(response, file) {
+      const { id } = response;
       this.imageUrl = URL.createObjectURL(file.raw);
+      this.id = id;
 
       this.$emit('upload', response);
     }
@@ -27,7 +52,7 @@ export default {
   >
     <img 
       v-if="imageUrl" 
-      :src="imageUrl" 
+      :src="hasFileId ? buildFileUrlById(id) : imageUrl"
       class="avatar"
     >
     <i 

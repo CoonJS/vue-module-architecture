@@ -1,4 +1,5 @@
 <script>
+
 export default {
   data() {
     return {
@@ -115,10 +116,21 @@ export default {
       </div>
     </div>
     <div v-if="hasCourse">
-      <img 
-        :src="course.image" 
-        :alt="course.title"
-      >
+      <el-card>
+        <div class="course-info">
+          <div>
+            <img :src="buildFileUrlById(course.imageFileId)">
+          </div>
+          <div class="description">
+            <div class="field">
+              <h3>Курс: {{ course.title }}</h3>
+            </div>
+            <div class="field">
+              <h3>Описание курса:</h3> {{ course.description }}
+            </div>
+          </div>
+        </div>
+      </el-card>
     </div>
   </page-container>
 </template>
@@ -151,4 +163,21 @@ export default {
             margin-left: 0;
         }
     }
+
+  .course-info {
+    display: flex;
+
+    .description {
+      margin-left: 16px;
+
+      .field {
+        padding: 4px 0;
+      }
+    }
+
+    img {
+      width: 200px;
+      height: 200px;
+    }
+  }
 </style>

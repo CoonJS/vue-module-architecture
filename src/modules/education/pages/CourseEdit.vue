@@ -53,13 +53,13 @@ export default {
       };
     },
     async saveCourse() {
-      const { title, description, image } = this.data;
+      const { title, description, imageFileId } = this.data;
 
       this.loading = true;
       await this.api.put('updatedCourseUsingPUT', { id : this.id }, {
         title,
         description,
-        image,
+        imageFileId,
         status: 'DRAFT'
       });
       this.loading = false;
