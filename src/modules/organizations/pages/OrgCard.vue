@@ -1,45 +1,51 @@
 <script>
-  export default {
-    beforeCreate() {
-      /** @type {Api}*/
-      this.api = this.$locator.Api;
-      /** @type {ArrayUtils}*/
-      this.array = this.$locator.ArrayUtils;
-    },
-    data () {
-      return {
-        org: {}
-      };
-    },
-    methods: {
-    }
+export default {
+  data () {
+    return {
+      org: {}
+    };
+  },
+  beforeCreate() {
+    /** @type {Api}*/
+    this.api = this.$locator.Api;
+    /** @type {ArrayUtils}*/
+    this.array = this.$locator.ArrayUtils;
+  },
+  methods: {
   }
+};
 </script>
 
 <template>
-    <page-container flexContent center>
-        <div slot="header" class="header">
-            <template>
-                <h3>{{org.name}}</h3>
-                <div class="actions">
-                    <el-button
-                        size="medium"
-                        type="success"
-                        icon="el-icon-check"
-                    >
-                        Сохранить изменения
-                    </el-button>
-                    <el-button
-                        size="medium"
-                        type="danger"
-                        icon="el-icon-delete"
-                    >
-                        Удалить
-                    </el-button>
-                </div>
-            </template>
+  <page-container 
+    flex-content 
+    center
+  >
+    <div 
+      slot="header" 
+      class="header"
+    >
+      <template>
+        <h3>{{ org.name }}</h3>
+        <div class="actions">
+          <el-button
+            size="medium"
+            type="success"
+            icon="el-icon-check"
+          >
+            Сохранить изменения
+          </el-button>
+          <el-button
+            size="medium"
+            type="danger"
+            icon="el-icon-delete"
+          >
+            Удалить
+          </el-button>
         </div>
-    </page-container>
+      </template>
+    </div>
+  </page-container>
 </template>
 
 <style scoped>

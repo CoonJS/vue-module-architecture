@@ -1,17 +1,17 @@
 <script>
-  import OrgList from './pages/OrgList.vue';
+import OrgList from './pages/OrgList.vue';
 
-  export default {
-    components: {
-      OrgList
-    },
-    beforeCreate() {
-      /** @type {Api}*/
-      this.api = this.$locator.Api;
-    }
+export default {
+  components: {
+    OrgList
+  },
+  beforeCreate() {
+    /** @type {Api}*/
+    this.api = this.$locator.Api;
   }
+};
 </script>
 
 <template>
-    <org-list/>
+  <org-list />
 </template>

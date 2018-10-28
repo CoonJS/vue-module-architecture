@@ -1,27 +1,27 @@
 <script>
-  import UserList from './pages/UserList.vue';
+import UserList from './pages/UserList.vue';
 
-  export default {
-    components: {
-      UserList
-    },
-    beforeCreate() {
-      /** @type {Api}*/
-      this.api = this.$locator.Api;
-    },
-    data () {
-      return {
-        access: {
-          canViewUsers: this.api.hasAccess('VIEW_USERS'),
-        }
-      };
-    }
-  }
+export default {
+  components: {
+    UserList
+  },
+  data () {
+    return {
+      access: {
+        canViewUsers: this.api.hasAccess('VIEW_USERS'),
+      }
+    };
+  },
+  beforeCreate() {
+    /** @type {Api}*/
+    this.api = this.$locator.Api;
+  },
+};
 </script>
 
 <template>
-    <user-list v-if="access.canViewUsers"/>
-    <access-denied v-else/>
+  <user-list v-if="access.canViewUsers" />
+  <access-denied v-else />
 </template>
 
 <style scoped>

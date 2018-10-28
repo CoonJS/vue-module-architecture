@@ -1,58 +1,72 @@
 <script>
-  export default {
-    props: {
-      active: {
-        type: Boolean,
-        default() {
-          return true;
-        }
-      },
-      date: {
-        type: String
-      },
-      type: {
-        type: String
-      },
-      entityId: {
-        type: Number
+export default {
+  props: {
+    active: {
+      type: Boolean,
+      default() {
+        return true;
       }
     },
-    methods: {
-      handleClick() {
-        this.$emit('click');
-
-        if (this.type === 'ADD_FIRST_INTEGRATION') {
-          this.$router.push('/marketplace');
-        }
-
-        if (this.type === 'INTEGRATION_ADDED') {
-          this.$router.push('/');
-        }
-
-        if (this.type === 'USER_REGISTRATION') {
-          this.$router.push(`/users/${this.entityId}`);
-        }
-      },
+    date: {
+      type: String,
+      default() {
+        return Date.now();
+      }
+    },
+    type: {
+      type: String,
+      default() {
+        return null;
+      }
+    },
+    entityId: {
+      type: Number,
+      default() {
+        return null;
+      }
     }
+  },
+  methods: {
+    handleClick() {
+      this.$emit('click');
+
+      if (this.type === 'ADD_FIRST_INTEGRATION') {
+        this.$router.push('/marketplace');
+      }
+
+      if (this.type === 'INTEGRATION_ADDED') {
+        this.$router.push('/');
+      }
+
+      if (this.type === 'USER_REGISTRATION') {
+        this.$router.push(`/users/${this.entityId}`);
+      }
+    },
   }
+};
 </script>
 
 <template>
-    <div class="notification" :class="{'active': active}" @click="handleClick">
-        <div class="status">
-            <div class="dot" :class="{'active': active}">
-
-            </div>
-        </div>
-        <div class="content">
-            <div class="text">
-                <slot></slot>
-            </div>
-            <div class="date">
-                <span>{{date}}</span>
-            </div>
-        </div>
+  <div 
+    :class="{'active': active}" 
+    class="notification" 
+    @click="handleClick"
+  >
+    <div class="status">
+      <div 
+        :class="{'active': active}" 
+        class="dot"
+      />
     </div>
+    <div class="content">
+      <div class="text">
+        <slot />
+      </div>
+      <div class="date">
+        <span>{{ date }}</span>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>

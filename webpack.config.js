@@ -1,6 +1,5 @@
-const webpack = require('webpack');
-const path = require('path');
 const fs = require('fs');
+const path = require('path');
 
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -16,6 +15,12 @@ module.exports = {
   cache: true,
   module: {
     rules: [
+      {
+        enforce: 'pre',
+        test: /\.(js|vue)$/,
+        loader: 'eslint-loader',
+        exclude: /node_modules/
+      },
       {
         test: /\.(css|less)$/,
         use: ['style-loader', 'css-loader', 'less-loader']

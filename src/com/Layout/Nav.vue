@@ -1,22 +1,22 @@
-<template>
-    <div class="nav-layout">
-        <div class="left">
-            <slot name="left"></slot>
-        </div>
-        <div class="center">
-            <slot name="center"></slot>
-        </div>
-        <div class="right">
-            <slot name="right"></slot>
-        </div>
-    </div>
-</template>
-
 <script>
-  export default {
-    name: "NavLayout"
-  }
+export default {
+  name: 'NavLayout'
+};
 </script>
+
+<template>
+  <div class="nav-layout">
+    <div class="left">
+      <slot name="left" />
+    </div>
+    <div class="center">
+      <slot name="center" />
+    </div>
+    <div class="right">
+      <slot name="right" />
+    </div>
+  </div>
+</template>
 
 <style scoped>
     .nav-layout {

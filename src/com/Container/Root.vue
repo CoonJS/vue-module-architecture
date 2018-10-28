@@ -1,14 +1,14 @@
-<template>
-    <div class="root-container">
-        <slot></slot>
-    </div>
-</template>
-
 <script>
-  export default {
-    name: "RootContainer"
-  }
+export default {
+  name: 'RootContainer'
+};
 </script>
+
+<template>
+  <div class="root-container">
+    <slot />
+  </div>
+</template>
 
 <style scoped>
     .root-container {

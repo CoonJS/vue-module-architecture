@@ -1,49 +1,56 @@
 <script>
-  export default {
-    props: {
-      number: {
-        type: Number
-      },
-      active: {
-        type: Boolean,
-        default() {
-          return false;
-        }
-      },
-      title: {
-        type: String,
-        default() {
-          return '';
-        }
-      },
-      content: {
-        type: String,
-        default() {
-          return null;
-        }
+export default {
+  props: {
+    number: {
+      type: Number,
+      default () {
+        return 0;
+      }
+    },
+    active: {
+      type: Boolean,
+      default() {
+        return false;
+      }
+    },
+    title: {
+      type: String,
+      default() {
+        return '';
+      }
+    },
+    content: {
+      type: String,
+      default() {
+        return null;
       }
     }
   }
+};
 </script>
 
 <template>
-    <div
-        class="step"
-        :class="{active}"
-        @click="$emit('click', number)"
-    >
+  <div
+    :class="{active}"
+    class="step"
+    @click="$emit('click', number)"
+  >
 
-        <el-tooltip content="Удалить" placement="top">
-            <div class="close-icon" @click.stop.prevent="$emit('remove', number)">
-                <i class="el-icon-circle-close-outline"/>
-            </div>
-        </el-tooltip>
-        <div class="count">{{number}}</div>
-        <div v-html="title" class="title">
-            {{title}}
-        </div>
-        <div v-html="content" class="content"/>
-    </div>
+    <el-tooltip 
+      content="Удалить" 
+      placement="top"
+    >
+      <div 
+        class="close-icon" 
+        @click.stop.prevent="$emit('remove', number)"
+      >
+        <i class="el-icon-circle-close-outline" />
+      </div>
+    </el-tooltip>
+    <div class="count">{{ number }}</div>
+    <div class="title">{{ title }}</div>
+    <div class="content">{{ content }}</div>
+  </div>
 </template>
 
 <style lang="less" scoped>

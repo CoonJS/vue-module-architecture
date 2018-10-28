@@ -1,36 +1,40 @@
 <script>
-  export default {
-    props: {
-      value: {
-        type: String,
-        default() {
-          return '';
-        }
-      }
-    },
-    mounted() {
-      this.focusInput();
-    },
-    data () {
-      return {
-        name: this.value
-      };
-    },
-    watch: {
-      name(val) {
-        this.$emit('input', val);
-      }
-    },
-    methods: {
-      focusInput() {
-        this.$refs.input.$el.querySelector('input').focus();
+export default {
+  props: {
+    value: {
+      type: String,
+      default() {
+        return '';
       }
     }
+  },
+  data () {
+    return {
+      name: this.value
+    };
+  },
+  watch: {
+    name(val) {
+      this.$emit('input', val);
+    }
+  },
+  mounted() {
+    this.focusInput();
+  },
+  methods: {
+    focusInput() {
+      this.$refs.input.$el.querySelector('input').focus();
+    }
   }
+};
 </script>
 
 <template>
-    <el-input ref="input" placeholder="Название" v-model="name"/>
+  <el-input 
+    ref="input" 
+    v-model="name" 
+    placeholder="Название"
+  />
 </template>
 
 <style scoped>

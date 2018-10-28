@@ -1,21 +1,21 @@
 <script>
-  export default {
-    name: "UiLink",
-    props: {
-      to: {
-        type: String,
-        default() {
-          return '#';
-        }
+export default {
+  name: 'UiLink',
+  props: {
+    to: {
+      type: String,
+      default() {
+        return '#';
       }
     }
   }
+};
 </script>
 
 <template>
-    <router-link :to="to">
-        <slot></slot>
-    </router-link>
+  <router-link :to="to">
+    <slot />
+  </router-link>
 </template>
 
 <style scoped>

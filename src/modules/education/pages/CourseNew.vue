@@ -1,124 +1,154 @@
 <script>
 
-  import { VueEditor } from 'vue2-editor';
+import { VueEditor } from 'vue2-editor';
 
-  import Step from '../src/com/Step/Default.vue';
-  import TestWrapper from '../src/com/Test/Wrapper.vue';
-  import CreateCourseForm from '../src/com/Form/CreateCourse.vue';
+import Step from '../src/com/Step/Default.vue';
+import TestWrapper from '../src/com/Test/Wrapper.vue';
+import CreateCourseForm from '../src/com/Form/CreateCourse.vue';
 
-  export default {
-    components: {
-      Step,
-      VueEditor,
-      TestWrapper,
-      CreateCourseForm
+export default {
+  components: {
+    Step,
+    VueEditor,
+    TestWrapper,
+    CreateCourseForm
+  },
+  data () {
+    return {
+      data: {},
+      type: 'article',
+      steps: [
+        { index: 0, content: null, title: '' }
+      ],
+      selectedStepIdx: 0,
+      loading: false
+    };
+  },
+  created() {
+    /** @type {Api}*/
+    this.api = this.$locator.Api;
+  },
+  methods: {
+    async saveCourse() {
+      const { title, description, imageFileId } = this.data;
+
+      this.loading = true;
+      await this.api.post('createdCourseUsingPOST', {}, {
+        title,
+        description,
+        imageFileId
+      });
+      this.loading = false;
+
+      this.$router.push('/courses');
+
     },
-    created() {
-      /** @type {Api}*/
-      this.api = this.$locator.Api;
+    handleCourseFormChange(data) {
+      this.data = data;
     },
-    data () {
-      return {
-        data: {},
-        type: 'article',
-        steps: [
-          { index: 0, content: null, title: '' }
-        ],
-        selectedStepIdx: 0,
-        loading: false
+    addStep() {
+      this.steps = [...this.steps, { index: this.steps.length, content: null, title: '' }];
+    },
+    handleStepClick(idx) {
+      this.selectedStepIdx = idx;
+    },
+    handleRemove(idx) {
+      if (this.steps.length === 1) {
+        return;
       }
-    },
-    methods: {
-      async saveCourse() {
-        const { title, description, imageFileId } = this.data;
 
-        this.loading = true;
-        await this.api.post('createdCourseUsingPOST', {}, {
-          title,
-          description,
-          imageFileId
-        });
-        this.loading = false;
-
-        this.$router.push('/courses');
-
-      },
-      handleCourseFormChange(data) {
-        this.data = data;
-      },
-      addStep() {
-        this.steps = [...this.steps, { index: this.steps.length, content: null, title: '' }];
-      },
-      handleStepClick(idx) {
-        this.selectedStepIdx = idx;
-      },
-      handleRemove(idx) {
-        if (this.steps.length === 1) {
-          return;
-        }
-
-        this.selectedStepIdx = 0;
-        this.steps = this.steps.filter((step, index) => index !== idx);
-      }
+      this.selectedStepIdx = 0;
+      this.steps = this.steps.filter((step, index) => index !== idx);
     }
   }
+};
 </script>
 
 <template>
-    <page-container flex-content fluid>
-        <div slot="header" class="header">
-            <h3>Создание курса</h3>
-            <el-button
-                    type="success"
-                    size="mini"
-                    :loading="loading"
-                    @click="saveCourse">Сохранить</el-button>
+  <page-container 
+    flex-content 
+    fluid
+  >
+    <div 
+      slot="header" 
+      class="header"
+    >
+      <h3>Создание курса</h3>
+      <el-button
+        :loading="loading"
+        type="success"
+        size="mini"
+        @click="saveCourse"
+      >
+        Сохранить
+      </el-button>
+    </div>
+    <div class="body">
+      <div class="steps">
+        <transition-group name="list">
+          <step
+            v-for="(step, idx) in steps"
+            :key="step.index"
+            :content="step.content"
+            :title="step.title"
+            :number="idx"
+            :active="idx === selectedStepIdx"
+            @click="handleStepClick"
+            @remove="handleRemove"
+          />
+        </transition-group>
+        <el-tooltip 
+          content="Добавить шаг" 
+          placement="top"
+        >
+          <div 
+            class="add-step step" 
+            @click="addStep"
+          >
+            <i class="el-icon-plus" />
+          </div>
+        </el-tooltip>
+      </div>
+      <div 
+        v-if="selectedStepIdx !== 0" 
+        class="step-content"
+      >
+        <div class="step-title">
+          <div>
+            <span>Название:</span>
+          </div>
+          <el-input 
+            v-model="steps[selectedStepIdx].title" 
+            size="mini"
+          />
         </div>
-        <div class="body">
-            <div class="steps">
-                <transition-group name="list">
-                    <step
-                        v-for="(step, idx) in steps"
-                        :content="step.content"
-                        :title="step.title"
-                        :key="step.index"
-                        :number="idx"
-                        :active="idx === selectedStepIdx"
-                        @click="handleStepClick"
-                        @remove="handleRemove"
-                    />
-                </transition-group>
-                <el-tooltip content="Добавить шаг" placement="top">
-                    <div class="add-step step" @click="addStep">
-                        <i class="el-icon-plus"></i>
-                    </div>
-                </el-tooltip>
-            </div>
-            <div class="step-content" v-if="selectedStepIdx !== 0">
-                <div class="step-title">
-                    <div>
-                        <span>Название:</span>
-                    </div>
-                    <el-input v-model="steps[selectedStepIdx].title" size="mini"/>
-                </div>
-                <div class="step-type">
-                    <el-radio-group v-model="type">
-                        <el-radio label="article">Статья</el-radio>
-                        <el-radio label="test">Тест</el-radio>
-                    </el-radio-group>
-                </div>
-                <div class="editor-wrapper" v-if="type === 'article'">
-                    <VueEditor v-model="steps[selectedStepIdx].content"/>
-                </div>
-                <div class="testing-wrapper" v-if="type === 'test'">
-                    <test-wrapper/>
-                </div>
-            </div>
-            <div class="course-settings" v-else>
-                <create-course-form @change="handleCourseFormChange"/>
-            </div>
+        <div class="step-type">
+          <el-radio-group v-model="type">
+            <el-radio label="article">Статья</el-radio>
+            <el-radio label="test">Тест</el-radio>
+          </el-radio-group>
         </div>
-    </page-container>
+        <div 
+          v-if="type === 'article'" 
+          class="editor-wrapper"
+        >
+          <VueEditor v-model="steps[selectedStepIdx].content" />
+        </div>
+        <div 
+          v-if="type === 'test'" 
+          class="testing-wrapper"
+        >
+          <test-wrapper />
+        </div>
+      </div>
+      <div 
+        v-else 
+        class="course-settings"
+      >
+        <create-course-form @change="handleCourseFormChange" />
+      </div>
+    </div>
+  </page-container>
 </template>
 
 <style lang="less" scoped>

@@ -1,15 +1,15 @@
 <script>
-  export default {
-    name: "MenuItemLogo"
-  }
+export default {
+  name: 'MenuItemLogo'
+};
 </script>
 
 <template>
-    <router-link to="/">
-        <div class="menu-item">
-            <span class="name">Platform<sup class="beta">&nbsp;beta</sup></span>
-        </div>
-    </router-link>
+  <router-link to="/">
+    <div class="menu-item">
+      <span class="name">Platform<sup class="beta">&nbsp;beta</sup></span>
+    </div>
+  </router-link>
 </template>
 
 <style scoped>

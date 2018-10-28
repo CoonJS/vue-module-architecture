@@ -1,14 +1,14 @@
 <script>
-  export default {
-    name: "AccessDenied"
-  }
+export default {
+  name: 'AccessDenied'
+};
 </script>
 
 <template>
-    <div class="error">
-        <div class="title">У вас нет прав для просмотра этой страницы</div>
-        <div class="subtitle">Обратитесь к администратору проекта для выдачи прав</div>
-    </div>
+  <div class="error">
+    <div class="title">У вас нет прав для просмотра этой страницы</div>
+    <div class="subtitle">Обратитесь к администратору проекта для выдачи прав</div>
+  </div>
 </template>
 
 <style scoped>

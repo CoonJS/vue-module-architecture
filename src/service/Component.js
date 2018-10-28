@@ -15,7 +15,7 @@ export default class Component {
 
   register(Component, type = 'common') {
     if (Component.name === undefined) {
-      throw `Missing prop name in component`;
+      throw 'Missing prop name in component';
     }
 
     Vue.component(Component.name, Component);

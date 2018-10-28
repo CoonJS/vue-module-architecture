@@ -1,32 +1,40 @@
 <script>
-  export default {
-    name: "AvatarUploader",
-    data() {
-      return {
-        imageUrl: ''
-      };
-    },
-    methods: {
-      handleAvatarSuccess(response, file) {
-        this.imageUrl = URL.createObjectURL(file.raw);
+export default {
+  name: 'AvatarUploader',
+  data() {
+    return {
+      imageUrl: ''
+    };
+  },
+  methods: {
+    handleAvatarSuccess(response, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
 
-        this.$emit('upload', response);
-      }
+      this.$emit('upload', response);
     }
   }
+};
 </script>
 
 <template>
-    <el-upload
-            drag
-            class="avatar-uploader"
-            action="/api/files"
-            :show-file-list="false"
-            :multiple="false"
-            :on-success="handleAvatarSuccess">
-        <img v-if="imageUrl" :src="imageUrl" class="avatar">
-        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-    </el-upload>
+  <el-upload
+    :show-file-list="false"
+    :multiple="false"
+    :on-success="handleAvatarSuccess"
+    drag
+    class="avatar-uploader"
+    action="/api/files"
+  >
+    <img 
+      v-if="imageUrl" 
+      :src="imageUrl" 
+      class="avatar"
+    >
+    <i 
+      v-else 
+      class="el-icon-plus avatar-uploader-icon"
+    />
+  </el-upload>
 </template>
 
 <style lang="less" scoped>

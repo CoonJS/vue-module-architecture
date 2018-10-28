@@ -1,20 +1,26 @@
 <script>
-  export default {
-    name: "NoData"
-  }
+export default {
+  name: 'NoData'
+};
 </script>
 
 <template>
-    <div class="no-data-hint">
-        <div>
-            <div class="hint">Нет данных</div>
-            <div class="placeholders">
-                <div class="placeholder"></div>
-                <div class="placeholder" style="width:75%"></div>
-                <div class="placeholder" style="width:50%"></div>
-            </div>
-        </div>
+  <div class="no-data-hint">
+    <div>
+      <div class="hint">Нет данных</div>
+      <div class="placeholders">
+        <div class="placeholder" />
+        <div 
+          class="placeholder" 
+          style="width:75%"
+        />
+        <div 
+          class="placeholder" 
+          style="width:50%"
+        />
+      </div>
     </div>
+  </div>
 </template>
 
 <style scoped>

@@ -49,7 +49,7 @@ export default class Api {
       headers: {
         'X-Requested-With': 'XMLHttpRequest'
       }
-    }).get(`/api/users/me`);
+    }).get('/api/users/me');
 
     this.event.emit('login');
   }
@@ -176,7 +176,7 @@ export default class Api {
   configureAxios() {
     this.axios.interceptors.response.use(
       (response) => {
-        return response
+        return response;
       },
       (error) => {
         const errorStatus = error.response.status;

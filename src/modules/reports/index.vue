@@ -1,36 +1,36 @@
 <script>
-  import ReportsPage from './pages/Reports.vue';
+import ReportsPage from './pages/Reports.vue';
 
-  export default {
-    components: {
-      ReportsPage
-    },
-    beforeCreate() {
-      /** @type {Api}*/
-      this.api = this.$locator.Api;
-    },
-    mounted() {
-      if (!this.access.canViewReports) {
-        this.redirectToProfile();
+export default {
+  components: {
+    ReportsPage
+  },
+  data () {
+    return {
+      access: {
+        canViewReports: this.api.hasAccess('VIEW_REPORTS')
       }
-    },
-    data () {
-      return {
-        access: {
-          canViewReports: this.api.hasAccess('VIEW_REPORTS')
-        }
-      }
-    },
-    methods: {
-      redirectToProfile() {
-        this.$router.push('/profile');
-      }
+    };
+  },
+  beforeCreate() {
+    /** @type {Api}*/
+    this.api = this.$locator.Api;
+  },
+  mounted() {
+    if (!this.access.canViewReports) {
+      this.redirectToProfile();
     }
-  };
+  },
+  methods: {
+    redirectToProfile() {
+      this.$router.push('/profile');
+    }
+  }
+};
 
 </script>
 
 <template>
-    <reports-page v-if="access.canViewReports"/>
-    <access-denied v-else/>
+  <reports-page v-if="access.canViewReports" />
+  <access-denied v-else />
 </template>

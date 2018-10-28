@@ -1,59 +1,62 @@
 <script>
-  export default {
-    name: "PageContainer",
-    props: {
-      flexContent: {
-        type: Boolean,
-        default() {
-          return false;
-        }
-      },
-      flexColumn: {
-        type: Boolean,
-        default() {
-          return false;
-        }
-      },
-      fluid: {
-        type: Boolean,
-        default() {
-          return false;
-        }
-      },
-      center: {
-        type: Boolean,
-        default() {
-          return false;
-        }
-      },
-      width: {
-        type: String,
-        default() {
-          return '100%';
-        }
+export default {
+  name: 'PageContainer',
+  props: {
+    flexContent: {
+      type: Boolean,
+      default() {
+        return false;
       }
     },
-    data() {
-      return {
-        hasHeader: this.$slots.header !== undefined
+    flexColumn: {
+      type: Boolean,
+      default() {
+        return false;
+      }
+    },
+    fluid: {
+      type: Boolean,
+      default() {
+        return false;
+      }
+    },
+    center: {
+      type: Boolean,
+      default() {
+        return false;
+      }
+    },
+    width: {
+      type: String,
+      default() {
+        return '100%';
       }
     }
+  },
+  data() {
+    return {
+      hasHeader: this.$slots.header !== undefined
+    };
   }
+};
 </script>
 
 <template>
-    <div class="page-container" >
-        <div class="page-header" v-if="hasHeader">
-            <slot name="header"></slot>
-        </div>
-        <div
-            class="page-content"
-            :style="{width}"
-            :class="{ 'offset': hasHeader, 'flex': flexContent, 'fluid': fluid, 'center': center, 'flex-column': flexColumn }"
-        >
-            <slot></slot>
-        </div>
+  <div class="page-container">
+    <div 
+      v-if="hasHeader" 
+      class="page-header"
+    >
+      <slot name="header" />
     </div>
+    <div
+      :style="{width}"
+      :class="{ 'offset': hasHeader, 'flex': flexContent, 'fluid': fluid, 'center': center, 'flex-column': flexColumn }"
+      class="page-content"
+    >
+      <slot />
+    </div>
+  </div>
 </template>
 
 <style scoped lang="less">

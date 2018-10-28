@@ -1,14 +1,17 @@
-<template>
-    <div class="menu-item" @click="$emit('click')">
-        <slot></slot>
-    </div>
-</template>
-
 <script>
-  export default {
-    name: "MenuItemAction"
-  }
+export default {
+  name: 'MenuItemAction'
+};
 </script>
+
+<template>
+  <div
+    class="menu-item"
+    @click="$emit('click')"
+  >
+    <slot />
+  </div>
+</template>
 
 <style scoped>
     .menu-item {

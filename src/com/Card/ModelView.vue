@@ -1,48 +1,66 @@
 <script>
-  export default {
-    name: "UiModelViewCard",
-    props: {
-      model: {
-        type: Object,
-        default() {
-          return {};
-        }
-      },
-      groups: {
-        type: Array,
-        default() {
-          return [];
-        }
-      },
-      titleWidth: {
-        type: String,
-        default() {
-          return '120px'
-        }
+export default {
+  name: 'UiModelViewCard',
+  props: {
+    model: {
+      type: Object,
+      default() {
+        return {};
       }
     },
-    beforeCreate() {
-      /** @type {ObjectUtils}*/
-      this.objectUtils = this.$locator.ObjectUtils;
+    groups: {
+      type: Array,
+      default() {
+        return [];
+      }
     },
-    methods: {
-      getValueByPath(obj, path) {
-        return this.objectUtils.deepFindByPath(obj, path);
+    titleWidth: {
+      type: String,
+      default() {
+        return '120px';
       }
     }
-  };
+  },
+  beforeCreate() {
+    /** @type {ObjectUtils}*/
+    this.objectUtils = this.$locator.ObjectUtils;
+  },
+  methods: {
+    getValueByPath(obj, path) {
+      return this.objectUtils.deepFindByPath(obj, path);
+    }
+  }
+};
 </script>
 
 <template>
-    <div>
-        <div v-for="group in groups" :key="group.id" class="group">
-            <h4 v-if="group.title" class="group-title">{{group.title}}</h4>
-            <div v-for="field in group.fields" :key="field.key" class="field">
-                <div class="title" :style="{ 'width': titleWidth }">{{field.title}}</div>
-                <div class="value">{{getValueByPath(model, field.key)}}</div>
-            </div>
+  <div>
+    <div 
+      v-for="group in groups" 
+      :key="group.id" 
+      class="group"
+    >
+      <h4 
+        v-if="group.title" 
+        class="group-title"
+      >
+        {{ group.title }}
+      </h4>
+      <div 
+        v-for="field in group.fields" 
+        :key="field.key" 
+        class="field"
+      >
+        <div 
+          :style="{ 'width': titleWidth }" 
+          class="title"
+        >
+          {{ field.title }}
         </div>
+        <div class="value">{{ getValueByPath(model, field.key) }}</div>
+      </div>
     </div>
+  </div>
 </template>
 
 <style scoped>

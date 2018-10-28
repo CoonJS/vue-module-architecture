@@ -1,39 +1,45 @@
 <script>
-  export default {
-    name: 'Sidebar',
-    props: {
-      value: {
-        type: Boolean,
-        default() {
-          return false;
-        }
-      },
-      position: {
-        type: String,
-        default() {
-          return 'right';
-        }
+export default {
+  name: 'Sidebar',
+  props: {
+    value: {
+      type: Boolean,
+      default() {
+        return false;
+      }
+    },
+    position: {
+      type: String,
+      default() {
+        return 'right';
       }
     }
   }
+};
 </script>
 
 <template>
-    <transition name="slide-fade">
-        <div class="sidebar" v-show="value">
-            <div class="sidebar-container">
-                <div v-if="$slots.header" class="header">
-                    <slot name="header"></slot>
-                </div>
-                <div class="content">
-                    <slot></slot>
-                </div>
-                <div class="footer">
-                    <slot name="footer"></slot>
-                </div>
-            </div>
+  <transition name="slide-fade">
+    <div 
+      v-show="value" 
+      class="sidebar"
+    >
+      <div class="sidebar-container">
+        <div 
+          v-if="$slots.header" 
+          class="header"
+        >
+          <slot name="header" />
         </div>
-    </transition>
+        <div class="content">
+          <slot />
+        </div>
+        <div class="footer">
+          <slot name="footer" />
+        </div>
+      </div>
+    </div>
+  </transition>
 </template>
 
 <style scoped>

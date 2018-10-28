@@ -1,79 +1,87 @@
 <script>
-  const imagePlaceholder = require('../../img/placeholder.png');
+const imagePlaceholder = require('../../img/placeholder.png');
 
-  export default {
-    name: "ModuleCard",
-    props: {
-      title: {
-        type: String,
-        default() {
-          return ''
-        }
-      },
-      img: {
-        type: String,
-        default() {
-          return imagePlaceholder;
-        }
-      },
-      status: {
-        type: String
-      },
-      active: {
-        type: Boolean,
-        default() {
-          return false;
-        }
+export default {
+  name: 'ModuleCard',
+  props: {
+    title: {
+      type: String,
+      default() {
+        return '';
       }
     },
-    computed: {
-      hasStatus() {
-        return this.status !== undefined;
+    img: {
+      type: String,
+      default() {
+        return imagePlaceholder;
+      }
+    },
+    status: {
+      type: String,
+      default () {
+        return null;
+      }
+    },
+    active: {
+      type: Boolean,
+      default() {
+        return false;
       }
     }
-
+  },
+  computed: {
+    hasStatus() {
+      return this.status !== undefined;
+    }
   }
+
+};
 </script>
 
 <template>
-    <div class="module-card">
-        <div class="card-body">
-            <img :src="img" :alt="title" width="150px" height="150px">
-        </div>
-        <div class="status">
-            <div>
-                <h5>{{title}}</h5>
-            </div>
-            <div>
-                <el-button
-                    v-if="status === 'FAILED'"
-                    circle
-                    type="danger"
-                    icon="el-icon-warning"
-                    :disabled="!active"
-                />
-                <el-button
-                    v-if="status === 'SYNCING'"
-                    circle
-                    type="primary"
-                    icon="el-icon-loading"
-                    :disabled="!active"
-                />
-                <el-button
-                    v-if="status === 'SYNCED'"
-                    circle
-                    type="success"
-                    icon="el-icon-success"
-                    :disabled="!active"
-                />
-                <el-button
-                    v-if="!hasStatus"
-                    circle
-                    icon="el-icon-zoom-in"
-                />
-            </div>
-        </div>
+  <div class="module-card">
+    <div class="card-body">
+      <img 
+        :src="img" 
+        :alt="title" 
+        width="150px" 
+        height="150px"
+      >
     </div>
+    <div class="status">
+      <div>
+        <h5>{{ title }}</h5>
+      </div>
+      <div>
+        <el-button
+          v-if="status === 'FAILED'"
+          :disabled="!active"
+          circle
+          type="danger"
+          icon="el-icon-warning"
+        />
+        <el-button
+          v-if="status === 'SYNCING'"
+          :disabled="!active"
+          circle
+          type="primary"
+          icon="el-icon-loading"
+        />
+        <el-button
+          v-if="status === 'SYNCED'"
+          :disabled="!active"
+          circle
+          type="success"
+          icon="el-icon-success"
+        />
+        <el-button
+          v-if="!hasStatus"
+          circle
+          icon="el-icon-zoom-in"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>

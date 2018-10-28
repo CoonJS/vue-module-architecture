@@ -1,24 +1,24 @@
-<template>
-    <router-link :to="link">
-        <div class="menu-item">
-            <slot></slot>
-        </div>
-    </router-link>
-</template>
-
 <script>
-  export default {
-    name: "MenuItemLink",
-    props: {
-      link: {
-        type: String,
-        default() {
-          return '/';
-        }
+export default {
+  name: 'MenuItemLink',
+  props: {
+    link: {
+      type: String,
+      default() {
+        return '/';
       }
     }
   }
+};
 </script>
+
+<template>
+  <router-link :to="link">
+    <div class="menu-item">
+      <slot />
+    </div>
+  </router-link>
+</template>
 
 <style scoped>
     .menu-item {

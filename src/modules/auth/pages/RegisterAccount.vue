@@ -1,170 +1,173 @@
 <script>
-  import bgImage from '../src/img/bg.jpg';
+import bgImage from '../src/img/bg.jpg';
 
-  export default {
-    mounted() {
-      this.focusInput();
+export default {
+  data () {
+    return {
+      bgImage,
+      name: '',
+      token: this.$route.query.token,
+      adminFirstName: '',
+      adminLastName: '',
+      password: '',
+      passwordConfirm: '',
+      isLoading: false
+    };
+  },
+  computed: {
+    isValidFields() {
+      const hasToken = this.token !== null;
+      const isValidName = this.name.trim() !== '';
+      const isValidAdminFirstName = this.adminFirstName.trim() !== '';
+      const isValidAdminLastName = this.adminLastName.trim() !== '';
+      const isValidPassword = this.password.trim() !== '';
+      const isValidPasswordConfirm = this.passwordConfirm.trim() !== '';
+
+      return hasToken && isValidName && isValidAdminFirstName && isValidAdminLastName && isValidPassword && isValidPasswordConfirm;
     },
-    data () {
-      return {
-        bgImage,
-        name: '',
-        token: this.$route.query.token,
-        adminFirstName: '',
-        adminLastName: '',
-        password: '',
-        passwordConfirm: '',
-        isLoading: false
+    isValidPasswordLength() {
+      return this.password.length >=8;
+    }
+  },
+  mounted() {
+    this.focusInput();
+  },
+  methods: {
+    async register() {
+      const { name, token, password, adminFirstName, adminLastName } = this;
+
+      if (!this.isValidFields) {
+        this.showRegisterError();
+        return;
       }
+
+      if (!this.isValidPasswordLength) {
+        this.showPasswordLengthError();
+        return;
+      }
+
+      if (this.password !== this.passwordConfirm) {
+        this.showPasswordError();
+        return;
+      }
+
+      this.isLoading = true;
+
+      try {
+        await this.$locator.Api.registerAccount({
+          name,
+          token,
+          password,
+          adminFirstName,
+          adminLastName
+        });
+      } catch(e) {
+        throw e;
+      }
+
+      this.redirectToRegisterPage();
+
+      this.isLoading = false;
     },
-    computed: {
-      isValidFields() {
-        const hasToken = this.token !== null;
-        const isValidName = this.name.trim() !== '';
-        const isValidAdminFirstName = this.adminFirstName.trim() !== '';
-        const isValidAdminLastName = this.adminLastName.trim() !== '';
-        const isValidPassword = this.password.trim() !== '';
-        const isValidPasswordConfirm = this.passwordConfirm.trim() !== '';
-
-        return hasToken && isValidName && isValidAdminFirstName && isValidAdminLastName && isValidPassword && isValidPasswordConfirm;
-      },
-      isValidPasswordLength() {
-        return this.password.length >=8;
-      }
+    redirectToRegisterPage() {
+      this.$router.push('/');
     },
-    methods: {
-      async register() {
-        const { name, token, password, adminFirstName, adminLastName } = this;
-
-        if (!this.isValidFields) {
-          this.showRegisterError();
-          return;
-        }
-
-        if (!this.isValidPasswordLength) {
-          this.showPasswordLengthError();
-          return;
-        }
-
-        if (this.password !== this.passwordConfirm) {
-          this.showPasswordError();
-          return;
-        }
-
-        this.isLoading = true;
-
-        try {
-          await this.$locator.Api.registerAccount({
-            name,
-            token,
-            password,
-            adminFirstName,
-            adminLastName
-          });
-        } catch(e) {
-          throw e;
-        }
-
-        this.redirectToRegisterPage();
-
-        this.isLoading = false;
-      },
-      redirectToRegisterPage() {
-        this.$router.push('/');
-      },
-      showRegisterError() {
-        this.$message({
-          showClose: true,
-          message: 'Заполните все поля',
-          type: 'error',
-          duration: 2000
-        });
-      },
-      showPasswordLengthError() {
-        this.$message({
-          showClose: true,
-          message: 'Длина пароля должна быть более 8 символов',
-          type: 'error',
-          duration: 2000
-        });
-      },
-      showPasswordError() {
-        this.$message({
-          showClose: true,
-          message: 'Пароли должны совпадать',
-          type: 'error',
-          duration: 2000
-        });
-      },
-      focusInput() {
-        this.$nextTick(() => {
-          this.$refs.input.$el.querySelector('input').focus();
-        });
-      }
+    showRegisterError() {
+      this.$message({
+        showClose: true,
+        message: 'Заполните все поля',
+        type: 'error',
+        duration: 2000
+      });
+    },
+    showPasswordLengthError() {
+      this.$message({
+        showClose: true,
+        message: 'Длина пароля должна быть более 8 символов',
+        type: 'error',
+        duration: 2000
+      });
+    },
+    showPasswordError() {
+      this.$message({
+        showClose: true,
+        message: 'Пароли должны совпадать',
+        type: 'error',
+        duration: 2000
+      });
+    },
+    focusInput() {
+      this.$nextTick(() => {
+        this.$refs.input.$el.querySelector('input').focus();
+      });
     }
   }
+};
 </script>
 
 <template>
-    <div class="form-wrapper" :style="{backgroundImage: `url(${bgImage})`}">
-        <div class="form">
-            <div class="title">
-                <h1>Регистрация</h1>
-            </div>
+  <div 
+    :style="{backgroundImage: `url(${bgImage})`}" 
+    class="form-wrapper"
+  >
+    <div class="form">
+      <div class="title">
+        <h1>Регистрация</h1>
+      </div>
 
-            <div class="field">
-                <el-input
-                    ref="input"
-                    v-model="name"
-                    type="text"
-                    placeholder="Название кампании"
-                    @keydown.native.enter="register"
-                />
-            </div>
-            <div class="field">
-                <el-input
-                    v-model="adminFirstName"
-                    type="text"
-                    placeholder="Имя"
-                    @keydown.native.enter="register"
-                />
-            </div>
-            <div class="field">
-                <el-input
-                    v-model="adminLastName"
-                    type="text"
-                    placeholder="Фамилия"
-                    @keydown.native.enter="register"
-                />
-            </div>
-            <div class="field">
-                <el-input
-                    v-model="password"
-                    type="password"
-                    placeholder="Пароль"
-                    @keydown.native.enter="register"
-                />
-            </div>
-            <div class="field">
-                <el-input
-                    v-model="passwordConfirm"
-                    type="password"
-                    placeholder="Подтверждение пароля"
-                    @keydown.native.enter="register"
-                />
-            </div>
-            <div class="actions">
-                <el-button
-                    type="success"
-                    class="register-button"
-                    :loading="isLoading"
-                    @click="register"
-                >
-                    Зарегистрироваться
-                </el-button>
-            </div>
-        </div>
+      <div class="field">
+        <el-input
+          ref="input"
+          v-model="name"
+          type="text"
+          placeholder="Название кампании"
+          @keydown.native.enter="register"
+        />
+      </div>
+      <div class="field">
+        <el-input
+          v-model="adminFirstName"
+          type="text"
+          placeholder="Имя"
+          @keydown.native.enter="register"
+        />
+      </div>
+      <div class="field">
+        <el-input
+          v-model="adminLastName"
+          type="text"
+          placeholder="Фамилия"
+          @keydown.native.enter="register"
+        />
+      </div>
+      <div class="field">
+        <el-input
+          v-model="password"
+          type="password"
+          placeholder="Пароль"
+          @keydown.native.enter="register"
+        />
+      </div>
+      <div class="field">
+        <el-input
+          v-model="passwordConfirm"
+          type="password"
+          placeholder="Подтверждение пароля"
+          @keydown.native.enter="register"
+        />
+      </div>
+      <div class="actions">
+        <el-button
+          :loading="isLoading"
+          type="success"
+          class="register-button"
+          @click="register"
+        >
+          Зарегистрироваться
+        </el-button>
+      </div>
     </div>
+  </div>
 </template>
 
 <style scoped>

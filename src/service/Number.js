@@ -5,11 +5,11 @@ export default class NumberUtils {
 
   format(number, digits = 2) {
     const si = [
-      { value: 1, symbol: "руб." },
-      { value: 1E3, symbol: "тыс." },
-      { value: 1E6, symbol: "млн." },
-      { value: 1E9, symbol: "млрд." },
-      { value: 1E12, symbol: "трлн." }
+      { value: 1, symbol: 'руб.' },
+      { value: 1E3, symbol: 'тыс.' },
+      { value: 1E6, symbol: 'млн.' },
+      { value: 1E9, symbol: 'млрд.' },
+      { value: 1E12, symbol: 'трлн.' }
     ];
     const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
     let i;
@@ -18,6 +18,6 @@ export default class NumberUtils {
         break;
       }
     }
-    return (number / si[i].value).toFixed(digits).replace(rx, "$1") + ' ' + si[i].symbol;
+    return (number / si[i].value).toFixed(digits).replace(rx, '$1') + ' ' + si[i].symbol;
   }
 }

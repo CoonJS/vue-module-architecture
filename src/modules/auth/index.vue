@@ -1,115 +1,116 @@
 <script>
-  import bgImage from './src/img/bg.jpg';
+import bgImage from './src/img/bg.jpg';
 
-  import RemindPasswordForm from './src/com/Form/RemindPassword.vue'
+import RemindPasswordForm from './src/com/Form/RemindPassword.vue';
 
-  export default {
-    components: {
-      RemindPasswordForm
-    },
-    beforeCreate() {
-      /** @type {Api}*/
-      this.api = this.$locator.Api;
-    },
-    mounted() {
-      this.focusLoginInput();
-    },
-    data () {
-      return {
-        bgImage,
-        userName: '',
-        password: '',
-        isLoading: false,
-        isShowRemindPasswordForm: false
+export default {
+  components: {
+    RemindPasswordForm
+  },
+  data () {
+    return {
+      bgImage,
+      userName: '',
+      password: '',
+      isLoading: false,
+      isShowRemindPasswordForm: false
+    };
+  },
+  beforeCreate() {
+    /** @type {Api}*/
+    this.api = this.$locator.Api;
+  },
+  mounted() {
+    this.focusLoginInput();
+  },
+  methods: {
+    async login() {
+      this.isLoading = true;
+      try {
+        await this.api.auth(this.userName, this.password);
+      } catch(e) {
+        this.showLoginError();
+        this.isLoading = false;
       }
     },
-    methods: {
-      async login() {
-        this.isLoading = true;
-        try {
-          await this.api.auth(this.userName, this.password);
-        } catch(e) {
-          this.showLoginError();
-          this.isLoading = false;
-        }
-      },
-      showLoginError() {
-        this.$message({
-          message: 'Неверный логин или пароль',
-          type: 'error',
-          duration: 2000
-        });
-      },
-      focusLoginInput() {
-        this.$nextTick(() => {
-          this.$refs.loginInput.$el.querySelector('input').focus();
-        });
-      },
-      showRemindPasswordForm() {
-        this.isShowRemindPasswordForm = true;
-      },
-      closeRemindPasswordForm() {
-        this.isShowRemindPasswordForm = false;
-      }
+    showLoginError() {
+      this.$message({
+        message: 'Неверный логин или пароль',
+        type: 'error',
+        duration: 2000
+      });
+    },
+    focusLoginInput() {
+      this.$nextTick(() => {
+        this.$refs.loginInput.$el.querySelector('input').focus();
+      });
+    },
+    showRemindPasswordForm() {
+      this.isShowRemindPasswordForm = true;
+    },
+    closeRemindPasswordForm() {
+      this.isShowRemindPasswordForm = false;
     }
   }
+};
 </script>
 
 <template>
-    <div class="form-wrapper">
-        <div class="logo">Platform<sup class="beta">BETA</sup></div>
-        <div class="auth-form"
-             v-loading.body="isLoading"
-             element-loading-background="#04171f69"
+  <div class="form-wrapper">
+    <div class="logo">Platform<sup class="beta">BETA</sup></div>
+    <div 
+      v-loading.body="isLoading"
+      class="auth-form"
+      element-loading-background="#04171f69"
+    >
+      <div class="title">
+        <span>Вход</span>
+      </div>
+      <div class="field">
+        <el-input
+          ref="loginInput"
+          v-model="userName"
+          :disabled="isLoading"
+          type="text"
+          placeholder="Логин"
+          @keydown.native.enter="login"
+        />
+      </div>
+      <div class="field">
+        <el-input
+          v-model="password"
+          :disabled="isLoading"
+          type="password"
+          placeholder="Пароль"
+          @keydown.native.enter="login"
+        />
+      </div>
+      <div class="actions">
+        <el-button
+          type="info"
+          @click="login"
         >
-            <div class="title">
-                <span>Вход</span>
-            </div>
-            <div class="field">
-                <el-input
-                    ref="loginInput"
-                    type="text"
-                    placeholder="Логин"
-                    :disabled="isLoading"
-                    v-model="userName"
-                    @keydown.native.enter="login"
-                />
-            </div>
-            <div class="field">
-                <el-input
-                    type="password"
-                    placeholder="Пароль"
-                    :disabled="isLoading"
-                    v-model="password"
-                    @keydown.native.enter="login"
-                />
-            </div>
-            <div class="actions">
-                <el-button
-                    type="info"
-                    @click="login"
-                >
-                    Войти
-                </el-button>
-                <el-button
-                    style="color:#fff"
-                    type="text"
-                    @click="showRemindPasswordForm"
-                >
-                    Забыли пароль?
-                </el-button>
-            </div>
-        </div>
-        <div>
-            <el-dialog
-                title="Восстановление пароля"
-                :visible.sync="isShowRemindPasswordForm"
-                width="560px"
-            >
-                <remind-password-form @send="closeRemindPasswordForm"/>
-            </el-dialog>
-        </div>
+          Войти
+        </el-button>
+        <el-button
+          style="color:#fff"
+          type="text"
+          @click="showRemindPasswordForm"
+        >
+          Забыли пароль?
+        </el-button>
+      </div>
     </div>
+    <div>
+      <el-dialog
+        :visible.sync="isShowRemindPasswordForm"
+        title="Восстановление пароля"
+        width="560px"
+      >
+        <remind-password-form @send="closeRemindPasswordForm" />
+      </el-dialog>
+    </div>
+  </div>
 </template>
 
 <style scoped>

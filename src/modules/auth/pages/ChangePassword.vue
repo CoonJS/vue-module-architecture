@@ -1,103 +1,106 @@
 <script>
-  import bgImage from '../src/img/bg.jpg';
+import bgImage from '../src/img/bg.jpg';
 
-  export default {
-    created() {
-      /** @type {Api}*/
-      this.api = this.$locator.Api;
-    },
-    mounted() {
-      this.focusInput();
-    },
-    data () {
-      return {
-        bgImage,
-        loading: false,
-        newPassword: '',
-        newPasswordConfirm: '',
-        token: this.$route.query.token,
+export default {
+  data () {
+    return {
+      bgImage,
+      loading: false,
+      newPassword: '',
+      newPasswordConfirm: '',
+      token: this.$route.query.token,
+    };
+  },
+  computed: {
+    canChangePasswords() {
+      return (
+        this.newPassword === this.newPasswordConfirm
+      ) && (
+        this.newPassword.length >=8
+      );
+    }
+  },
+  created() {
+    /** @type {Api}*/
+    this.api = this.$locator.Api;
+  },
+  mounted() {
+    this.focusInput();
+  },
+  methods: {
+    async changePassword() {
+      if (!this.canChangePasswords) {
+        this.showErrorMessage();
+        return;
       }
-    },
-    computed: {
-      canChangePasswords() {
-        return (
-          this.newPassword === this.newPasswordConfirm
-        ) && (
-          this.newPassword.length >=8
-        );
+
+      this.loading = true;
+
+      try {
+        await this.api.changePassword(this.token, this.newPassword);
+      } catch(e) {
+        throw e;
       }
+
+      this.loading = false;
+
+      this.redirectToAuth();
+
     },
-    methods: {
-      async changePassword() {
-        if (!this.canChangePasswords) {
-          this.showErrorMessage();
-          return;
-        }
-
-        this.loading = true;
-
-        try {
-          await this.api.changePassword(this.token, this.newPassword);
-        } catch(e) {
-          throw e;
-        }
-
-        this.loading = false;
-
-        this.redirectToAuth();
-
-      },
-      redirectToAuth() {
-        this.$router.push('/');
-      },
-      showErrorMessage() {
-        this.$message({
-          message: 'Пароли не совпадают',
-          type: 'error'
-        });
-      },
-      focusInput() {
-        this.$nextTick(() => {
-          this.$refs.input.$el.querySelector('input').focus();
-        });
-      }
+    redirectToAuth() {
+      this.$router.push('/');
+    },
+    showErrorMessage() {
+      this.$message({
+        message: 'Пароли не совпадают',
+        type: 'error'
+      });
+    },
+    focusInput() {
+      this.$nextTick(() => {
+        this.$refs.input.$el.querySelector('input').focus();
+      });
     }
   }
+};
 </script>
 
 <template>
-    <div class="form-wrapper" :style="{backgroundImage: `url(${bgImage})`}">
-        <div class="form">
-            <h3>Смена пароля</h3>
-            <div class="form-fields">
+  <div 
+    :style="{backgroundImage: `url(${bgImage})`}" 
+    class="form-wrapper"
+  >
+    <div class="form">
+      <h3>Смена пароля</h3>
+      <div class="form-fields">
 
-                <div class="hint">Введите новый пароль</div>
-                <el-input
-                    ref="input"
-                    type="password"
-                    v-model="newPassword"
-                    :disabled="loading"
-                    @keydown.native.enter="changePassword"
-                />
+        <div class="hint">Введите новый пароль</div>
+        <el-input
+          ref="input"
+          v-model="newPassword"
+          :disabled="loading"
+          type="password"
+          @keydown.native.enter="changePassword"
+        />
 
-                <div class="hint">Подтвердите новый пароль</div>
-                <el-input
-                    type="password"
-                    v-model="newPasswordConfirm"
-                    :disabled="loading"
-                    @keydown.native.enter="changePassword"
-                />
+        <div class="hint">Подтвердите новый пароль</div>
+        <el-input
+          v-model="newPasswordConfirm"
+          :disabled="loading"
+          type="password"
+          @keydown.native.enter="changePassword"
+        />
 
-                <el-button
-                    type="success"
-                    :loading="loading"
-                    @click="changePassword"
-                >
-                    Сменить пароль
-                </el-button>
-            </div>
-        </div>
+        <el-button
+          :loading="loading"
+          type="success"
+          @click="changePassword"
+        >
+          Сменить пароль
+        </el-button>
+      </div>
     </div>
+  </div>
 </template>
 
 <style scoped>

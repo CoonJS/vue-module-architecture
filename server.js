@@ -9,7 +9,7 @@ app.use(express.static('dist'));
 
 app.get('/', (req, res) => {
   const indexFilePath = path.resolve(__dirname, 'dist', 'index.html');
-  res.sendfile(indexFilePath)
+  res.sendfile(indexFilePath);
 });
 
 app.listen(PORT, HOST);

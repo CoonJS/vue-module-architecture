@@ -1,13 +1,13 @@
 <template>
-    <div class="page-layout">
-        <slot></slot>
-    </div>
+  <div class="page-layout">
+    <slot />
+  </div>
 </template>
 
 <script>
-  export default {
-    name: "PageLayout"
-  }
+export default {
+  name: 'PageLayout'
+};
 </script>
 
 <style scoped>
