@@ -38,7 +38,6 @@ export default {
   created() {
     /** @type {Api}*/
     this.api = this.$locator.Api;
-    console.log('asdas');
   },
   mounted() {
     this.showCreateCourseModal();
