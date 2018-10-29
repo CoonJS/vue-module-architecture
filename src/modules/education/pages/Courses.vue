@@ -32,9 +32,29 @@ export default {
       this.courses = courses;
       this.loading = false;
     },
+    async removeCourseById(id) {
+      try {
+        await this.api.delete('deleteCourseUsingDELETE', { id });
+        this.loadCourses();
+      } catch (e) {
+        throw new Error(e);
+      }
+    },
+    editCourseById(id) {
+      this.$router.push(`/courses/edit/${id}`);
+    },
+    showConfirmRemoveMessage(id) {
+      this.$confirm('Вы действительно хотите удалить курс?', 'Подтвердите удаление', {
+        confirmButtonText: 'Да',
+        cancelButtonText: 'Отмена',
+        type: 'error'
+      }).then(() => {
+        this.removeCourseById(id);
+      }).catch(() => {});
+    },
     redirectToCreateCoursePage() {
       this.$router.push('courses/new');
-    },
+    }
   }
 };
 </script>
@@ -104,6 +124,20 @@ export default {
             </div>
             <div class="description">
               <span>{{ course.description }}</span>
+              <div class="actions">
+                <el-tooltip content="Редактировать">
+                  <i
+                    class="el-icon-edit"
+                    @click.stop.prevent="editCourseById(course.id)"
+                  />
+                </el-tooltip>
+                <el-tooltip content="Удалить">
+                  <i
+                    class="el-icon-delete"
+                    @click.stop.prevent="showConfirmRemoveMessage(course.id)"
+                  />
+                </el-tooltip>
+              </div>
             </div>
           </div>
         </router-link>
@@ -169,6 +203,14 @@ export default {
             border: 2px solid #eee;
             padding: 4px;
             background: #fff;
+
+            .actions {
+
+              padding: 8px;
+              position: absolute;
+              top: 0;
+              right: 0;
+            }
         }
 
         &:hover {
@@ -195,6 +237,7 @@ export default {
         }
 
         .description {
+            position: relative;
             width: 100%;
             background: rgba(255,255,255, .4);
             padding: 16px;
@@ -202,6 +245,17 @@ export default {
             color: #948c8c;
             overflow: hidden;
             height: 80px;
+
+            .actions {
+              position: absolute;
+              right: 8px;
+              bottom: 8px;
+
+              i {
+                cursor: pointer;
+                padding: 4px;
+              }
+            }
         }
     }
 </style>

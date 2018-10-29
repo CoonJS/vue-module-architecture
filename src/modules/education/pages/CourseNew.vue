@@ -59,8 +59,15 @@ export default {
       this.closeCreateCourseModal();
     },
     async updateCourse() {
-      console.log(this.data);
-      await {};
+      const { id, title, description, imageFileId} = this.data;
+      this.loading = true;
+      const { data: course } = await this.api.put('updatedCourseUsingPUT', { id }, {
+        title,
+        description,
+        imageFileId
+      });
+      this.loading = false;
+      console.log(course);
     },
     showCreateCourseModal() {
       this.isShowCreateCourseModal = true;
