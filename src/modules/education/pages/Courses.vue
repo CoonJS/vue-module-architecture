@@ -1,12 +1,23 @@
 <script>
 
+import CreateCourseForm from '../src/com/Form/CreateCourse.vue';
+
 export default {
+  components: {
+    CreateCourseForm
+  },
   data() {
     return {
       search: '',
       courses: [],
+      saving: false,
       loading: false,
-      isShowCreateCourseModal: false
+      isShowCreateCourseModal: false,
+      data: {
+        title: null,
+        description: null,
+        imageFileId: null
+      }
     };
   },
   computed: {
@@ -17,6 +28,10 @@ export default {
     },
     hasNoSearchedCourses() {
       return this.search.trim().length !== 0 && this.filteredCourses.length === 0;
+    },
+    isDisabledSaveCourseButton() {
+      const title = this.data.title;
+      return title === null || title.trim() === '';
     }
   },
   beforeCreate() {
@@ -33,6 +48,19 @@ export default {
       this.courses = courses;
       this.loading = false;
     },
+    async saveCourse() {
+      const { title, description, imageFileId } = this.data;
+
+      this.saving = true;
+      const { data: course } = await this.api.post('createdCourseUsingPOST', {}, {
+        title,
+        description,
+        imageFileId
+      });
+      this.saving = false;
+
+      this.editCourseById(course.id);
+    },
     async removeCourseById(id) {
       try {
         await this.api.delete('deleteCourseUsingDELETE', { id });
@@ -44,6 +72,9 @@ export default {
     editCourseById(id) {
       this.$router.push(`/courses/edit/${id}`);
     },
+    handleCourseFormChange(data) {
+      this.data = data;
+    },
     showConfirmRemoveMessage(id) {
       this.$confirm('Вы действительно хотите удалить курс?', 'Подтвердите удаление', {
         confirmButtonText: 'Да',
@@ -53,8 +84,11 @@ export default {
         this.removeCourseById(id);
       }).catch(() => {});
     },
-    redirectToCreateCoursePage() {
-      this.$router.push('courses/new');
+    showCreateCourseModal() {
+      this.isShowCreateCourseModal = true;
+    },
+    closeCreateCourseModal() {
+      this.isShowCreateCourseModal = false;
     }
   }
 };
@@ -70,7 +104,7 @@ export default {
       <el-button
         type="success"
         size="mini"
-        @click="redirectToCreateCoursePage"
+        @click="showCreateCourseModal"
       >
         Создать курс
       </el-button>
@@ -144,6 +178,34 @@ export default {
         </router-link>
       </div>
     </div>
+
+    <el-dialog
+      width="40%"
+      title="Создание курса"
+      :visible.sync="isShowCreateCourseModal"
+    >
+      <create-course-form
+        :data="data"
+        @change="handleCourseFormChange"
+      />
+      <div slot="footer">
+        <el-button
+          size="mini"
+          @click="closeCreateCourseModal"
+        >
+          Отмена
+        </el-button>
+        <el-button
+          type="primary"
+          size="mini"
+          :loading="saving"
+          :disabled="isDisabledSaveCourseButton"
+          @click="saveCourse"
+        >
+          Сохранить
+        </el-button>
+      </div>
+    </el-dialog>
   </page-container>
 </template>
 

@@ -9,11 +9,6 @@ export default async function(locator) {
       component: () => import(/* webpackChunkName: "courses" */'./index.vue')
     },
     {
-      path: '/courses/new',
-      name: 'CourseNew',
-      component: () => import(/* webpackChunkName: "courseNew" */'./pages/CourseNew.vue')
-    },
-    {
       path: '/courses/edit/:id',
       name: 'CourseEdit',
       component: () => import(/* webpackChunkName: "courseEdit" */'./pages/CourseEdit.vue')
