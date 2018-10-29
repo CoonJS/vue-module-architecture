@@ -5,7 +5,8 @@ export default {
     return {
       search: '',
       courses: [],
-      loading: false
+      loading: false,
+      isShowCreateCourseModal: false
     };
   },
   computed: {

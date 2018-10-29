@@ -38,6 +38,7 @@ export default {
   created() {
     /** @type {Api}*/
     this.api = this.$locator.Api;
+    console.log('asdas');
   },
   mounted() {
     this.showCreateCourseModal();
@@ -66,8 +67,14 @@ export default {
         description,
         imageFileId
       });
+
+      this.$message({
+        type: 'success',
+        message: 'Черновик обновлен'
+      });
       this.loading = false;
     },
+
     showCreateCourseModal() {
       this.isShowCreateCourseModal = true;
     },
