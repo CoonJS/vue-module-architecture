@@ -15,33 +15,58 @@ export default {
   },
   data () {
     return {
-      data: {},
+      data: {
+        title: null,
+        description: null,
+        imageFileId: null
+      },
       type: 'article',
       steps: [
         { index: 0, content: null, title: '' }
       ],
       selectedStepIdx: 0,
-      loading: false
+      loading: false,
+      isShowCreateCourseModal: false
     };
+  },
+  computed: {
+    isDisabledSaveCourseButton() {
+      const title = this.data.title;
+      return title === null || title.trim() === '';
+    }
   },
   created() {
     /** @type {Api}*/
     this.api = this.$locator.Api;
+  },
+  mounted() {
+    this.showCreateCourseModal();
   },
   methods: {
     async saveCourse() {
       const { title, description, imageFileId } = this.data;
 
       this.loading = true;
-      await this.api.post('createdCourseUsingPOST', {}, {
+      const { data: course } = await this.api.post('createdCourseUsingPOST', {}, {
         title,
         description,
         imageFileId
       });
       this.loading = false;
 
-      this.$router.push('/courses');
+      this.data = course;
 
+      this.closeCreateCourseModal();
+    },
+    async updateCourse() {
+      console.log(this.data);
+      await {};
+    },
+    showCreateCourseModal() {
+      this.isShowCreateCourseModal = true;
+    },
+    closeCreateCourseModal() {
+      this.isShowCreateCourseModal = false;
     },
     handleCourseFormChange(data) {
       this.data = data;
@@ -78,7 +103,7 @@ export default {
         :loading="loading"
         type="success"
         size="mini"
-        @click="saveCourse"
+        @click="updateCourse"
       >
         Сохранить
       </el-button>
@@ -145,7 +170,35 @@ export default {
         v-else 
         class="course-settings"
       >
-        <create-course-form @change="handleCourseFormChange" />
+        <create-course-form
+          :data="data"
+          @change="handleCourseFormChange"
+        />
+
+        <el-dialog
+          width="40%"
+          title="Создание курса"
+          :show-close="false"
+          :close-on-press-escape="false"
+          :close-on-click-modal="false"
+          :visible.sync="isShowCreateCourseModal"
+        >
+          <create-course-form
+            :data="data"
+            @change="handleCourseFormChange"
+          />
+          <div slot="footer">
+            <el-button
+              type="primary"
+              size="mini"
+              :loading="loading"
+              :disabled="isDisabledSaveCourseButton"
+              @click="saveCourse"
+            >
+              Сохранить
+            </el-button>
+          </div>
+        </el-dialog>
       </div>
     </div>
   </page-container>

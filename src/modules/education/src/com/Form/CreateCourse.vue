@@ -23,6 +23,12 @@ export default {
       handler(val) {
         this.$emit('change', val);
       }
+    },
+    data: {
+      deep: true,
+      handler(val) {
+        this.model = val;
+      }
     }
   },
   beforeCreate() {
@@ -66,7 +72,7 @@ export default {
 
 <style lang="less" scoped>
     .form {
-        width: 50%;
+        width: 100%;
         padding: 16px;
 
         .field {

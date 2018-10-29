@@ -25,7 +25,7 @@ export default {
       immediate: true,
       handler(newFileId) {
         this.id = newFileId;
-        this.imageUrl = this.buildFileUrlById(newFileId);
+        this.imageUrl = newFileId ? this.buildFileUrlById(newFileId) : null;
       }
     }
   },
